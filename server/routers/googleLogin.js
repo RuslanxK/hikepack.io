@@ -13,7 +13,6 @@ const generateJwtToken = (userId) => {
 const setTokenCookie = (res, token) => {
   res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
     sameSite: 'Strict',
     maxAge: 86400000, 
   });

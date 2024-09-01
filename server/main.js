@@ -15,7 +15,7 @@ const googleAuthRoute = require("./routers/googleLogin")
 
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 
 app.use(cors({ origin: process.env.CLIENT_URL })); 

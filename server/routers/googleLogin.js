@@ -32,16 +32,15 @@ const findOrCreateUser = async (profile) => {
   return user;
 };
 
+
 router.post('/api/google-login', async (req, res) => {
   const { token } = req.body;
-
   try {
     const response = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
     const profile = response.data;
     const user = await findOrCreateUser(profile);
     const jwtToken = generateJwtToken(user._id);

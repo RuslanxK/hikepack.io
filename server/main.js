@@ -15,6 +15,9 @@ const googleAuthRoute = require("./routers/googleLogin")
 
 const app = express();
 
+const port = process.env.PORT || 5000;
+
+
 app.use(cors({ origin: process.env.CLIENT_URL })); 
 app.use(cookieParser()); 
 app.use(express.json());
@@ -61,7 +64,7 @@ const startServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
 
-  app.listen(4000, () => {
+  app.listen(port, () => {
     console.log(`Server running at http://localhost:4000${server.graphqlPath}`);
   });
 };

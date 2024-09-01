@@ -57,7 +57,7 @@ app.use(uploadArticle);
 app.use(googleAuthRoute);
 
 const startServer = async () => {
-  await mongoose.connect('mongodb://localhost:27017/BagsApplication');
+  await mongoose.connect(process.env.DATA_BASE_URL);
   await server.start();
   server.applyMiddleware({ app });
 

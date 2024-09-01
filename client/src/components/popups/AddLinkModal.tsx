@@ -1,0 +1,65 @@
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { UPDATE_ITEM_LINK } from '../../queries/itemQueries'; 
+import Modal from './Modal';
+import Spinner from '../loading/Spinner';
+import { AddLinkModalProps } from '../../types/item';
+import Message from '../message/Message';
+
+const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, itemLink }) => {
+
+  const [link, setLink] = useState(itemLink || '');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const [updateItemLink] = useMutation(UPDATE_ITEM_LINK);
+
+  const handleSaveLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      await updateItemLink({
+        variables: { id: itemId, link },
+        
+      });
+
+      onClose();
+    } catch (e) {
+      setError('Error saving link. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title="Item Link">
+      <form onSubmit={handleSaveLink}>
+        
+          <input
+            type="url"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            className="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
+            placeholder="e.g., https://example.com"
+           
+          />
+      
+        
+          <button
+            type="submit"
+            className="mt-4 text-sm bg-orange-400 font-medium w-full text-white px-4 py-2.5 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
+            disabled={loading}
+          >
+            SAVE
+            {loading && <Spinner w={4} h={4 }/>}
+          </button>
+       
+          {error &&  <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />}
+      </form>
+    </Modal>
+  );
+};
+
+export default AddLinkModal;

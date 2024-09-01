@@ -1,0 +1,152 @@
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import Message from '../message/Message';
+import Spinner from '../loading/Spinner'; 
+import { useMutation } from '@apollo/client';
+import { RESET_PASSWORD } from '../../queries/userQueries';
+
+
+const ResetPassword: React.FC = () => {
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
+
+  const { id } = useParams();
+  const navigate = useNavigate()
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "password") {
+      setPassword(value);
+    } else if (name === "confirmPassword") {
+      setConfirmPassword(value);
+    }
+  };
+
+  const [resetPassword] = useMutation(RESET_PASSWORD, {
+    onCompleted: (data) => {
+      setSuccess(data.resetPassword);
+      setLoading(false);
+    
+      setTimeout(() => {
+        navigate('/login')
+      }, 2000);
+    },
+    onError: (error) => {
+      setError(error.message);
+      setLoading(false);
+    },
+  });
+
+  const validatePassword = () => {
+    const errors: { [key: string]: string } = {};
+    const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (password.length < 8) {
+      errors.password = 'Password must be at least 8 characters long';
+    } else if (!strongPasswordRegex.test(password)) {
+      errors.password = 'Password must contain at least one letter and one number';
+    }
+
+    if (password !== confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handlePasswordReset = (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!validatePassword()) {
+      return;
+    }
+
+    setLoading(true);
+    resetPassword({ variables: { token: id, newPassword: password } });
+  };
+
+  return (
+    <div className="min-h-screen flex bg-white">
+      <div className="w-1/2 bg-cover bg-center relative" style={{ backgroundImage: `url('/images/new-password-background.jpg')` }}>
+        <div className="absolute top-8 left-8">
+          <img src="/images/logo-black.png" alt="Logo" className="h-8" />
+        </div>
+      </div>
+
+      <div className="w-1/2 flex flex-col justify-center items-center p-10">
+        <form className="w-full max-w-lg" onSubmit={handlePasswordReset}>
+          <div className="flex justify-between items-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900">New Password</h2>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm mb-2">New Password</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={handleInputChange}
+              className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your new password"
+              required
+            />
+            {validationErrors.password && <p className="text-red-500 text-xs mt-1">{validationErrors.password}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm mb-2">Confirm New Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={handleInputChange}
+              className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirm your new password"
+              required
+            />
+            {validationErrors.confirmPassword && <p className="text-red-500 text-xs mt-1">{validationErrors.confirmPassword}</p>}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
+            disabled={loading}
+          >
+            {loading ? <Spinner w={4} h={4} /> : "Reset Password"}
+          </button>
+
+          <div className="mt-4 mb-4 flex justify-between">
+            <span className="text-sm text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-blue-500 hover:underline">
+                Register
+              </Link>
+            </span>
+            <span className="text-sm text-gray-600">
+              <Link to="/login" className="text-blue-500 hover:underline">
+                Back to Login
+              </Link>
+            </span>
+          </div>
+          
+          {error ? (
+            <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={error} type="error" />
+          ) : (
+            success && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={success} type="success" />
+          )}
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default ResetPassword;

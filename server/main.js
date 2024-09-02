@@ -18,10 +18,8 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'https://hikepack-io-frontend.onrender.com',
-  credentials: true, 
-}));
+app.use(cors({ origin: process.env.CLIENT_URL })); 
+
 
 app.use(cookieParser()); 
 app.use(express.json());

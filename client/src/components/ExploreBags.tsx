@@ -63,6 +63,22 @@ const ExploreBags: React.FC = () => {
   }
 
   if (bagsError || userError || usersError) {
+
+     if(bagsError) {
+       
+        console.log(bagsError)
+     }
+
+     if(userError) {
+         console.log(userError)
+     }
+
+     if(usersError) {
+
+        console.log(usersError)
+     }
+
+
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Message 

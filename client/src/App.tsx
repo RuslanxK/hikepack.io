@@ -31,7 +31,7 @@ const App: React.FC = () => {
   
       <div className="flex ">
        {!hideSidebar && <SideBar />}
-        <div className={`${hideSidebar ? 'ml-0' : 'ml-56'} min-h-screen h-fit flex-grow bg-gradient-to-r from-zinc-50 to-orange-100 dark:from-theme-bgDark dark:to-theme-bgDark`} >
+        <div className={`${hideSidebar ? 'ml-0' : 'ml-56'} min-h-screen h-fit flex-grow bg-theme-bgGray dark:bg-theme-bgDark`} >
           <Routes>
 
           <Route element={<PublicRoutes />}>

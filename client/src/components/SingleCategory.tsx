@@ -46,8 +46,8 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       setItemsData(data.items.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
     }
   }, [data]);
-  
 
+  
 
   const moveItem = async (fromIndex: number, toIndex: number) => {
     if (fromIndex === toIndex) return;
@@ -104,6 +104,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
     });
   }, []);
 
+
   const handleAddItemSubmit = async () => {
     try {
       await addItem({
@@ -117,6 +118,8 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
     }
   };
 
+
+
   const handleCategoryNameBlur = async () => {
     if (categoryNameRef.current && categoryNameRef.current.value !== categoryData.name) {
       try {
@@ -129,6 +132,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       }
     }
   };
+
 
   const removeAllSelectedItems = async () => {
     try {
@@ -148,9 +152,10 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
     }
   };
 
+
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: categoryData.id });
 
-  
+
   if (loading  || error) {
     if (error) {
       console.error('Error fetching item details:', error);
@@ -167,7 +172,6 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
 
   const style = { transform: CSS.Translate.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   
-
 
 
 
@@ -216,8 +220,6 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
               <FaPlus className="mr-1" size={14} />
               Add item
             </button> }
-          
-
           </div>
         </div>
       )}

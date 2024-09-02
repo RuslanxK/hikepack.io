@@ -41,6 +41,7 @@ module.exports = {
           black: "#000000",
           dark: "#161616",
           bgDark: "#202020",
+          bgGray: "#fafafa"
           
         },
       },

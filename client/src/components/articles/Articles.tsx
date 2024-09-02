@@ -51,11 +51,23 @@ const Articles: React.FC = () => {
       <p className="text-base text-left text-gray-600 dark:text-gray-300 mb-8">
         Discover the latest tips, guides, and adventures from our blog.
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5">
-        {articles.map((article: any) => (
-          <ArticleCard key={article.id} article={article} />
-        ))}
-      </div>
+      
+      {articles.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5">
+          {articles.map((article: any) => (
+            <ArticleCard key={article.id} article={article} />
+          ))}
+        </div>
+      ) : (
+        <Message 
+          width="w-full" 
+          title="No Articles Found" 
+          padding="p-5" 
+          titleMarginBottom="mb-2" 
+          message="There are currently no articles available. Please check back later." 
+          type="info" 
+        />
+      )}
     </div>
   );
 };

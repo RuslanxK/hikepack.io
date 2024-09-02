@@ -53,10 +53,22 @@ const Settings: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    if (file && file.size > 2 * 1024 * 1024) {
-      setSelectedFile(null);
-      setError('File size should not exceed 2 MB.');
-    } else {
+  
+    if (file) {
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+      
+      if (!validTypes.includes(file.type)) {
+        setSelectedFile(null);
+        setError('Invalid file type. Only JPG, JPEG, and PNG files are allowed.');
+        return;
+      }
+  
+      if (file.size > 2 * 1024 * 1024) { 
+        setSelectedFile(null);
+        setError('File size should not exceed 2 MB.');
+        return;
+      }
+  
       setSelectedFile(file);
       setError('');
     }
@@ -145,6 +157,7 @@ const Settings: React.FC = () => {
                 <input 
                   type="file" 
                   className="hidden" 
+                  accept=".png, .jpeg, .jpg"
                   onChange={handleFileChange} 
                 />
               </label>

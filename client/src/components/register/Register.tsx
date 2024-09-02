@@ -75,14 +75,26 @@ const Register: React.FC = () => {
         }));
         return;
       }
-
+  
       setStep((prevStep) => prevStep + 1);
     } else if (step === 2 && validateStep2(formData, setErrors)) {
       setStep((prevStep) => prevStep + 1);
-    } else if (step > 2) {
+    } else if (step === 3) {
+      if (formData.profilePicture && formData.profilePicture.size > 2 * 1024 * 1024) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          profilePicture: 'File size should not exceed 2 MB.',
+        }));
+        return;
+      }
+  
+      setStep((prevStep) => prevStep + 1);
+    } else if (step > 3) {
       setStep((prevStep) => prevStep + 1);
     }
   };
+
+
 
   const handlePrevStep = () => setStep((prevStep) => prevStep - 1);
 
@@ -251,57 +263,61 @@ const Register: React.FC = () => {
             </>
           )}
 
-          {step === 3 && (
-            <>
-              <div className="mb-4">
-                <label className="block text-gray-600 text-sm mb-5">Profile picture</label>
-                {profilePicturePreview ? (
-                  <div className="mb-5">
-                    <img
-                      className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
-                      src={profilePicturePreview}
-                      alt="Profile Preview"
-                    />
-                  </div>
-                ) : (
-                  <div className="mb-5">
-                    <img
-                      className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
-                      src="/images/default.jpg"
-                      alt="Default Avatar"
-                    />
-                  </div>
-                )}
-                <input
-                  type="file"
-                  name="file-input"
-                  id="file-input"
-                  className="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
-              file:bg-gray-50 file:border-0
-              file:me-4
-              file:py-3 file:px-4
-              dark:file:bg-neutral-700 dark:file:text-neutral-400"
-                  onChange={handleFileChange}
-                />
-              </div>
-              <div className="flex flex-col space-y-4 justify-between">
-                <button
-                  type="button"
-                  onClick={handlePrevStep}
-                  className="bg-gray-200 text-gray-700 text-sm p-3 rounded hover:bg-gray-300 transition-colors"
-                >
-                  Previous
-                </button>
-                <button
-                  type="button"
-                  onClick={handleNextStep}
-                  className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors"
-                >
-                  Next
-                </button>
-              </div>
-            </>
-          )}
+{step === 3 && (
+  <>
+    <div className="mb-4">
+      <label className="block text-gray-600 text-sm mb-5">Profile picture</label>
+      {profilePicturePreview ? (
+        <div className="mb-5">
+          <img
+            className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
+            src={profilePicturePreview}
+            alt="Profile Preview"
+          />
+        </div>
+      ) : (
+        <div className="mb-5">
+          <img
+            className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
+            src="/images/default.jpg"
+            alt="Default Avatar"
+          />
+        </div>
+      )}
+      <input
+        type="file"
+        accept=".png, .jpeg, .jpg"
+        name="file-input"
+        id="file-input"
+        className="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
+        file:bg-gray-50 file:border-0
+        file:me-4
+        file:py-3 file:px-4
+        dark:file:bg-neutral-700 dark:file:text-neutral-400"
+        onChange={handleFileChange}
+      />
+      {errors.profilePicture && (
+        <p className="text-red-500 text-xs mt-1">{errors.profilePicture}</p>
+      )}
+    </div>
+    <div className="flex flex-col space-y-4 justify-between">
+      <button
+        type="button"
+        onClick={handlePrevStep}
+        className="bg-gray-200 text-gray-700 text-sm p-3 rounded hover:bg-gray-300 transition-colors"
+      >
+        Previous
+      </button>
+      <button
+        type="button"
+        onClick={handleNextStep}
+        className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors"
+      >
+        Next
+      </button>
+    </div>
+  </>
+)}
 
           {step === 4 && (
             <>

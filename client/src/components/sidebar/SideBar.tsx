@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaHome, FaBook, FaSearch, FaCog, FaHistory, FaBug, FaUserShield, FaSignOutAlt, FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
+import { FaHome, FaBook, FaSearch, FaCog, FaHistory, FaBug, FaUserShield, FaSignOutAlt, FaSun, FaMoon } from 'react-icons/fa';
 import { GiHiking, GiSchoolBag } from 'react-icons/gi';
 import { FaBasketShopping } from "react-icons/fa6";
 import SideBarItem from './SideBarItem';
@@ -11,6 +11,9 @@ import Message from '../message/Message';
 import Cookies from 'js-cookie';
 import { GET_USER } from '../../queries/userQueries';
 import { googleLogout } from '@react-oauth/google';
+import { CgMenuLeftAlt } from "react-icons/cg";
+import { CgClose } from "react-icons/cg";
+
 
 interface SideBarItemProps {
   to: string;
@@ -83,7 +86,7 @@ const SideBar: React.FC = () => {
         className="sm:hidden p-2 z-30 absolute right-0 top-2 right-3"
         onClick={() => setIsSidebarOpen(true)}
       >
-        <FaBars className="text-xl" />
+        <CgMenuLeftAlt className="text-xl" />
       </button>
 
       <img
@@ -106,6 +109,7 @@ const SideBar: React.FC = () => {
           <img
             src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
             width="90px"
+            className='pb-2 pl-2 pr-2 sm:p-0'
             alt="logo"
             onClick={() => navigate('/')}
           />
@@ -113,7 +117,7 @@ const SideBar: React.FC = () => {
             className="sm:hidden"
             onClick={() => setIsSidebarOpen(false)}
           >
-            <FaTimes className="text-xl" />
+            <CgClose className="text-xl" />
           </button>
         </div>
 

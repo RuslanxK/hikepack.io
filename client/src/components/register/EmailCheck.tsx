@@ -16,7 +16,6 @@ const EmailCheck: React.FC = () => {
   };
 
   const [sendResetPasswordLink] = useMutation(SEND_RESET_PASSWORD_LINK, {
-
     onCompleted: (data) => {
       setSuccess(data.sendResetPasswordLink);
       setLoading(false);
@@ -27,8 +26,6 @@ const EmailCheck: React.FC = () => {
     },
   });
 
-
-
   const handleEmailCheck = (e: FormEvent) => {
     e.preventDefault();
     setError("");
@@ -38,19 +35,20 @@ const EmailCheck: React.FC = () => {
     sendResetPasswordLink({ variables: { email } });
   };
 
-
   return (
-    <div className="min-h-screen flex bg-white">
-      <div className="w-1/2 bg-cover bg-center relative" style={{ backgroundImage: `url('/images/reset-password-background.jpg')` }}>
-        <div className="absolute top-8 left-8">
-          <img src="/images/logo-white.png" alt="Logo" className="h-8" />
+    <div className="min-h-screen flex flex-col sm:flex-row bg-white">
+      {/* Image Section */}
+      <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto" style={{ backgroundImage: `url('/images/reset-password-background.jpg')` }}>
+        <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
+          <img src="/images/logo-white.png" alt="Logo" className="h-6 sm:h-8" />
         </div>
       </div>
 
-      <div className="w-1/2 flex flex-col justify-center items-center p-10">
-        <form className="w-full max-w-lg" onSubmit={handleEmailCheck}>
-          <div className="flex justify-between items-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900">Reset Password</h2>
+      {/* Form Section */}
+      <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
+        <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleEmailCheck}>
+          <div className="flex justify-between items-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Reset Password</h2>
           </div>
 
           <div className="mb-4">
@@ -60,7 +58,7 @@ const EmailCheck: React.FC = () => {
               name="email"
               value={email}
               onChange={handleInputChange}
-              className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
               required
             />
@@ -68,10 +66,10 @@ const EmailCheck: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
+            className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
             disabled={loading}
           >
-           Send Reset Link  {loading ? <Spinner w={4} h={4} /> : null}
+            Send Reset Link {loading ? <Spinner w={4} h={4} /> : null}
           </button>
 
           <div className="mt-4 mb-4 flex justify-between">
@@ -87,11 +85,11 @@ const EmailCheck: React.FC = () => {
               </Link>
             </span>
           </div>
-          
+
           {error ? (
-            <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={error} type="error" />
+            <Message width='w-full' title="" padding="p-3 sm:p-5" titleMarginBottom="" message={error} type="error" />
           ) : (
-            success && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={success} type="success" />
+            success && <Message width='w-full' title="" padding="p-3 sm:p-5" titleMarginBottom="" message={success} type="success" />
           )}
         </form>
       </div>

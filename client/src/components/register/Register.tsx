@@ -11,7 +11,6 @@ import Spinner from '../loading/Spinner';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/apiConfigs';
 
-
 const initialFormData: FormData = { 
   fullName: '', 
   email: '', 
@@ -32,13 +31,12 @@ const Register: React.FC = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [registerError, setRegisterError] = useState<string | null>(null);
   const [profilePicturePreview, setProfilePicturePreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
   const { countryNameArr } = useCountries();
-  const [addUser, { loading: userLoading }] = useMutation(ADD_USER, { onCompleted: () => { navigate('/login'); }});
-  const { data } = useQuery(CHECK_EMAIL_EXISTENCE, { variables: { email: formData.email }});
+  const [addUser, { loading: userLoading }] = useMutation(ADD_USER, { onCompleted: () => { navigate('/login'); } });
+  const { data } = useQuery(CHECK_EMAIL_EXISTENCE, { variables: { email: formData.email } });
 
   useEffect(() => {
     if (formData.profilePicture) {
@@ -52,7 +50,6 @@ const Register: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-
     setRegisterError(null);
     setFormData((prevData) => ({ ...prevData, [name]: value }));
     if (errors[name]) {
@@ -75,7 +72,6 @@ const Register: React.FC = () => {
         }));
         return;
       }
-  
       setStep((prevStep) => prevStep + 1);
     } else if (step === 2 && validateStep2(formData, setErrors)) {
       setStep((prevStep) => prevStep + 1);
@@ -87,20 +83,15 @@ const Register: React.FC = () => {
         }));
         return;
       }
-  
       setStep((prevStep) => prevStep + 1);
     } else if (step > 3) {
       setStep((prevStep) => prevStep + 1);
     }
   };
 
-
-
   const handlePrevStep = () => setStep((prevStep) => prevStep - 1);
 
-
   const handleRegister = async (e: FormEvent) => {
-
     e.preventDefault();
     setRegisterError(null);
     setLoading(true); 
@@ -108,23 +99,19 @@ const Register: React.FC = () => {
     let imageUrl = '';
   
     try {
-     
       if (formData.profilePicture) {
         try {
           const newFormData = new FormData();
           newFormData.append('file', formData.profilePicture);
-      
           const { data } = await axios.post(`${API_BASE_URL}/upload-image`, newFormData, {
             headers: { 'Content-Type': 'multipart/form-data' },
           });
-          
           imageUrl = data.data.Location;
         } catch (error) {
           console.error('File upload failed:', error);
           return;
         }
       }
-  
       await addUser({
         variables: {
           email: formData.email,
@@ -139,10 +126,7 @@ const Register: React.FC = () => {
           imageUrl: imageUrl, 
         },
       });
-
       localStorage.setItem("registrationSuccess", "true");
-  
-      
     } catch (error) {
       setRegisterError('error');
       console.error('Registration failed:', error);
@@ -151,11 +135,6 @@ const Register: React.FC = () => {
     }
   };
 
-
-
-
-  const progressPercentage = (step / 4) * 100;
-
   const renderInput = (
     name: keyof FormData,
     label: string,
@@ -163,14 +142,14 @@ const Register: React.FC = () => {
     placeholder?: string,
     required?: boolean
   ) => (
-    <div className="mb-4 relative">
+    <div className="mb-4">
       <label className="block text-gray-600 text-sm mb-2">{label}</label>
       <input
         type={type}
         name={name}
         value={formData[name] as string}
         onChange={handleInputChange}
-        className={`w-full text-sm p-3 border rounded focus:outline-none focus:ring-2 ${
+        className={`w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 ${
           errors[name] ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
         }`}
         placeholder={placeholder}
@@ -194,7 +173,7 @@ const Register: React.FC = () => {
         name={name}
         value={formData[name] as string}
         onChange={handleInputChange}
-        className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -206,24 +185,26 @@ const Register: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen flex bg-white">
-      <div className="w-1/2 bg-cover bg-center relative" style={{ backgroundImage: `url('/images/hiking.jpg')` }}>
-        <div className="absolute top-8 left-8">
-          <img src="/images/logo-black.png" alt="Logo" className="h-8" />
-        </div>
+    <div className="min-h-screen flex flex-col sm:flex-row bg-white">
+      {/* Image Section */}
+      <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto transform scale-x-[-1] sm:scale-x-100" style={{ backgroundImage: `url('/images/hiking.jpg')` }}>
+      </div>
+      <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
+          <img src="/images/logo-black.png" alt="Logo" className="h-6 sm:h-8" />
       </div>
 
-      <div className="w-1/2 flex flex-col justify-center items-center p-10">
-        <form className="w-full max-w-lg" onSubmit={handleRegister}>
-          <div className="flex justify-between items-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900">Register</h2>
+      {/* Form Section */}
+      <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
+        <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleRegister}>
+          <div className="flex justify-between items-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Register</h2>
             <h3 className="text-sm text-gray-500">{`Step ${step}: ${
               ['Basic Information', 'Set Your Password', 'Upload Profile Picture', 'Additional Information'][step - 1]
             }`}</h3>
           </div>
 
           <div className="w-full bg-gray-200 h-2 mb-6 rounded-full">
-            <div className="bg-blue-500 h-full rounded-full" style={{ width: `${progressPercentage}%` }}></div>
+            <div className="bg-blue-500 h-full rounded-full" style={{ width: `${(step / 4) * 100}%` }}></div>
           </div>
 
           {step === 1 && (
@@ -233,7 +214,7 @@ const Register: React.FC = () => {
               <button
                 type="button"
                 onClick={handleNextStep}
-                className={`w-full text-white text-sm p-3 mt-2 rounded transition-colors bg-blue-500 hover:bg-blue-600`}
+                className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
               >
                 Next
               </button>
@@ -248,14 +229,14 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="bg-gray-200 text-gray-700 text-sm p-3 rounded hover:bg-gray-300 transition-colors"
+                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors"
+                  className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
                 >
                   Next
                 </button>
@@ -263,61 +244,58 @@ const Register: React.FC = () => {
             </>
           )}
 
-{step === 3 && (
-  <>
-    <div className="mb-4">
-      <label className="block text-gray-600 text-sm mb-5">Profile picture</label>
-      {profilePicturePreview ? (
-        <div className="mb-5">
-          <img
-            className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
-            src={profilePicturePreview}
-            alt="Profile Preview"
-          />
-        </div>
-      ) : (
-        <div className="mb-5">
-          <img
-            className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
-            src="/images/default.jpg"
-            alt="Default Avatar"
-          />
-        </div>
-      )}
-      <input
-        type="file"
-        accept=".png, .jpeg, .jpg"
-        name="file-input"
-        id="file-input"
-        className="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
-        file:bg-gray-50 file:border-0
-        file:me-4
-        file:py-3 file:px-4
-        dark:file:bg-neutral-700 dark:file:text-neutral-400"
-        onChange={handleFileChange}
-      />
-      {errors.profilePicture && (
-        <p className="text-red-500 text-xs mt-1">{errors.profilePicture}</p>
-      )}
-    </div>
-    <div className="flex flex-col space-y-4 justify-between">
-      <button
-        type="button"
-        onClick={handlePrevStep}
-        className="bg-gray-200 text-gray-700 text-sm p-3 rounded hover:bg-gray-300 transition-colors"
-      >
-        Previous
-      </button>
-      <button
-        type="button"
-        onClick={handleNextStep}
-        className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors"
-      >
-        Next
-      </button>
-    </div>
-  </>
-)}
+          {step === 3 && (
+            <>
+              <div className="mb-4">
+                <label className="block text-gray-600 text-sm mb-2">Profile Picture</label>
+                {profilePicturePreview ? (
+                  <div className="mb-4">
+                    <img
+                      className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
+                      src={profilePicturePreview}
+                      alt="Profile Preview"
+                    />
+                  </div>
+                ) : (
+                  <div className="mb-4">
+                    <img
+                      className="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
+                      src="/images/default.jpg"
+                      alt="Default Avatar"
+                    />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  accept=".png, .jpeg, .jpg"
+                  name="file-input"
+                  id="file-input"
+                  className="block w-full text-sm border border-gray-300 shadow-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500
+                  file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400"
+                  onChange={handleFileChange}
+                />
+                {errors.profilePicture && (
+                  <p className="text-red-500 text-xs mt-1">{errors.profilePicture}</p>
+                )}
+              </div>
+              <div className="flex flex-col space-y-4 justify-between">
+                <button
+                  type="button"
+                  onClick={handlePrevStep}
+                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextStep}
+                  className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
+                >
+                  Next
+                </button>
+              </div>
+            </>
+          )}
 
           {step === 4 && (
             <>
@@ -364,25 +342,25 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="bg-gray-200 text-gray-700 text-sm p-3 rounded hover:bg-gray-300 transition-colors"
+                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors"
+                  className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
                 >
                  Register  {loading || userLoading ?  <Spinner w={4} h={4} /> : null}
                 </button>
 
                 {registerError ? (
-                  <Message width="w-full" title="" padding="p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />
+                  <Message width="w-full" title="" padding="p-3 sm:p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />
                 ) : null}
               </div>
             </>
           )}
 
-          <div className=" mt-4">
+          <div className="mt-4">
             <span className="text-sm text-gray-600">
               Already have an account?{' '}
               <Link to="/login" className="text-blue-500 hover:underline">

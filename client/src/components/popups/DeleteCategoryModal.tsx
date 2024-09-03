@@ -44,13 +44,13 @@ const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({ isOpen, onClo
         </p>
         <button
           onClick={handleDeleteCategory}
-          className="text-sm bg-red-500 font-medium w-full text-white px-4 py-2.5 mb-1 rounded hover:bg-red-600 flex items-center justify-center"
+          className="text-sm bg-red-500 font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-red-600 flex items-center justify-center"
           disabled={loading}
         >
           DELETE
           {loading && <Spinner w={4} h={4}/>}
         </button>
-        {error &&  <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
+        {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
       </div>
     </Modal>
   );

@@ -155,13 +155,13 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
         </div>
       </div>
       <button
-        className="text-sm bg-orange-400 font-medium w-full text-white px-4 py-2.5 mt-4 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
+        className="text-sm bg-orange-400 font-medium w-full text-white p-2 sm:p-3 mt-4 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
         onClick={handleSavePicture}
         disabled={loading}
       >
         SAVE {loading && <Spinner w={4} h={4} />}
       </button>
-      {error &&  <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
+      {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
     </Modal>
   );
 };

@@ -68,7 +68,7 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
     <Modal isOpen={isOpen} onClose={onClose} title="Add Item to Category">
     <div className="mb-4">
     <select
-  className="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
+  className="block w-full p-2 sm:p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
   value={selectedCategory}
   onChange={handleSelectChange}
 >
@@ -84,14 +84,14 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
 </div>
 <div>
   <button
-    className="text-sm bg-orange-400 font-medium w-full text-white px-4 py-2.5 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
+    className="text-sm bg-orange-400 font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
     disabled={loading || selectedCategory === ''}
     onClick={handleAddItemSubmit}
   >
     ADD
     {loading && <Spinner w={4} h={4}/>}
   </button>
-  {error &&  <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />}
+  {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />}
 </div>
     </Modal>
   );

@@ -142,12 +142,10 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   };
 
   return (
-    <div className="flex items-center py-0.5 space-x-2 relative" ref={setNodeRef} style={style}>
+    <div className="flex items-center py-0.5 space-x-2" ref={setNodeRef} style={style}>
       <div className="flex items-center">
         <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
-
         <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300"/>
-        
 
       </div>
 
@@ -155,7 +153,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="text" 
         placeholder="e.g., Hiking socks"
         name="name" 
-        className={`${inputClasses} w-2/5`} 
+        className={`${inputClasses} w-auto sm:w-2/5`} 
         defaultValue={itemData.name} 
         onBlur={(e) => handleBlur('name', e.target.value)} 
       />
@@ -164,7 +162,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="text" 
         placeholder="note" 
         name="description" 
-        className={`${inputClasses} w-3/5`} 
+        className={`${inputClasses} w-auto sm:w-3/5`} 
         defaultValue={itemData.description} 
         onBlur={(e) => handleBlur('description', e.target.value)} 
       />
@@ -174,7 +172,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="number" 
         id="qty" 
         name="qty" 
-        className={`${inputClasses} w-16`} 
+        className={`${inputClasses} w-auto sm:w-16`} 
         min={1} 
         defaultValue={itemData.qty} 
         onChange={(e) => handleQtyChange(+e.target.value)} 
@@ -185,16 +183,16 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="number" 
         id="weight" 
         name="weight" 
-        className={`${inputClasses} w-20`} 
+        className={`${inputClasses} w-auto sm:w-20`} 
         min={0} 
         defaultValue={itemData.weight} 
         onChange={(e) => handleWeightChange(+e.target.value)} 
       />
 
-      <div className="relative" ref={dropdownRef}>
+      <div className="relative w-full sm:w-auto" ref={dropdownRef}>
         <button
           onClick={toggleDropdown}
-          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-[57px] truncate ${inputClasses}`} 
+          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-[57px] truncate ${inputClasses}`} 
         >
           <span className="truncate">{weightOption}</span>
           <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -218,10 +216,10 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         )}
       </div>
 
-      <div className="relative" ref={priorityDropdownRef}>
+      <div className="relative w-full sm:w-auto" ref={priorityDropdownRef}>
         <button
           onClick={togglePriorityDropdown}
-          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-28 truncate ${inputClasses} ${priorityClass}`} 
+          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-28 truncate ${inputClasses} ${priorityClass}`} 
         >
           <span className="truncate">{itemData.priority === 'low' ? 'Low Priority' : itemData.priority === 'med' ? 'Med Priority' : 'High Priority'}</span>
           <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -229,32 +227,32 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           </svg>
         </button>
         {isPriorityDropdownOpen && (
-  <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-full mt-2 left-0 ring ring-1 ring-primary" style={{ position: 'absolute', zIndex: 999 }}>
-    <ul className="text-sm text-zinc-900 dark:text-gray-200">
-      <li>
-        <button
-          onClick={() => handlePriorityChange('low')}
-          className="block px-3 py-1.5 w-full hover:bg-emerald-100 dark:hover:bg-emerald-600 dark:hover:text-white font-normal transition-colors duration-150">
-          Low Priority
-        </button>
-      </li>
-      <li>
-        <button
-          onClick={() => handlePriorityChange('med')}
-          className="block px-3 py-1.5 w-full hover:bg-yellow-100 dark:hover:bg-yellow-700 dark:hover:text-white font-normal transition-colors duration-150">
-          Med Priority
-        </button>
-      </li>
-      <li>
-        <button
-          onClick={() => handlePriorityChange('high')}
-          className="block px-3 py-1.5 w-full hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-white font-normal transition-colors duration-150">
-          High Priority
-        </button>
-      </li>
-    </ul>
-  </div>
-)}
+          <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-full mt-2 left-0 ring ring-1 ring-primary" style={{ position: 'absolute', zIndex: 999 }}>
+            <ul className="text-sm text-zinc-900 dark:text-gray-200">
+              <li>
+                <button
+                  onClick={() => handlePriorityChange('low')}
+                  className="block px-3 py-1.5 w-full hover:bg-emerald-100 dark:hover:bg-emerald-600 dark:hover:text-white font-normal transition-colors duration-150">
+                  Low Priority
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handlePriorityChange('med')}
+                  className="block px-3 py-1.5 w-full hover:bg-yellow-100 dark:hover:bg-yellow-700 dark:hover:text-white font-normal transition-colors duration-150">
+                  Med Priority
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handlePriorityChange('high')}
+                  className="block px-3 py-1.5 w-full hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-white font-normal transition-colors duration-150">
+                  High Priority
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="flex space-x-3 pl-2 relative">

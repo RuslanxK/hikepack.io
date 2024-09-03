@@ -59,7 +59,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
       <input
         type={type}
         onChange={(e) => setValue(type === 'number' ? (e.target.value as unknown as T) : e.target.value as T)}
-        className="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
+        className="block w-full p-2 sm:p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
         required
         min={min}
         max={max}
@@ -85,14 +85,14 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
       <div className="pt-1">
         <button
           type="submit"
-          className="mt-3 text-sm bg-button font-medium w-full text-white px-4 py-2.5 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
+          className="mt-3 text-sm bg-button font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
           disabled={loading}
         >
           CREATE
           {loading && <Spinner w={4} h={4} />}
         </button>
       </div>
-      {error && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
+      {error && <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
     </Form>
   </Modal>
   

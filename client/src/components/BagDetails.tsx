@@ -225,7 +225,7 @@ const BagDetails: React.FC = () => {
             </div>
           )}
 
-          <div className="overflow-hidden">
+          <div className="">
             <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
               <FaPlus size={13}/>
             </button>

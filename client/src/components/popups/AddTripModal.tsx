@@ -118,7 +118,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
       <input
         type={type}
         onChange={(e) => setValue(e.target.value)}
-      className="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
+        className="block w-full p-2 sm:p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
         required
         min={min}
         max={max}
@@ -196,11 +196,11 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   </div>
 </div>
 
-        <button type="submit" className="text-sm bg-button font-medium w-full text-white px-4 py-2.5 mb-1 rounded hover:bg-button-hover flex items-center justify-center" disabled={loading}>
+        <button type="submit" className="text-sm bg-button font-medium w-full text-white p-2 sm:p-3  mb-1 rounded hover:bg-button-hover flex items-center justify-center" disabled={loading}>
           CREATE
           {loading && <Spinner w={4} h={4}/>}
         </button>
-        {error && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />}
+        {error && <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />}
       </Form>
     </Modal>
   );

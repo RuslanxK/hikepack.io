@@ -163,7 +163,7 @@ const BagDetails: React.FC = () => {
 
   return (
     <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
-      <div className={`flex flex-col sm:flex-row items-start justify-center min-h-screen p-4 ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
+      <div className={`flex flex-col sm:flex-row items-start min-h-screen p-4 ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
             <div className='w-full'>

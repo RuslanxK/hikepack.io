@@ -159,9 +159,9 @@ const Login: React.FC = () => {
         </div>
 
         {error ? (
-          <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={error} type="error" />
+          <Message width='w-full' title="" padding="p-3 sm:p-5" titleMarginBottom="" message={error} type="error" />
         ) : (
-          success && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={success} type="success" />
+          success && <Message width='w-full' title="" padding="p-3 sm:p-5" titleMarginBottom="" message={success} type="success" />
         )}
       </form>
     </div>

@@ -90,83 +90,82 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-white">
-      <div className="w-1/2 bg-cover bg-center relative" style={{ backgroundImage: `url('/images/hiking-login.png')` }}>
-        <div className="absolute top-8 left-8">
-          <img src="/images/logo-black.png" alt="Logo" className="h-8" />
-        </div>
-      </div>
-
-      <div className="w-1/2 flex flex-col justify-center items-center p-10">
-        <form className="w-full max-w-lg" onSubmit={handleLogin}>
-          <div className="flex justify-between items-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900">Login</h2>
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
-            disabled={loading}
-          >
-            Login {loading && <Spinner w={4} h={4} />}
-          </button>
-
-          <button
-            onClick={handleGoogleLoginClick}
-            className="w-full bg-transparent text-gray-800 text-sm p-3 mt-3 rounded flex items-center hover:outline-none border border-gray-300 justify-center hover:ring-2 hover:ring-blue-500">
-            <FaGoogle className='mr-3'/>
-            Sign in with Google 
-          </button>
-
-          <div className="mt-4 mb-4 flex justify-between">
-
-            <span className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link to="/register" className="text-blue-500 hover:underline">
-                Register
-              </Link>
-            </span>
-            <span className="text-sm text-gray-600">
-              <Link to="/reset-password" className="text-blue-500 hover:underline">
-                Forgot your password?
-              </Link>
-            </span>
-
-          </div>
-          
-          {error ? (
-            <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={error} type="error" />
-          ) : (
-            success && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={success} type="success" />
-          )}
-
-        </form>
+    <div className="min-h-screen flex flex-col sm:flex-row bg-white">
+    <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-64 sm:h-auto" style={{ backgroundImage: `url('/images/hiking-login.png')` }}>
+      <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
+        <img src="/images/logo-black.png" alt="Logo" className="h-6 sm:h-8" />
       </div>
     </div>
+
+    {/* Form Section */}
+    <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
+      <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleLogin}>
+        <div className="flex justify-between items-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Login</h2>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-600 text-sm mb-2">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your email"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-600 text-sm mb-2">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your password"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
+          disabled={loading}
+        >
+          Login {loading && <Spinner w={4} h={4} />}
+        </button>
+
+        <button
+          onClick={handleGoogleLoginClick}
+          className="w-full bg-transparent text-gray-800 text-sm p-2 sm:p-3 mt-3 rounded flex items-center hover:outline-none border border-gray-300 justify-center hover:ring-2 hover:ring-blue-500"
+        >
+          <FaGoogle className='mr-2 sm:mr-3'/>
+          Sign in with Google 
+        </button>
+
+        <div className="mt-4 mb-4 flex flex-col sm:flex-row justify-between">
+          <span className="text-sm text-gray-600 mb-2 sm:mb-0">
+            Don't have an account?{' '}
+            <Link to="/register" className="text-blue-500 hover:underline">
+              Register
+            </Link>
+          </span>
+          <span className="text-sm text-gray-600">
+            <Link to="/reset-password" className="text-blue-500 hover:underline">
+              Forgot your password?
+            </Link>
+          </span>
+        </div>
+
+        {error ? (
+          <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={error} type="error" />
+        ) : (
+          success && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={success} type="success" />
+        )}
+      </form>
+    </div>
+  </div>
   );
 };
 

@@ -201,9 +201,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
         </div>
       </div>
       {expanded && (
-        <div className="w-full">
-          <div className="px-5  text-sm w-full shadow-md bg-white dark:bg-box">
-            <div className="w-full">
+          <div className="px-5 text-sm shadow-md bg-white dark:bg-box">
               <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
                 <SortableContext items={itemsData.map((item) => item.id) || []} strategy={verticalListSortingStrategy}>
                   {itemsData.map((item, index) => (
@@ -211,7 +209,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
                   ))}
                 </SortableContext>
               </DndContext>
-            </div>
+           
            {checkedItems.length ? <button className="flex items-center pt-3 pb-3 text-red-400 hover:text-red-500 focus:outline-none" onClick={removeAllSelectedItems}>
               <TiDelete className="mr-1" size={19} />
               Delete items
@@ -221,7 +219,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
               Add item
             </button> }
           </div>
-        </div>
+        
       )}
 
       <DeleteCategoryModal isOpen={isModalDeleteOpen} categoryId={categoryData.id} categoryName={categoryData.name} onClose={() => setIsModalDeleteOpen(false)}  />

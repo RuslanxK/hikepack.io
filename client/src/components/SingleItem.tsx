@@ -11,7 +11,7 @@ import AddLinkModal from './popups/AddLinkModal';
 import { GET_CATEGORIES } from '../queries/categoryQueries';
 import { GET_ITEMS, GET_ALL_ITEMS } from '../queries/itemQueries';
 
-const inputClasses = "py-1 px-2 block border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-primary dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
+const inputClasses = "py-1 px-2 border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-primary dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
 const iconClasses = "transform transition-transform duration-200 hover:scale-125";
 
 const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUnit }) => {
@@ -142,20 +142,18 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   };
 
   return (
-    <div className="flex items-center py-0.5 space-x-2 relative sm:w-auto w-full" ref={setNodeRef} style={style}>
+    <div className="py-0.5 overflow-x-scroll sm:overflow-visible sm:w-full" ref={setNodeRef} style={style}>
+      <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
         <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
-
         <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300"/>
-        
-
       </div>
 
       <input 
         type="text" 
         placeholder="e.g., Hiking socks"
         name="name" 
-        className={`${inputClasses} w-auto sm:w-2/5`} 
+        className={`${inputClasses} w-auto sm:w-full`} 
         defaultValue={itemData.name} 
         onBlur={(e) => handleBlur('name', e.target.value)} 
       />
@@ -164,7 +162,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="text" 
         placeholder="note" 
         name="description" 
-        className={`${inputClasses} w-auto sm:w-3/5`} 
+        className={`${inputClasses} w-auto sm:w-full`} 
         defaultValue={itemData.description} 
         onBlur={(e) => handleBlur('description', e.target.value)} 
       />
@@ -174,7 +172,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="number" 
         id="qty" 
         name="qty" 
-        className={`${inputClasses} w-auto sm:w-16`} 
+        className={`${inputClasses} w-16`} 
         min={1} 
         defaultValue={itemData.qty} 
         onChange={(e) => handleQtyChange(+e.target.value)} 
@@ -185,13 +183,13 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="number" 
         id="weight" 
         name="weight" 
-        className={`${inputClasses} w-auto sm:w-20`} 
+        className={`${inputClasses} w-20`} 
         min={0} 
         defaultValue={itemData.weight} 
         onChange={(e) => handleWeightChange(+e.target.value)} 
       />
 
-      <div className="relative w-full sm:w-auto" ref={dropdownRef}>
+      <div className="relative w-auto" ref={dropdownRef}>
         <button
           onClick={toggleDropdown}
           className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-[57px] truncate ${inputClasses}`} 
@@ -202,8 +200,8 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           </svg>
         </button>
         {isDropdownOpen && (
-          <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-fit absolute mt-2 left-0 ring ring-1 ring-primary">
-            <ul className="text-sm text-zinc-900 dark:text-gray-200 flex">
+          <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-full mt-2 left-0 ring ring-1 ring-primary absolute">
+            <ul className="text-sm text-zinc-900 dark:text-gray-200">
               {['lb', 'kg', 'g', 'oz'].map(unit => (
                 <li key={unit} className="">
                   <button
@@ -221,7 +219,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
       <div className="relative w-full sm:w-auto" ref={priorityDropdownRef}>
         <button
           onClick={togglePriorityDropdown}
-          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-28 truncate ${inputClasses} ${priorityClass}`} 
+          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-auto truncate ${inputClasses} ${priorityClass}`} 
         >
           <span className="truncate">{itemData.priority === 'low' ? 'Low Priority' : itemData.priority === 'med' ? 'Med Priority' : 'High Priority'}</span>
           <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -229,26 +227,26 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           </svg>
         </button>
         {isPriorityDropdownOpen && (
-          <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-full mt-2 left-0 ring ring-1 ring-primary" style={{ position: 'absolute', zIndex: 999 }}>
+          <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-full mt-2 left-0 ring ring-1 ring-primary absolute" style={{ zIndex: 999 }}>
             <ul className="text-sm text-zinc-900 dark:text-gray-200">
               <li>
                 <button
                   onClick={() => handlePriorityChange('low')}
-                  className="block px-3 py-1.5 w-full hover:bg-emerald-100 dark:hover:bg-emerald-600 dark:hover:text-white font-normal transition-colors duration-150">
+                  className="py-1.5 w-full hover:bg-emerald-100 dark:hover:bg-emerald-600 dark:hover:text-white font-normal transition-colors duration-150">
                   Low Priority
                 </button>
               </li>
               <li>
                 <button
                   onClick={() => handlePriorityChange('med')}
-                  className="block px-3 py-1.5 w-full hover:bg-yellow-100 dark:hover:bg-yellow-700 dark:hover:text-white font-normal transition-colors duration-150">
+                  className=" py-1.5 w-full hover:bg-yellow-100 dark:hover:bg-yellow-700 dark:hover:text-white font-normal transition-colors duration-150">
                   Med Priority
                 </button>
               </li>
               <li>
                 <button
                   onClick={() => handlePriorityChange('high')}
-                  className="block px-3 py-1.5 w-full hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-white font-normal transition-colors duration-150">
+                  className="py-1.5 w-full hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-white font-normal transition-colors duration-150">
                   High Priority
                 </button>
               </li>
@@ -297,6 +295,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
       <ItemPictureModal isOpen={isModalPicOpen} onClose={() => setIsModalPicOpen(false)} itemId={itemData.id} itemPicLink={itemData.imageUrl || ''} />
       <AddLinkModal isOpen={isModalLinkOpen} onClose={() => setIsModalLinkOpen(false)} itemId={itemData.id} itemLink={itemData.link} />
+    </div>
     </div>
   );
 }

@@ -162,27 +162,26 @@ const BagDetails: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-
     <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
-    <div className={`flex items-start justify-center min-h-screen p-4 ${isSidePanelVisible && dataItems?.allItems.length ? 'mr-56' : 'mr-0'}`}>
+      <div className={`flex flex-col sm:flex-row items-start justify-center min-h-screen p-4 ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
-          <div className="flex flex-row items-center justify-between space-y-2 w-full">
+          <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
             <div className='w-full'>
-              <div className='p-4 flex flex-row items-start'>
-                <div className='w-8/12'>
-                <div className="flex items-center w-11/12">
-          <button 
-          type="button" 
-          className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm"  onClick={() => navigate(-1)}>
-         <FaArrowLeft size={17} />
-          </button>
-
-            <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
-              {bag.name}
-            </h1>
-          </div>
+              <div className='p-4 flex flex-col sm:flex-row items-start'>
+                <div className='w-full sm:w-8/12'>
+                  <div className="flex items-center w-full sm:w-11/12">
+                    <button 
+                      type="button" 
+                      className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm"  
+                      onClick={() => navigate(-1)}>
+                      <FaArrowLeft size={17} />
+                    </button>
+                    <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
+                      {bag.name}
+                    </h1>
+                  </div>
                 </div>
-                <div className='w-4/12 flex flex-row items-center justify-end'>
+                <div className='w-full sm:w-4/12 flex flex-row items-center justify-end'>
                   <label className="inline-flex items-center cursor-pointer mr-5">
                     <input type="checkbox" checked={bag?.exploreBags} onChange={handleToggleShareToExplore} className="sr-only peer" />
                     <div className="relative w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-400"></div>
@@ -196,34 +195,32 @@ const BagDetails: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <p className="text-base  text-gray-700 dark:text-gray-200 text-center p-5 dark:bg-theme-bgDark">
+              <p className="text-base text-gray-700 dark:text-gray-200 text-center p-5 dark:bg-theme-bgDark">
                 {bag?.description}
               </p>
             </div>
           </div>
           
-         
-
           {categoriesData.length > 0 && hasCategoriesWithWeight && (
-            <div className="w-full flex flex-row items-center py-10 justify-center space-x-12">
-            <div className="flex justify-center items-center">
-            <div className="flex items-center space-x-2 p-3 rounded-full">
-              <FaHeart size={20} className="text-red-500 animate-pulse" />
-              <div className="flex flex-col items-center">
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {bag?.likes || 0}
-                </span>
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  {bag?.likes === 1 ? 'Like' : 'Likes'}
-                </span>
+            <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
+              <div className="flex justify-center items-center">
+                <div className="flex items-center space-x-2 p-3 rounded-full">
+                  <FaHeart size={20} className="text-red-500 animate-pulse" />
+                  <div className="flex flex-col items-center">
+                    <span className="font-semibold text-gray-900 dark:text-white">
+                      {bag?.likes || 0}
+                    </span>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {bag?.likes === 1 ? 'Like' : 'Likes'}
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-              <div className="w-64 h-64">
+              <div className="w-full sm:w-64 h-64">
                 <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
-              <div>
+              <div className='w-full sm:w-fit'>
                 <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
             </div>
@@ -247,9 +244,9 @@ const BagDetails: React.FC = () => {
           </div>
         </div>
       
-      {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null}
-      <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />
-    </div>
+        {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null}
+        <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />
+      </div>
     </div>
   );
 }

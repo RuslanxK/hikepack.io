@@ -16,8 +16,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
               className="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100"
               onClick={onClose}
             >
-              <FaTimes size={20} />
+               <FaTimes size={20}  className='mb-5'/>
             </button>
+           
           </div>
           <div className=" h-full box-border">
             {children}

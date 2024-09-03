@@ -54,7 +54,7 @@ const Home: React.FC = () => {
 
   return (
 
-    <div className='container mx-auto'>
+    <div className='container mx-auto sm:mt-0 sm:p-0 mt-16 p-5'>
     <div className='p-4 sm:p-10 flex flex-col items-start justify-start space-y-2'>
       <div className='mb-5'>
         <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
@@ -107,12 +107,12 @@ const Home: React.FC = () => {
           </p>
     
           <div className='flex justify-center mt-5'>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-              <GridBox title="Total Weight" goal={' / ' + latestBagData.latestBagWithDetails.goal.toString() + ' ' + userData?.user?.weightOption } details={latestBagData.latestBagWithDetails.totalWeight.toFixed(2).toString()} icon={FaWeight} />
-              <GridBox title="Total Categories" goal={""} details={latestBagData.latestBagWithDetails.totalCategories.toString()} icon={FaListAlt} />
-              <GridBox title="Total Items" goal={""} details={latestBagData.latestBagWithDetails.totalItems.toString()} icon={FaBox} />
-            </div>
-          </div>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-auto'>
+        <GridBox title="Total Weight" goal={' / ' + latestBagData.latestBagWithDetails.goal.toString() + ' ' + userData?.user?.weightOption } details={latestBagData.latestBagWithDetails.totalWeight.toFixed(2).toString()} icon={FaWeight} />
+        <GridBox title="Total Categories" goal={""} details={latestBagData.latestBagWithDetails.totalCategories.toString()} icon={FaListAlt} />
+        <GridBox title="Total Items" goal={""} details={latestBagData.latestBagWithDetails.totalItems.toString()} icon={FaBox} />
+  </div>
+</div>
         </div>
       )}
 

@@ -75,6 +75,9 @@ const SideBar: React.FC = () => {
 
   return (
     <>
+
+
+    <div className='mb-5'>
     
       <button
         className="sm:hidden p-2 z-30 absolute right-0 top-1 right-4"
@@ -82,6 +85,16 @@ const SideBar: React.FC = () => {
       >
         <FaBars className="text-xl" />
       </button>
+
+      <img
+            src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
+            width="90px"
+            className='sm:hidden p-2 z-30 absolute right-0 top-1 left-4'
+            alt="logo"
+            onClick={() => navigate('/')}
+          />
+
+</div>
 
     
       <div

@@ -202,7 +202,7 @@ const BagDetails: React.FC = () => {
           </div>
           
           {categoriesData.length > 0 && hasCategoriesWithWeight && (
-            <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
+            <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0 bg-zinc-200 sm:bg-theme-bgGray">
               <div className="flex justify-center items-center">
                 <div className="flex items-center space-x-2 p-3 rounded-full">
                   <FaHeart size={20} className="text-red-500 animate-pulse" />

@@ -167,7 +167,7 @@ const BagDetails: React.FC = () => {
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
             <div className='w-full'>
-              <div className='flex flex-col sm:flex-row items-start'>
+              <div className='flex flex-row sm:flex-row items-start'>
                 <div className='w-full w-8/12'>
                   <div className="flex items-center w-full sm:w-11/12">
                     <button 
@@ -182,10 +182,9 @@ const BagDetails: React.FC = () => {
                   </div>
                 </div>
                 <div className='w-full sm:w-4/12 flex flex-row items-center justify-end'>
-                  <label className="inline-flex items-center cursor-pointer mr-5">
+                  <label className="inline-flex items-center cursor-pointer mr-5 hidden sm:block">
                     <input type="checkbox" checked={bag?.exploreBags} onChange={handleToggleShareToExplore} className="sr-only peer" />
                     <div className="relative w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-400"></div>
-                    <span className="ms-3 text-sm font-medium text-gray-700 dark:text-gray-200">Share to Explore</span>
                   </label>
                   <button type="button" className={buttonClass} onClick={() => window.open(`/share/${bag.id}`, '_blank')}>
                     <IoMdShare size={19} />
@@ -202,7 +201,7 @@ const BagDetails: React.FC = () => {
           </div>
           
           {categoriesData.length > 0 && hasCategoriesWithWeight && (
-            <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0 bg-zinc-200 sm:bg-theme-bgGray">
+            <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
               <div className="flex justify-center items-center">
                 <div className="flex items-center space-x-2 p-3 rounded-full">
                   <FaHeart size={20} className="text-red-500 animate-pulse" />

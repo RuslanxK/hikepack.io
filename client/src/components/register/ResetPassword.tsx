@@ -5,7 +5,6 @@ import Spinner from '../loading/Spinner';
 import { useMutation } from '@apollo/client';
 import { RESET_PASSWORD } from '../../queries/userQueries';
 
-
 const ResetPassword: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -15,7 +14,7 @@ const ResetPassword: React.FC = () => {
   const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
 
   const { id } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,7 +31,7 @@ const ResetPassword: React.FC = () => {
       setLoading(false);
     
       setTimeout(() => {
-        navigate('/login')
+        navigate('/login');
       }, 2000);
     },
     onError: (error) => {
@@ -75,17 +74,19 @@ const ResetPassword: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-white">
-      <div className="w-1/2 bg-cover bg-center relative" style={{ backgroundImage: `url('/images/new-password-background.jpg')` }}>
-        <div className="absolute top-8 left-8">
-          <img src="/images/logo-black.png" alt="Logo" className="h-8" />
+    <div className="min-h-screen flex flex-col sm:flex-row bg-white">
+      {/* Image Section */}
+      <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto" style={{ backgroundImage: `url('/images/new-password-img.jpg')` }}>
+        <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
+          <img src="/images/logo-black.png" alt="Logo" className="h-6 sm:h-8" />
         </div>
       </div>
 
-      <div className="w-1/2 flex flex-col justify-center items-center p-10">
-        <form className="w-full max-w-lg" onSubmit={handlePasswordReset}>
-          <div className="flex justify-between items-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900">New Password</h2>
+      {/* Form Section */}
+      <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
+        <form className="w-full max-w-sm md:max-w-lg" onSubmit={handlePasswordReset}>
+          <div className="flex justify-between items-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">New Password</h2>
           </div>
 
           <div className="mb-4">
@@ -95,7 +96,7 @@ const ResetPassword: React.FC = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your new password"
               required
             />
@@ -109,7 +110,7 @@ const ResetPassword: React.FC = () => {
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleInputChange}
-              className="w-full text-sm p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Confirm your new password"
               required
             />
@@ -118,7 +119,7 @@ const ResetPassword: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white text-sm p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
+            className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
             disabled={loading}
           >
             {loading ? <Spinner w={4} h={4} /> : "Reset Password"}
@@ -139,9 +140,9 @@ const ResetPassword: React.FC = () => {
           </div>
           
           {error ? (
-            <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={error} type="error" />
+            <Message width='w-full' title="" padding="p-3 sm:p-5" titleMarginBottom="" message={error} type="error" />
           ) : (
-            success && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={success} type="success" />
+            success && <Message width='w-full' title="" padding="p-3 sm:p-5" titleMarginBottom="" message={success} type="success" />
           )}
         </form>
       </div>

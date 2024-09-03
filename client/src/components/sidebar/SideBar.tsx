@@ -80,7 +80,7 @@ const SideBar: React.FC = () => {
     <div>
     
       <button
-        className="sm:hidden p-2 z-30 absolute right-0 top-2 right-4"
+        className="sm:hidden p-2 z-30 absolute right-0 top-2 right-3"
         onClick={() => setIsSidebarOpen(true)}
       >
         <FaBars className="text-xl" />
@@ -89,7 +89,7 @@ const SideBar: React.FC = () => {
       <img
             src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
             width="90px"
-            className='sm:hidden p-2 z-30 absolute right-0 top-2 left-4'
+            className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3'
             alt="logo"
             onClick={() => navigate('/')}
           />

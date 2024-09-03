@@ -49,7 +49,8 @@ const Changelog: React.FC = () => {
   }) || [];
 
   return (
-    <div className="container mx-auto p-4 sm:p-10">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
+      <div className='p-4 sm:p-10'>
       <div className="min-h-screen">
         <div className="flex items-center mb-4">
           <button
@@ -87,6 +88,7 @@ const Changelog: React.FC = () => {
           </ul>
         )}
       </div>
+    </div>
     </div>
   );
 };

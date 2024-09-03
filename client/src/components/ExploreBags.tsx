@@ -156,7 +156,8 @@ const ExploreBags: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col container mx-auto p-4 sm:p-10">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
+      <div className='p-4 sm:p-10'>
       <div className="flex items-center mb-6">
         <button 
           type="button" 
@@ -267,6 +268,7 @@ const ExploreBags: React.FC = () => {
   />
 )}
 
+    </div>
     </div>
   );
 };

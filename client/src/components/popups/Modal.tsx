@@ -7,7 +7,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 p-2 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="flex items-center justify-center w-full">
         <div className="bg-white dark:bg-theme-bgDark p-8 rounded-lg shadow-lg w-full h-full sm:max-w-lg sm:max-h-full relative">
           <div className="flex justify-between items-center">

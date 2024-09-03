@@ -41,7 +41,8 @@ const BugReport: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 sm:p-10">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
+      <div className='p-4 sm:p-10'>
       <div className="mb-4 flex items-center">
         <button 
           type="button" 
@@ -98,6 +99,7 @@ const BugReport: React.FC = () => {
         {successMessage && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={successMessage} type="success" />}
         {errorMessage && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={errorMessage} type="error" />}
 
+      </div>
       </div>
     </div>
   );

@@ -129,7 +129,8 @@ const Settings: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 sm:p-10">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
+      <div className='p-4 sm:p-10'>
       <div className="w-full min-h-screen flex flex-col items-center justify-right">
         <div className="w-full">
           <div className="flex items-center mb-4">
@@ -236,6 +237,7 @@ const Settings: React.FC = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -86,7 +86,7 @@ const TripDetails: React.FC = () => {
 
   return (
 
-    <div className='container mx-auto'>
+    <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
     <div className='p-4 sm:p-10 space-y-6'>
       <div className='flex flex-col lg:flex-row'>
         <div className="w-full flex flex-col space-y-4">

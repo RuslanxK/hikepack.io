@@ -47,7 +47,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
-    <div className="relative overflow-x-auto max-w-full">
+    <div className="w-full">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-200">
         <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
           <tr>

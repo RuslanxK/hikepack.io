@@ -167,8 +167,8 @@ const BagDetails: React.FC = () => {
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
             <div className='w-full'>
-              <div className='p-4 flex flex-col sm:flex-row items-start'>
-                <div className='w-full sm:w-8/12'>
+              <div className='flex flex-col sm:flex-row items-start'>
+                <div className='w-full w-8/12'>
                   <div className="flex items-center w-full sm:w-11/12">
                     <button 
                       type="button" 
@@ -217,10 +217,10 @@ const BagDetails: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full sm:w-64 h-64">
+              <div className="sm:w-64 h-64">
                 <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
-              <div className='w-full sm:w-fit'>
+              <div>
                 <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
             </div>
@@ -230,7 +230,7 @@ const BagDetails: React.FC = () => {
             <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
               <FaPlus size={13}/>
             </button>
-            <div className="w-full pb-14">
+            {/* <div className="w-full pb-14">
               {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="p-5" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }
 
               <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
@@ -240,11 +240,11 @@ const BagDetails: React.FC = () => {
                   ))}
                 </SortableContext>
               </DndContext>
-            </div>
+            </div> */}
           </div>
         </div>
       
-        {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null}
+        {/* {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null} */}
         <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />
       </div>
     </div>

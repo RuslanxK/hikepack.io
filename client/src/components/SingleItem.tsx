@@ -142,10 +142,12 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   };
 
   return (
-    <div className="flex items-center py-0.5 space-x-2" ref={setNodeRef} style={style}>
+    <div className="flex items-center py-0.5 space-x-2 relative sm:w-auto w-full overflow-x-scroll sm:overflow-x-auto" ref={setNodeRef} style={style}>
       <div className="flex items-center">
         <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
+
         <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300"/>
+        
 
       </div>
 

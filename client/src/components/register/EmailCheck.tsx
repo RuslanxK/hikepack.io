@@ -37,14 +37,14 @@ const EmailCheck: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row bg-white">
-      {/* Image Section */}
+  
       <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto" style={{ backgroundImage: `url('/images/reset-password-background.jpg')` }}>
         <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
           <img src="/images/logo-white.png" alt="Logo" className="h-6 sm:h-8" />
         </div>
       </div>
 
-      {/* Form Section */}
+    
       <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
         <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleEmailCheck}>
           <div className="flex justify-between items-center mb-10 sm:mb-16">
@@ -72,8 +72,8 @@ const EmailCheck: React.FC = () => {
             Send Reset Link {loading ? <Spinner w={4} h={4} /> : null}
           </button>
 
-          <div className="mt-4 mb-4 flex justify-between">
-            <span className="text-sm text-gray-600">
+          <div className="mt-4 mb-4 flex flex-col sm:flex-row justify-between">
+            <span className="text-sm text-gray-600 mb-2 sm:mb-0">
               Don't have an account?{' '}
               <Link to="/register" className="text-blue-500 hover:underline">
                 Register

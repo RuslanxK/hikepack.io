@@ -125,8 +125,8 @@ const ResetPassword: React.FC = () => {
             {loading ? <Spinner w={4} h={4} /> : "Reset Password"}
           </button>
 
-          <div className="mt-4 mb-4 flex justify-between">
-            <span className="text-sm text-gray-600">
+          <div className="mt-4 mb-4 flex flex-col sm:flex-row justify-between">
+            <span className="text-sm text-gray-600 mb-2 sm:mb-0">
               Don't have an account?{' '}
               <Link to="/register" className="text-blue-500 hover:underline">
                 Register

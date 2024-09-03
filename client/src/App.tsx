@@ -29,9 +29,9 @@ const App: React.FC = () => {
 
   return (
   
-      <div className="flex ">
+      <div className="flex">
        {!hideSidebar && <SideBar />}
-        <div className={`${hideSidebar ? 'ml-0' : 'ml-56'} min-h-screen h-fit flex-grow bg-theme-bgGray dark:bg-theme-bgDark`} >
+        <div className={`ml-0 ${!hideSidebar && 'lg:ml-56'} min-h-screen h-fit flex-grow bg-theme-bgGray dark:bg-theme-bgDark`} >
           <Routes>
 
           <Route element={<PublicRoutes />}>

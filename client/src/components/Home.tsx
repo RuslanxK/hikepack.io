@@ -83,7 +83,7 @@ const Home: React.FC = () => {
             <FaPlus className='text-xl' />
           </li>
 
-          {data?.trips.length === 0 ?  <Message title="Attention Needed" padding="p-5" width="w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a trip." type="info" /> : null }
+          {data?.trips.length === 0 ?  <Message title="Attention Needed" padding="p-5" width="sm:w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a trip." type="info" /> : null }
 
           {data?.trips.map((trip: any) => (
             <SingleTrip key={trip.id} tripData={trip} />

@@ -229,7 +229,7 @@ const BagDetails: React.FC = () => {
             <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
               <FaPlus size={13}/>
             </button>
-            {/* <div className="w-full pb-14">
+            <div className="w-full pb-14">
               {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="p-5" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }
 
               <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
@@ -239,7 +239,7 @@ const BagDetails: React.FC = () => {
                   ))}
                 </SortableContext>
               </DndContext>
-            </div> */}
+            </div>
           </div>
         </div>
       

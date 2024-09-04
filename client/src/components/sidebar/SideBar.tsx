@@ -103,7 +103,7 @@ const SideBar: React.FC = () => {
       <div
         className={`fixed top-0 left-0 h-full transition-transform transform flex flex-col space-between ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } w-full sm:w-56 sm:translate-x-0 z-40 ${isDarkTheme ? 'bg-theme-dark text-white' : 'bg-theme-white text-gray-900'}`}
+        } w-full sm:w-56 sm:translate-x-0 z-50 ${isDarkTheme ? 'bg-theme-dark text-white' : 'bg-theme-white text-gray-900'}`}
       >
         <div className="flex sm:flex-col justify-between items-center p-4">
           <img

@@ -35,9 +35,9 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
       <div className='p-3 flex flex-col space-y-4 bg-secondary dark:bg-zinc-800 rounded-b-lg'>
         <div className='flex items-center justify-between'>
           <h3 className='text-sm text-gray-900 dark:text-white'>
-          {bagData.name && bagData.name.length > 22 ? `${bagData.name.substring(0, 22)}...` : bagData.name}
+          {bagData.name && bagData.name.length > 28 ? `${bagData.name.substring(0, 28)}...` : bagData.name}
           </h3>
-          <div className='flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+          <div className='flex items-center space-x-2 transition-opacity duration-200'>
 
           <IoNavigate 
               className='text-button cursor-pointer transform transition-transform duration-200 hover:scale-125'

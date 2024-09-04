@@ -31,9 +31,9 @@ const SingleTrip: React.FC<SingleTripProps> = ({ tripData }) => {
       <div className='p-3 flex flex-col space-y-4'>
         <div className='flex items-center justify-between'>
           <h3 className='text-sm text-gray-900 dark:text-white'>
-           {tripData.name.length > 27 ? `${tripData.name.substring(0, 27)}...` : tripData.name}
+           {tripData.name.length > 32 ? `${tripData.name.substring(0, 32)}...` : tripData.name}
           </h3>
-          <div className='flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+          <div className='flex items-center space-x-2 transition-opacity duration-200'>
             <IoNavigate 
               className='text-primary cursor-pointer transform transition-transform duration-200 hover:scale-125'
               title='View Details'

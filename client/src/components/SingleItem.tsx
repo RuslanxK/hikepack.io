@@ -195,7 +195,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     id="weight-unit-select"
     value={weightOption}
     onChange={(e) => handleWeightOptionChange(e.target.value)} 
-    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-[57px] truncate ${inputClasses}`}
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border p-1 pl-2 pr-2 w-20 sm:w-[57px] truncate ${inputClasses}`}
   >
     <option value="lb" className="bg-white dark:bg-zinc-700">lb</option>
     <option value="kg" className="bg-white dark:bg-zinc-700">kg</option>

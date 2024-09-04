@@ -32,7 +32,12 @@ const Login: React.FC = () => {
       }
     },
     onError: (error) => {
-      setError(error.message);
+      console.log(error.message)
+      if (error.message.includes('user not found') || error.message.includes('data and hash arguments required')) {
+        setError("User does not exist or email/password is incorrect.");
+      } else {
+        setError("An error occurred. Please try again later.");
+      }
     },
   });
 

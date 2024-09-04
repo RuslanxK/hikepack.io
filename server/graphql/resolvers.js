@@ -321,7 +321,7 @@ const resolvers = {
 
         return { token, user };
       } catch (error) {
-        throw new Error(error.message);
+        throw new Error("Something went wrong please try again later.");
       }
     },
 

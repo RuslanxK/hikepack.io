@@ -102,7 +102,7 @@ const MainShare: React.FC = () => {
           </div>
 
           
-          <div className='pr-5 pl-5'>
+          <div className='pl-5 pr-5 pb-5'>
             <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-5">
               {bag?.name}
             </h1>

@@ -320,8 +320,11 @@ const resolvers = {
         return { token, user };
       } catch (error) {
         if (error.message === 'Invalid email or password.') {
+
+          console.log(error.message)
           throw new Error(error.message);
         } else {
+        
           throw new Error('Something went wrong. Please try again later.');
         }
       }

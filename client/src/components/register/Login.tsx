@@ -32,7 +32,16 @@ const Login: React.FC = () => {
       }
     },
     onError: (error) => {
-      setError(error.message);
+
+      if(error.message === "Invalid email or password") {
+
+        setError(error.message);
+      }
+      
+      else {
+
+        setError("Something went wrong. Please try again later.");
+      }
     },
   });
 

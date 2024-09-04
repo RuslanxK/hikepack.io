@@ -150,14 +150,14 @@ const ExploreBags: React.FC = () => {
   );
 
   const renderCell = (content: string | number) => (
-    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200 ">
       {content}
     </td>
   );
 
   return (
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
-      <div className='p-4 sm:p-10'>
+    <div className="p-4 sm:p-10">
       <div className="flex items-center mb-6">
         <button 
           type="button" 
@@ -170,110 +170,116 @@ const ExploreBags: React.FC = () => {
       <p className="mb-8 text-gray-600 dark:text-gray-400">
         Discover top-rated bags for every journey. Whether you're conquering remote peaks or exploring dense forests, find your perfect companion.
       </p>
-
+  
       {paginatedBags.length > 0 ? (
-  <div className="-m-1.5 overflow-x-auto">
-    <div className="p-1.5 min-w-full inline-block align-middle">
-      <div className="border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700 bg-white dark:bg-box">
-        <div className="py-4 px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="relative">
-              <label className="sr-only">Search</label>
-              {renderInput(searchFilter, setSearchFilter, "Search by name")}
-              <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
-                <svg className="size-4 text-gray-400 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </svg>
+        // Added `overflow-x-auto` to make the table scrollable horizontally on mobile
+        <div className="overflow-x-auto">
+          <div className="inline-block min-w-full align-middle">
+            <div className="border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700 bg-white dark:bg-box">
+              <div className="py-4 px-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="relative">
+                    <label className="sr-only">Search</label>
+                    {renderInput(searchFilter, setSearchFilter, "Search by name")}
+                    <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                      <svg className="size-4 text-gray-400 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                      </svg>
+                    </div>
+                  </div>
+                  {renderSelect(likesFilter, setLikesFilter, ['0-10', '10-100', '100-1000', '1000+'], 'Likes')}
+                  {renderSelect(goalFilter, setGoalFilter, getGoalOptions(), 'Goal')}
+                </div>
               </div>
+              
+               <div id="scroll" className='overflow-x-scroll'>
+                <div className='w-48'>
+                <table className="w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                  <thead className="bg-gray-50 dark:bg-neutral-700">
+                    <tr>
+                      {['User name', 'Bag name', 'Description', `Goal (${userData.user.weightOption})`, 'Categories', 'Items', 'Likes'].map((header, index) => (
+                        <th key={`header-${index}`} scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-300">{header}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 dark:divide-neutral-700 overflow-x-scroll">
+                    {paginatedBags.map((bag: Bag) => {
+                      const user = usersData.users.find((user: any) => user.id === bag.owner);
+                      const truncatedName = bag.name.length > 20 ? `${bag.name.substring(0, 20)}...` : bag.name;
+                      const truncatedDescription = bag.description.length > 40 ? `${bag.description.substring(0, 40)}...` : bag.description;
+  
+                      return (
+                        <tr 
+                          key={bag.id} 
+                          className="hover:bg-gray-50 dark:hover:bg-neutral-800 cursor-pointer overflow-x-scroll"
+                          onClick={() => window.location.href = `/share/${bag.id}`}
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200 flex items-center">
+                            <img src={user?.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-4' /> 
+                            {user?.username}
+                          </td>
+                          {renderCell(truncatedName)}
+                          {renderCell(truncatedDescription)}
+                          {renderCell(bag.goal)}
+                          {renderCell(bag.totalCategories)}
+                          {renderCell(bag.totalItems)}
+                          {renderCell(bag.likes)}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                </div>
+                </div>
+              </div>
+              {filteredBags.length > 10 && (
+                <div className="py-2 px-4">
+                  <nav className="flex items-center space-x-1" aria-label="Pagination">
+                    <button 
+                      type="button" 
+                      onClick={() => handlePageChange(currentPage - 1)} 
+                      disabled={currentPage === 1}
+                      className={baseButtonClass}>
+                      «
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                      <button 
+                        key={`page-${page}`} 
+                        type="button" 
+                        onClick={() => handlePageChange(page)}
+                        className={`${baseButtonClass} ${currentPage === page ? 'bg-gray-200 dark:bg-neutral-700' : ''}`}>
+                        {page}
+                      </button>
+                    ))}
+                    <button 
+                      type="button" 
+                      onClick={() => handlePageChange(currentPage + 1)} 
+                      disabled={currentPage === totalPages}
+                      className={baseButtonClass}>
+                      »
+                    </button>
+                  </nav>
+                </div>
+              )}
             </div>
-            {renderSelect(likesFilter, setLikesFilter, ['0-10', '10-100', '100-1000', '1000+'], 'Likes')}
-            {renderSelect(goalFilter, setGoalFilter, getGoalOptions(), 'Goal')}
           </div>
-        </div>
-        <div className="overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-            <thead className="bg-gray-50 dark:bg-neutral-700">
-              <tr>
-                {['User name', 'Bag name', 'Description', `Goal (${userData.user.weightOption})`, 'Categories', 'Items', 'Likes'].map((header, index) => (
-                  <th key={`header-${index}`} scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-300">{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-              {paginatedBags.map((bag: Bag) => {
-                const user = usersData.users.find((user: any) => user.id === bag.owner);
-                const truncatedName = bag.name.length > 20 ? `${bag.name.substring(0, 20)}...` : bag.name;
-                const truncatedDescription = bag.description.length > 40 ? `${bag.description.substring(0, 40)}...` : bag.description;
-
-                return (
-                  <tr 
-                    key={bag.id} 
-                    className="hover:bg-gray-50 dark:hover:bg-neutral-800 cursor-pointer"
-                    onClick={() => window.location.href = `/share/${bag.id}`}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200 flex items-center">
-                      <img src={user?.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-4' /> 
-                      {user?.username}
-                    </td>
-                    {renderCell(truncatedName)}
-                    {renderCell(truncatedDescription)}
-                    {renderCell(bag.goal)}
-                    {renderCell(bag.totalCategories)}
-                    {renderCell(bag.totalItems)}
-                    {renderCell(bag.likes)}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        {filteredBags.length > 10 && (
-          <div className="py-2 px-4">
-            <nav className="flex items-center space-x-1" aria-label="Pagination">
-              <button 
-                type="button" 
-                onClick={() => handlePageChange(currentPage - 1)} 
-                disabled={currentPage === 1}
-                className={baseButtonClass}>
-                «
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                <button 
-                  key={`page-${page}`} 
-                  type="button" 
-                  onClick={() => handlePageChange(page)}
-                  className={`${baseButtonClass} ${currentPage === page ? 'bg-gray-200 dark:bg-neutral-700' : ''}`}>
-                  {page}
-                </button>
-              ))}
-              <button 
-                type="button" 
-                onClick={() => handlePageChange(currentPage + 1)} 
-                disabled={currentPage === totalPages}
-                className={baseButtonClass}>
-                »
-              </button>
-            </nav>
-          </div>
-        )}
-      </div>
+       
+      ) : (
+        <Message 
+          width="w-full" 
+          title="No Bags Found" 
+          padding="p-5" 
+          titleMarginBottom="mb-2" 
+          message="There are no bags that match your search criteria. Please adjust your filters and try again." 
+          type="info" 
+        />
+      )}
     </div>
   </div>
-) : (
-  <Message 
-    width="w-full" 
-    title="No Bags Found" 
-    padding="p-5" 
-    titleMarginBottom="mb-2" 
-    message="There are no bags that match your search criteria. Please adjust your filters and try again." 
-    type="info" 
-  />
-)}
-
-    </div>
-    </div>
+  
   );
-};
+  };
+
 
 export default ExploreBags;

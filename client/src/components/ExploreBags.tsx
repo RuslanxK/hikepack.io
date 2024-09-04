@@ -172,8 +172,7 @@ const ExploreBags: React.FC = () => {
       </p>
   
       {paginatedBags.length > 0 ? (
-        // Added `overflow-x-auto` to make the table scrollable horizontally on mobile
-        <div className="overflow-x-auto">
+        
           <div className="inline-block min-w-full align-middle">
             <div className="border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700 bg-white dark:bg-box">
               <div className="py-4 px-4">
@@ -193,7 +192,7 @@ const ExploreBags: React.FC = () => {
                 </div>
               </div>
               
-               <div id="scroll" className='overflow-x-scroll '>
+               <div id="scroll" className='overflow-x-scroll sm:overflow-x-visible '>
                 <div className='w-48 sm:w-full'>
                 <table className="w-full divide-y divide-gray-200 dark:divide-neutral-700">
                   <thead className="bg-gray-50 dark:bg-neutral-700">
@@ -203,7 +202,7 @@ const ExploreBags: React.FC = () => {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200 dark:divide-neutral-700 overflow-x-scroll">
+                  <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
                     {paginatedBags.map((bag: Bag) => {
                       const user = usersData.users.find((user: any) => user.id === bag.owner);
                       const truncatedName = bag.name.length > 20 ? `${bag.name.substring(0, 20)}...` : bag.name;
@@ -212,7 +211,7 @@ const ExploreBags: React.FC = () => {
                       return (
                         <tr 
                           key={bag.id} 
-                          className="hover:bg-gray-50 dark:hover:bg-neutral-800 cursor-pointer overflow-x-scroll"
+                          className="hover:bg-gray-50 dark:hover:bg-neutral-800 cursor-pointer"
                           onClick={() => window.location.href = `/share/${bag.id}`}
                         >
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200 flex items-center">
@@ -263,7 +262,6 @@ const ExploreBags: React.FC = () => {
                 </div>
               )}
             </div>
-          </div>
        
       ) : (
         <Message 

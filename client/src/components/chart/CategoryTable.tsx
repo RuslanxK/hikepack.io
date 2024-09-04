@@ -53,7 +53,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
           <tr>
             <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Color</th>
             <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Category Name</th>
-            <th className="px-4 sm:px-6 py-2 border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">
+            <th className="px-3 sm:px-6 py-2 border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">
               Weight (
               <div className="relative inline-block text-left" ref={dropdownRef}>
                 <button
@@ -72,7 +72,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
                         <li key={unit}>
                           <button
                             onClick={() => { setWeightUnit(unit); setIsOpen(false); }}
-                            className="block px-4 py-2 w-full hover:bg-gray-100 dark:hover:bg-zinc-500 dark:hover:text-white font-normal border-b border-neutral-300 dark:border-zinc-500">
+                            className=" px-4 py-2 w-full hover:bg-gray-100 dark:hover:bg-zinc-500 dark:hover:text-white font-normal border-b border-neutral-300 dark:border-zinc-500">
                             {unit}
                           </button>
                         </li>

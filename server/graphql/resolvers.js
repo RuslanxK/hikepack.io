@@ -311,17 +311,19 @@ const resolvers = {
           throw new Error('Invalid email or password.');
         }
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-
         res.cookie('token', token, {
           httpOnly: true, 
-          secure: process.env.NODE_ENV === 'production' ? true : false,
+          secure: process.env.NODE_ENV === 'production',
           sameSite: 'Strict',
           maxAge: 86400000,   
         });
-
         return { token, user };
       } catch (error) {
-        throw new Error(error.message);
+        if (error.message === 'Invalid email or password.') {
+          throw new Error(error.message);
+        } else {
+          throw new Error('Something went wrong. Please try again later.');
+        }
       }
     },
 

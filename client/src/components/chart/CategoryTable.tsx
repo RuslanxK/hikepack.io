@@ -52,9 +52,9 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
         <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
           <tr>
             <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Color</th>
-            <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Category Name</th>
+            <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Category</th>
             <th className="px-3 sm:px-6 py-2 border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">
-              Weight (
+              Weight
               <div className="relative inline-block text-left" ref={dropdownRef}>
                 <button
                   onClick={toggleDropdown}
@@ -81,7 +81,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
                   </div>
                 )}
               </div>
-              )
+              
             </th>
           </tr>
         </thead>

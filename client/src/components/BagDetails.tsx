@@ -182,7 +182,7 @@ const BagDetails: React.FC = () => {
                   </div>
                 </div>
                 <div className='w-fit sm:w-4/12 flex flex-row items-center justify-end'>
-                <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:mr-5 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-40 w-full sm:w-48 sm:static bg-zinc-200 dark:bg-theme-dark">
+                <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:mr-5 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-40 w-full sm:w-48 sm:static bg-zinc-300 dark:bg-theme-dark">
               <input
                 type="checkbox"
                 checked={bag?.exploreBags}

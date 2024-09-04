@@ -142,7 +142,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   };
 
   return (
-    <div className="container py-0.5 sm:w-full" ref={setNodeRef} style={style}>
+    <div id='scroll' className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible" ref={setNodeRef} style={style}>
       <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
         <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />

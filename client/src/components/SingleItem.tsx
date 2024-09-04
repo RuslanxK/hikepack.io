@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SingleItemProps } from '../types/item';
 import { FaImage, FaWalking, FaCopy, FaLink } from 'react-icons/fa';
 import { GrDrag } from 'react-icons/gr';
@@ -21,13 +21,9 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const [isModalPicOpen, setIsModalPicOpen] = useState(false);
   const [isModalLinkOpen, setIsModalLinkOpen] = useState(false);
   const [weightOption, setWeightOption] = useState(itemData.weightOption || weightUnit);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isPriorityDropdownOpen, setIsPriorityDropdownOpen] = useState(false);
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const priorityDropdownRef = useRef<HTMLDivElement>(null);
 
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [addItem] = useMutation(ADD_ITEM);
@@ -42,21 +38,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     }
   }, [itemData.weightOption, weightUnit]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-      if (priorityDropdownRef.current && !priorityDropdownRef.current.contains(event.target as Node)) {
-        setIsPriorityDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdownRef, priorityDropdownRef]);
+ 
 
   const handleBlur = (field: string, value: any) => {
     updateItem({
@@ -67,7 +49,6 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   const handleWeightOptionChange = (unit: string) => {
     setWeightOption(unit);
-    setIsDropdownOpen(false);
     updateItem({
       variables: { id: itemData.id, weightOption: unit },
       refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }, { query: GET_ALL_ITEMS }]
@@ -76,7 +57,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   const handlePriorityChange = (priority: string) => {
     handleBlur('priority', priority);
-    setIsPriorityDropdownOpen(false);
+    
   };
 
   const handleQtyChange = (value: number) => {
@@ -128,9 +109,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     sendChecked(itemData.id, e.target.checked);
   };
 
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
-  const togglePriorityDropdown = () => setIsPriorityDropdownOpen(!isPriorityDropdownOpen);
 
   const showTooltip = (content: string) => {
     setTooltipContent(content);

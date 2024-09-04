@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CategoryTableProps } from '../../types/category';
 
 const weightConversionRates = {
@@ -10,9 +10,7 @@ const weightConversionRates = {
 
 const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: initialWeightUnit }) => {
   const [weightUnit, setWeightUnit] = useState(initialWeightUnit);
-  const [isOpen, setIsOpen] = useState(false);
   const [convertedCategories, setConvertedCategories] = useState(categories);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const convertWeights = (categories: any, fromUnit: any, toUnit: any) => {
@@ -26,25 +24,12 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
     setConvertedCategories(convertWeights(categories, initialWeightUnit, weightUnit));
   }, [weightUnit, categories, initialWeightUnit]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
+ 
     
-    document.addEventListener('mousedown', handleClickOutside);
-    
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const totalWeight = convertedCategories.reduce((sum, category) => sum + category.totalWeight, 0);
   const totalWornWeight = convertedCategories.reduce((sum, category) => sum + category.totalWornWeight, 0);
   const baseWeight = totalWeight - totalWornWeight;
-
-  const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
     <div className="w-full">

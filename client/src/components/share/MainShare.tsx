@@ -23,7 +23,6 @@ const MainShare: React.FC = () => {
   const { loading: loadingCategories, error: errorCategories, data: dataCategories } = useQuery<GetCategoriesData>(GET_CATEGORIES, { variables: { bagId: id } });
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER_SHARED, { variables: { bagId: id }});
 
-   console.log(userData)
 
   const [updateLikes] = useMutation(UPDATE_LIKES_BAG);
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);

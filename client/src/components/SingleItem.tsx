@@ -246,12 +246,16 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           onMouseLeave={hideTooltip}
         />
 
-        {tooltipVisible && (
-          <div id="tooltip-default" role="tooltip" className=" w-fit absolute bottom-5 right-5 z-10 px-1.5 py-0.5 text-sm text-white rounded-md bg-orange-300 shadow-sm dark:bg-zinc-500">
-            {tooltipContent}
-            <div className="tooltip-arrow" data-popper-arrow></div>
-          </div>
-        )}
+{tooltipVisible && (
+  <div
+    id="tooltip-default"
+    role="tooltip"
+    className="w-fit absolute bottom-5 right-5 z-10 px-1.5 py-0.5 text-sm text-white rounded-md bg-orange-300 shadow-sm dark:bg-zinc-500 hidden sm:block"
+  >
+    {tooltipContent}
+    <div className="tooltip-arrow" data-popper-arrow></div>
+  </div>
+)}
       </div>
 
       <ItemPictureModal isOpen={isModalPicOpen} onClose={() => setIsModalPicOpen(false)} itemId={itemData.id} itemPicLink={itemData.imageUrl || ''} />

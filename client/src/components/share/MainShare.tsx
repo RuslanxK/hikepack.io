@@ -85,11 +85,11 @@ const MainShare: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className="container mx-auto w-full p-4">
+    <div className="container mx-auto p-4 w-full sm:w-10/12">
       <div className="flex flex-row items-center justify-between space-y-2 w-full">
         <div className="w-full">
           <div className="dark:bg-zinc-800 flex flex-row items-start">
-            <div className="w-full flex flex-row items-center justify-between p-2 mb-14">
+            <div className="w-full flex flex-row items-center justify-between mb-14">
               <img src={'/images/logo-black.png'} width="90px" className="sm:p-0 p-2" alt="logo" onClick={() => navigate('/')} />
               <button 
                 onClick={handleLikeToggle} 
@@ -101,15 +101,16 @@ const MainShare: React.FC = () => {
             </div>
           </div>
 
-          <div className="pl-5 pr-5">
+          
+          <div className='pr-5 pl-5'>
             <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-5">
               {bag?.name}
             </h1>
             <p className="text-base text-gray-700 dark:text-gray-200">
               {bag?.description}
             </p>
+            </div>
           </div>
-        </div>
       </div>
 
       {categoriesData.length > 0 && hasCategoriesWithWeight && (

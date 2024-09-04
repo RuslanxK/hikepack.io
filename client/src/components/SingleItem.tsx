@@ -142,7 +142,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   };
 
   return (
-    <div id='scroll' className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible" ref={setNodeRef} style={style}>
+    <div id='scroll' className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible relative" ref={setNodeRef} style={style}>
       <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
         <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
@@ -189,71 +189,33 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         onChange={(e) => handleWeightChange(+e.target.value)} 
       />
 
-      <div className="relative w-auto" ref={dropdownRef}>
-        <button
-          onClick={toggleDropdown}
-          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-[57px] truncate ${inputClasses}`} 
-        >
-          <span className="truncate">{weightOption}</span>
-          <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
-          </svg>
-        </button>
-        {isDropdownOpen && (
-          <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-full mt-2 left-0 ring ring-1 ring-primary absolute">
-            <ul className="text-sm text-zinc-900 dark:text-gray-200">
-              {['lb', 'kg', 'g', 'oz'].map(unit => (
-                <li key={unit} className="">
-                  <button
-                    onClick={() => handleWeightOptionChange(unit)}
-                    className="block px-3 py-1.5 w-full hover:bg-orange-100 dark:hover:bg-zinc-600 dark:hover:text-white font-normal transition-colors duration-150">
-                    {unit}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
 
-      <div className="relative w-full sm:w-auto" ref={priorityDropdownRef}>
-        <button
-          onClick={togglePriorityDropdown}
-          className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm text-center inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-auto truncate ${inputClasses} ${priorityClass}`} 
-        >
-          <span className="truncate">{itemData.priority === 'low' ? 'Low Priority' : itemData.priority === 'med' ? 'Med Priority' : 'High Priority'}</span>
-          <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
-          </svg>
-        </button>
-        {isPriorityDropdownOpen && (
-          <div className="z-50 bg-white dark:bg-zinc-700 shadow-lg w-full mt-2 left-0 ring ring-1 ring-primary absolute" style={{ zIndex: 999 }}>
-            <ul className="text-sm text-zinc-900 dark:text-gray-200">
-              <li>
-                <button
-                  onClick={() => handlePriorityChange('low')}
-                  className="py-1.5 w-full hover:bg-emerald-100 dark:hover:bg-emerald-600 dark:hover:text-white font-normal transition-colors duration-150">
-                  Low Priority
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handlePriorityChange('med')}
-                  className=" py-1.5 w-full hover:bg-yellow-100 dark:hover:bg-yellow-700 dark:hover:text-white font-normal transition-colors duration-150">
-                  Med Priority
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handlePriorityChange('high')}
-                  className="py-1.5 w-full hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-white font-normal transition-colors duration-150">
-                  High Priority
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
-      </div>
+  <label htmlFor="weight-unit-select" className="sr-only">Weight Unit</label>
+  <select
+    id="weight-unit-select"
+    value={weightOption}
+    onChange={(e) => handleWeightOptionChange(e.target.value)} 
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border p-1 pl-2 pr-2 w-full sm:w-[57px] truncate ${inputClasses}`}
+  >
+    <option value="lb" className="bg-white dark:bg-zinc-700">lb</option>
+    <option value="kg" className="bg-white dark:bg-zinc-700">kg</option>
+    <option value="g" className="bg-white dark:bg-zinc-700">g</option>
+    <option value="oz" className="bg-white dark:bg-zinc-700">oz</option>
+  </select>
+
+    
+  <select
+    id="priority-select"
+    value={itemData.priority}
+    onChange={(e) => handlePriorityChange(e.target.value)} 
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} rounded-none`} // Add `rounded-none`
+  >
+    <option value="low" className="bg-emerald-100 dark:bg-emerald-600 dark:text-white">Low Priority</option>
+    <option value="med" className="bg-yellow-100 dark:bg-yellow-600 dark:text-white">Med Priority</option>
+    <option value="high" className="bg-red-100 dark:bg-red-600 dark:text-white">High Priority</option>
+  </select>
+
+
 
       <div className="flex space-x-3 pl-2 relative">
         <FaImage 

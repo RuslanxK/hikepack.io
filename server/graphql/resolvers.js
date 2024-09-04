@@ -319,9 +319,16 @@ const resolvers = {
         });
         return { token, user };
       } catch (error) {
+
+        console.log(error.message)
+        
         if (error.message === 'Invalid email or password.') {
           throw new Error(error.message);
         } 
+        else if(error.message === "Failed to fetch") {
+
+          throw new Error("Something went wrong. Please try again later.");
+        }
         else {
           throw new Error('Something went wrong. Please try again later.');
         }

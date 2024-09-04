@@ -88,10 +88,10 @@ const MainShare: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className="w-full p-4">
+    <div className="container mx-auto w-full p-4">
         <div className="flex flex-row items-center justify-between space-y-2 w-full">
           <div className='w-full'>
-            <div className='bg-white dark:bg-zinc-800 p-4 flex flex-row items-start'>
+            <div className='dark:bg-zinc-800 flex flex-row items-start'>
               <div className='w-full flex flex-row items-center justify-between'>
               <img src={'/images/logo-black.png'} width="90px" className='sm:p-0 p-2' alt='logo' onClick={() => navigate('/')}/>
                 <h1 className="text-xl font-semibold text-gray-900 dark:text-white pl-10 pr-10 text-center">

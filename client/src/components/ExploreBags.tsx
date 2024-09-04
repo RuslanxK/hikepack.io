@@ -193,8 +193,8 @@ const ExploreBags: React.FC = () => {
                 </div>
               </div>
               
-               <div id="scroll" className='overflow-x-scroll'>
-                <div className='w-48'>
+               <div id="scroll" className='overflow-x-scroll '>
+                <div className='w-48 sm:w-full'>
                 <table className="w-full divide-y divide-gray-200 dark:divide-neutral-700">
                   <thead className="bg-gray-50 dark:bg-neutral-700">
                     <tr>

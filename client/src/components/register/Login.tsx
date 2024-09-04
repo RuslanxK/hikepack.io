@@ -35,13 +35,9 @@ const Login: React.FC = () => {
 
       if(error.message === "Invalid email or password") {
 
-        setError(error.message);
+        setError(error.message || "Something went wrong. Please try again later.");
       }
-      
-      else {
-
-        setError("Something went wrong. Please try again later.");
-      }
+    
     },
   });
 
@@ -90,7 +86,11 @@ const Login: React.FC = () => {
         setError('Google login failed. No access token received.');
       }
     },
-    onError: (error) => console.log('Login Failed:', error)
+    onError: (error: any) => {
+
+      console.log('Login Failed:', error)
+      setError(error);
+    }
   });
 
   const handleGoogleLoginClick = (e: any) => {

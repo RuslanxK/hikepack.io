@@ -108,7 +108,7 @@ const Settings: React.FC = () => {
     }
   };
 
-  const commonInputStyles = "w-full text-sm p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const commonInputStyles = "w-full text-sm p-2 sm:p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500";
 
   if (loadingUser || errorUser || updateError || error) {
     return (
@@ -228,13 +228,12 @@ const Settings: React.FC = () => {
               </div>
             ))}
 
-            <div className="px-3 w-full">
               <button 
                 type="submit" 
-                className="px-6 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                className="w-full sm:w-fit px-6 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
                 Save Changes {updatingUser ?  <Spinner w={4} h={4}/> : null}
               </button>
-            </div>
+            
           </form>
         </div>
       </div>

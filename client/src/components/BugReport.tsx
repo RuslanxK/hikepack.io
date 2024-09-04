@@ -14,8 +14,8 @@ const BugReport: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [addBugReport] = useMutation(ADD_BUG_REPORT);
 
-  const commonButtonStyles = "w-full text-sm py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
-  const commonInputStyles = "w-full text-sm px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const commonButtonStyles = "w-full text-sm p-2 sm:p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const commonInputStyles = "w-full text-sm p-2 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
   const commonLabelStyles = "block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -77,7 +77,7 @@ const Changelog: React.FC = () => {
                 </div>
                 <ul className="mt-3 space-y-2 text-gray-700 dark:text-gray-300">
                   {log.changes.map((change, idx) => (
-                    <li key={idx} className="flex items-start text-sm">
+                    <li key={idx} className="flex items-start text-sm mt-5">
                       <span className="mr-2 text-green-500">•</span>
                       <p>{change}</p>
                     </li>

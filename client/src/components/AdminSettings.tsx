@@ -96,7 +96,7 @@ const AdminSettings: React.FC = () => {
                   name={id}
                   value={(formValues[id] as string) || ''}
                   onChange={handleChange}
-                  className="w-full text-sm px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-white"
+                  className="w-full text-sm p-2 sm:p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-white"
                   placeholder={placeholder}
                   rows={rows}
                 ></textarea>
@@ -108,7 +108,7 @@ const AdminSettings: React.FC = () => {
                   name={id}
                   value={type === 'file' ? undefined : (formValues[id] as string) || ''}
                   onChange={handleChange}
-                  className="w-full text-sm px-4 py-3 border border-gray-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-white"
+                  className="w-full text-sm p-2 sm:p-3 border border-gray-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-white"
                   placeholder={type === 'file' ? undefined : placeholder}
                 />
               )}
@@ -116,7 +116,7 @@ const AdminSettings: React.FC = () => {
           ))}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-sm text-white py-3 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center mb-4"
+            className="w-full bg-blue-500 text-sm text-white p-2 sm:p-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center mb-4"
             disabled={loadingChangelog}
           >
             Submit {loadingChangelog && <Spinner w={4} h={4} />}

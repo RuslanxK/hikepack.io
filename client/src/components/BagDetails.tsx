@@ -182,7 +182,7 @@ const BagDetails: React.FC = () => {
                   </div>
                 </div>
                 <div className='w-fit sm:w-4/12 flex flex-row items-center justify-end'>
-                <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:mr-5 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-50 w-full sm:w-fit sm:static sm:bg-theme-bgGray bg-zinc-200">
+                <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:mr-5 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-50 w-full sm:w-48 sm:static sm:bg-theme-bgGray bg-zinc-200">
               <input
                 type="checkbox"
                 checked={bag?.exploreBags}
@@ -249,7 +249,7 @@ const BagDetails: React.FC = () => {
           </div>
       
       
-        {/* {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null} */}
+        {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null}
         <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />
       </div>
     </div>

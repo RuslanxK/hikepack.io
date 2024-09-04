@@ -17,13 +17,13 @@ const SidePanel: React.FC<SidePanelProps> = ({ isVisible, toggleVisibility, item
   
   return (
     <div
-      className={`bg-green dark:bg-box w-56 h-screen fixed right-0 top-0 transition-transform ${
+      className={`bg-green dark:bg-box sm:w-56 h-screen fixed right-0 top-0 transition-transform z-50 ${
         isVisible ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
       <button
         onClick={toggleVisibility}
-        className="absolute top-4 left-[-15px] bg-blue-400 dark:bg-zinc-700 text-white p-1"
+        className="absolute top-4 left-[-22px] bg-blue-400 dark:bg-zinc-700 text-white p-1"
       >
         {isVisible ? <GoArrowRight size={20} /> : <GoArrowLeft size={20} />}
       </button>

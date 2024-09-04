@@ -10,7 +10,7 @@ import CategoryChart from '../chart/CategoryChart';
 import CategoryTable from '../chart/CategoryTable';
 import CategoryShare from './CategoryShare';
 import Message from '../message/Message';
-import { GET_USER } from '../../queries/userQueries';
+import { GET_USER_SHARED } from '../../queries/userQueries';
 import Spinner from '../loading/Spinner';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -21,7 +21,9 @@ const MainShare: React.FC = () => {
 
   const { data: dataBag, loading: loadingBag, error: errorBag } = useQuery(GET_SHARED_BAG, { variables: { id } });
   const { loading: loadingCategories, error: errorCategories, data: dataCategories } = useQuery<GetCategoriesData>(GET_CATEGORIES, { variables: { bagId: id } });
-  const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
+  const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER_SHARED, { variables: { bagId: id }});
+
+   console.log(userData)
 
   const [updateLikes] = useMutation(UPDATE_LIKES_BAG);
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);
@@ -130,10 +132,10 @@ const MainShare: React.FC = () => {
           </div>
 
           <div className="sm:w-64 h-64">
-            <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
+            <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.userShared?.weightOption} />
           </div>
           <div className="w-full sm:w-fit">
-            <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
+            <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.userShared?.weightOption} />
           </div>
         </div>
       )}
@@ -141,14 +143,14 @@ const MainShare: React.FC = () => {
       <div className="overflow-hidden">
         <div className="w-full mt-5">
           {categoriesData.map((category) => (
-            <CategoryShare key={category.id} categoryData={category} weightUnit={userData?.user?.weightOption} />
+            <CategoryShare key={category.id} categoryData={category} weightUnit={userData?.userShared?.weightOption} />
           ))}
         </div>
       </div>
 
     
       <footer className="mt-10 p-4 text-center text-gray-700 dark:text-gray-200">
-        <p className="text-sm">Shared by <span className="font-semibold text-blue-600">Ruslan Khomutov</span></p>
+        <p className="text-sm">Shared by <span className="font-semibold text-blue-600">{userData?.userShared?.username}</span></p>
       </footer>
     </div>
   );

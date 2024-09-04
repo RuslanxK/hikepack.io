@@ -32,7 +32,7 @@ const typeDefs = gql`
 
   type Trip {
     id: ID!
-    owner: ID!  # Owner field added
+    owner: ID! 
     name: String!
     about: String!
     distance: String!
@@ -46,7 +46,7 @@ const typeDefs = gql`
   type Bag {
     id: ID!
     tripId: ID!
-    owner: ID!  # Owner field added
+    owner: ID!  
     name: String!
     description: String!
     goal: String!
@@ -63,7 +63,7 @@ const typeDefs = gql`
     id: ID!
     tripId: String!
     bagId: String!
-    owner: ID!  # Owner field added
+    owner: ID!  
     name: String!
     order: Int
     color: String
@@ -78,7 +78,7 @@ const typeDefs = gql`
     tripId: String!
     bagId: String!
     categoryId: String!
-    owner: ID!  # Owner field added
+    owner: ID!  
     name: String!
     qty: Int!
     description: String
@@ -129,6 +129,7 @@ const typeDefs = gql`
   type Query {
     users: [User!]!
     user : User
+    userShared(bagId: ID!): User 
     trips: [Trip!]!
     trip(id: ID!): Trip
     bags(tripId: ID!): [Bag!]!

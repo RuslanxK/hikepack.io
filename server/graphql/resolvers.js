@@ -77,6 +77,29 @@ const resolvers = {
       }
     },
 
+    userShared: async (_, { bagId }) => {
+      try {
+      
+        const bag = await Bag.findOne({ _id: new ObjectId(bagId) });
+  
+        if (!bag) {
+          throw new Error('Bag not found');
+        }
+    
+        const ownerId = bag.owner;
+        const owner = await User.findOne({ _id: new ObjectId(ownerId) });
+
+        if (!owner) {
+          throw new Error('Owner not found');
+        }
+        return owner;
+      } catch (error) {
+        console.error(`Error fetching owner with bag id ${bagId}:`, error);
+        throw new Error('Failed to fetch owner');
+      }
+    },
+
+
     trips: async (_, __, { user }) => {
       return await Trip.find(ensureOwner(user));
     },

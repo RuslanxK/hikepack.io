@@ -38,6 +38,26 @@ export const GET_USER = gql`
   }
 `;
 
+export const GET_USER_SHARED = gql`
+query GetUser($bagId: ID!) {
+  userShared(bagId: $bagId) {
+    id
+    email
+    username
+    birthdate
+    isActive
+    isAdmin
+    weightOption
+    distance
+    gender
+    verifiedCredentials
+    imageUrl
+    activityLevel
+    country
+    googleId
+  }
+}
+`;
 
 export const CHECK_EMAIL_EXISTENCE = gql`
   query CheckEmailExistence($email: String!) {

@@ -147,7 +147,7 @@ const MainShare: React.FC = () => {
       </div>
 
     
-      <footer className="mt-16 p-4 text-center text-gray-700 dark:text-gray-200">
+      <footer className="mt-10 p-4 text-center text-gray-700 dark:text-gray-200">
         <p className="text-sm">Shared by <span className="font-semibold text-blue-600">Ruslan Khomutov</span></p>
       </footer>
     </div>

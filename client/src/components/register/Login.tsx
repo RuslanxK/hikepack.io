@@ -32,7 +32,6 @@ const Login: React.FC = () => {
       }
     },
     onError: (error) => {
-      
         setError(error.message);
     },
   });

@@ -26,7 +26,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
 
   const [updateItem] = useMutation(UPDATE_ITEM);
-  const [addItem] = useMutation(ADD_ITEM);
+  const [addItem, { loading: addingItem }] = useMutation(ADD_ITEM); 
 
   const priorityClass = itemData.priority === 'low' ? 'bg-emerald-100 dark:bg-emerald-600' : itemData.priority === 'med' ? 'bg-yellow-100 dark:bg-yellow-600' : 'bg-red-100 dark:bg-red-600';
 

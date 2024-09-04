@@ -55,33 +55,19 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
             <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Category</th>
             <th className="px-3 sm:px-6 py-2 border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">
               Weight
-              <div className="relative inline-block text-left" ref={dropdownRef}>
-                <button
-                  onClick={toggleDropdown}
-                  className="text-gray-900 dark:text-gray-200 focus:outline-none font-medium rounded-lg px-1 text-sm text-center inline-flex items-center"
-                >
-                  {weightUnit} 
-                  <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
-                  </svg>
-                </button>
-                {isOpen && (
-                  <div className="bg-white divide-y divide-gray-100 shadow w-fit dark:bg-zinc-600 absolute mt-1">
-                    <ul className="text-sm text-gray-700 dark:text-gray-200">
-                      {['lb', 'kg', 'g', 'oz'].map(unit => (
-                        <li key={unit}>
-                          <button
-                            onClick={() => { setWeightUnit(unit); setIsOpen(false); }}
-                            className=" px-4 py-2 w-full hover:bg-gray-100 dark:hover:bg-zinc-500 dark:hover:text-white font-normal border-b border-neutral-300 dark:border-zinc-500">
-                            {unit}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              
+              <div className="relative inline-block text-left ml-1">
+            <select
+            value={weightUnit}
+            onChange={(e) => setWeightUnit(e.target.value)}
+            className="text-gray-900 dark:text-gray-200 focus:outline-none font-medium text-sm text-center bg-white dark:bg-zinc-600 border border-gray-300 dark:border-zinc-500"
+             >
+           {['lb', 'kg', 'g', 'oz'].map((unit) => (
+           <option key={unit} value={unit}>
+           {unit}
+           </option>
+           ))}
+           </select>
+           </div>
             </th>
           </tr>
         </thead>

@@ -194,7 +194,7 @@ const BagDetails: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <p className="text-base text-gray-700 dark:text-gray-200 text-center p-5 dark:bg-theme-bgDark">
+              <p className="text-base text-gray-700 dark:text-gray-200 p-5 dark:bg-theme-bgDark">
                 {bag?.description}
               </p>
             </div>

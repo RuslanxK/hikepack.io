@@ -43,7 +43,8 @@ const SingleArticle: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 sm:p-10">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
+       <div className='p-4 sm:p-10'>
       <div className="flex items-center mb-6">
         <button 
           type="button" 
@@ -60,6 +61,7 @@ const SingleArticle: React.FC = () => {
       />
       <div className="prose prose-lg text-gray-700 dark:text-gray-300 max-w-none mb-5">
         <p>{article.description}</p>
+      </div>
       </div>
     </div>
   );

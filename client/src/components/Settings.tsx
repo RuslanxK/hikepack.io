@@ -171,7 +171,7 @@ const Settings: React.FC = () => {
               { label: 'Username', type: 'text', name: 'username', value: formData.username },
               { label: 'Birthdate', type: 'date', name: 'birthdate', value: formData.birthdate },
             ].map(({ label, type, name, value }, idx) => (
-              <div key={idx} className="px-3 w-full md:w-1/2">
+              <div key={idx} className=" px-0 sm:px-3 w-full md:w-1/2">
                 <label className="block text-gray-600 dark:text-gray-300 mb-2 text-sm">{label}</label>
                 <input 
                   type={type} 
@@ -206,7 +206,7 @@ const Settings: React.FC = () => {
                   { value: country, label: country }
                 )), value: formData.country },
             ].map(({ label, name, options, value }, idx) => (
-              <div key={idx} className="px-3 w-full md:w-1/2">
+              <div key={idx} className="sm:px-3 px-0 w-full md:w-1/2">
                 <label className="block text-gray-600 dark:text-gray-300 mb-2 text-sm">{label}</label>
                 <select 
                   name={name}

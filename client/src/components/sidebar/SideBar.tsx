@@ -122,46 +122,50 @@ const SideBar: React.FC = () => {
         </div>
 
         <nav className="flex-grow p-4">
-          <ul>
-            {items.map(item => (
-              <React.Fragment key={item.to}>
-                <SideBarItem
-                  to={item.to}
-                  icon={item.icon}
-                  label={item.label}
-                  onClick={item.onClick}
-                  showArrow={item.label === "Recent bags"}
-                  isOpen={showLatestBags}
-                />
-                {item.label === "Recent bags" && showLatestBags && (
-                  <ul className="mt-1 mb-2">
-                    {loading && (
-                      <li className="p-1 pl-2 pr-2 text-sm">
-                        <Spinner w={4} h={4} />
-                      </li>
-                    )}
-                    {error && (
-                      <Message width='w-full' title="Error occurs" padding="p-2" titleMarginBottom="" message="" type="error" />
-                    )}
-                    {!data?.latestBags.length && (
-                      <Message title="No bags yet." padding="p-2" width="w-full" titleMarginBottom="" message="" type="info" />
-                    )}
-                    {!loading && !error && data?.latestBags?.map((bag: { id: string, name: string }) => (
-                      <li
-                        key={bag.id}
-                        className="p-2 pl-2 pr-2 flex items-center cursor-pointer dark:hover:bg-button-dark hover:bg-button-light rounded text-sm"
-                        onClick={() => handleBagClick(bag.id)}
-                      >
-                        <GiSchoolBag style={{ marginRight: "10px" }} />
-                        {bag.name && bag.name.length > 18 ? `${bag.name.substring(0, 18)}...` : bag.name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </React.Fragment>
+  <ul>
+    {items.map(item => (
+      <React.Fragment key={item.to}>
+        <SideBarItem
+          to={item.to}
+          icon={item.icon}
+          label={item.label}
+          onClick={item.onClick}
+          showArrow={item.label === "Recent bags"}
+          isOpen={showLatestBags}
+          setIsSidebarOpen={setIsSidebarOpen} // Pass down the function
+        />
+        {item.label === "Recent bags" && showLatestBags && (
+          <ul className="mt-1 mb-2">
+            {loading && (
+              <li className="p-1 pl-2 pr-2 text-sm">
+                <Spinner w={4} h={4} />
+              </li>
+            )}
+            {error && (
+              <Message width='w-full' title="Error occurs" padding="p-2" titleMarginBottom="" message="" type="error" />
+            )}
+            {!data?.latestBags.length && (
+              <Message title="No bags yet." padding="p-2" width="w-full" titleMarginBottom="" message="" type="info" />
+            )}
+            {!loading && !error && data?.latestBags?.map((bag: { id: string, name: string }) => (
+              <li
+                key={bag.id}
+                className="p-2 pl-2 pr-2 flex items-center cursor-pointer dark:hover:bg-button-dark hover:bg-button-light rounded text-sm"
+                onClick={() => {
+                  handleBagClick(bag.id);
+                  setIsSidebarOpen(false); // Close sidebar on item click
+                }}
+              >
+                <GiSchoolBag style={{ marginRight: "10px" }} />
+                {bag.name && bag.name.length > 18 ? `${bag.name.substring(0, 18)}...` : bag.name}
+              </li>
             ))}
           </ul>
-        </nav>
+        )}
+      </React.Fragment>
+    ))}
+  </ul>
+</nav>
 
         <div className="p-4 flex items-center">
           {loadingUser ? (

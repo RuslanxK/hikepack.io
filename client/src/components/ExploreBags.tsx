@@ -203,6 +203,9 @@ const ExploreBags: React.FC = () => {
             <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
               {paginatedBags.map((bag: Bag) => {
                 const user = usersData.users.find((user: any) => user.id === bag.owner);
+                const truncatedName = bag.name.length > 20 ? `${bag.name.substring(0, 20)}...` : bag.name;
+                const truncatedDescription = bag.description.length > 40 ? `${bag.description.substring(0, 40)}...` : bag.description;
+
                 return (
                   <tr 
                     key={bag.id} 
@@ -213,8 +216,8 @@ const ExploreBags: React.FC = () => {
                       <img src={user?.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-4' /> 
                       {user?.username}
                     </td>
-                    {renderCell(bag.name)}
-                    {renderCell(bag.description)}
+                    {renderCell(truncatedName)}
+                    {renderCell(truncatedDescription)}
                     {renderCell(bag.goal)}
                     {renderCell(bag.totalCategories)}
                     {renderCell(bag.totalItems)}

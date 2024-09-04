@@ -162,8 +162,8 @@ const BagDetails: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
-      <div className={`flex flex-col sm:flex-row items-start min-h-screen p-4 ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
+    <div className='container mx-auto sm:mt-0 sm:p-0 mt-24'>
+      <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
             <div className='w-full'>
@@ -219,7 +219,7 @@ const BagDetails: React.FC = () => {
               <div className="sm:w-64 h-64">
                 <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
-              <div>
+              <div className='w-full sm:w-fit'>
                 <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
             </div>

@@ -166,7 +166,7 @@ const BagDetails: React.FC = () => {
       <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
-            <div className='w-full'>
+            <div className='w-full sm:pl-10 sm:pr-10 sm:pt-10 pr-6 pt-6 pl-6'>
               <div className='flex flex-row sm:flex-row items-start'>
                 <div className='w-full w-8/12'>
                   <div className="flex items-center w-full sm:w-11/12">
@@ -219,13 +219,13 @@ const BagDetails: React.FC = () => {
               <div className="sm:w-64 h-64">
                 <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
-              <div className='w-full sm:w-fit'>
+              <div className='w-full sm:w-fit p-4'>
                 <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
             </div>
           )}
 
-          <div className="">
+          <div className="p-2">
             <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
               <FaPlus size={13}/>
             </button>

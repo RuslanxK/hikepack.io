@@ -12,7 +12,8 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
   const displayedWeightUnit = itemData.weightOption || weightUnit;
 
   return (
-    <div className="flex items-center py-1 space-x-2">
+    <div id="scroll" className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible relative">
+      <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       {itemData.imageUrl && (
         <div className="w-12 h-12 flex-shrink-0">
           <img 
@@ -26,7 +27,7 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
         type="text" 
         placeholder="name" 
         name="name" 
-        className={`${inputClasses} w-2/5 ${itemData.link ? "text-cyan-500 cursor-pointer hover:text-cyan-600" : "text-gray-500"}`} 
+        className={`${inputClasses}  w-auto sm:w-full ${itemData.link ? "text-cyan-500 cursor-pointer hover:text-cyan-600" : "text-gray-500"}`} 
         onClick={() => {
           if (itemData.name.length > 0 && itemData.link) {
             window.open(itemData.link, '_blank');
@@ -39,7 +40,7 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
         type="text" 
         placeholder="note" 
         name="description" 
-        className={`${inputClasses} w-3/5`} 
+        className={`${inputClasses} w-auto sm:w-full`} 
         defaultValue={itemData.description} 
         readOnly
       />
@@ -64,18 +65,20 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
         defaultValue={itemData.weight} 
       />
 
-      <span className="border px-2 py-1 dark:border-zinc-600 dark:text-gray-300 w-[48px]">
+      <span className="border px-2 py-1 dark:border-zinc-600 dark:text-gray-300">
         {displayedWeightUnit}
       </span>
        
-      <div 
-        className={`w-52 text-sm mx-3 flex flex-row pl-2 border ring-gray-300 py-1 dark:text-gray-300 dark:border-gray-500 dark:bg-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 ${priorityClass} cursor-default text-center`}
-      >
-        {priority.charAt(0).toUpperCase() + priority.slice(1)} priority
-      </div>
+      <input 
+      type="text"
+      value={`${priority.charAt(0).toUpperCase() + priority.slice(1)} priority`}
+      readOnly
+      className={`w-28 text-sm border ring-gray-300 py-1 dark:text-gray-300 dark:border-gray-500 dark:bg-gray-800 focus:outline-none  ${priorityClass} cursor-default text-center`}
+    />
       <div className="flex space-x-3 pl-2">
         <FaWalking size={14} className={`${iconClasses} ${itemData.worn ? 'text-green' : ''}`} />
       </div>
+    </div>
     </div>
   );
 }

@@ -88,19 +88,18 @@ const MainShare: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className="flex items-start justify-center min-h-screen dark:bg-zinc-900 mt-2">
-      <div className="w-4/6 mx-auto">
+    <div className="w-full p-4">
         <div className="flex flex-row items-center justify-between space-y-2 w-full">
           <div className='w-full'>
             <div className='bg-white dark:bg-zinc-800 p-4 flex flex-row items-start'>
               <div className='w-full flex flex-row items-center justify-between'>
-              <img src={'/images/logo-black.png'} width="90px" alt='logo' onClick={() => navigate('/')}/>
+              <img src={'/images/logo-black.png'} width="90px" className='sm:p-0 p-2' alt='logo' onClick={() => navigate('/')}/>
                 <h1 className="text-xl font-semibold text-gray-900 dark:text-white pl-10 pr-10 text-center">
                   {bag?.name}
                 </h1>
                 <button 
                   onClick={handleLikeToggle} 
-                  className={`flex items-center space-x-1 p-2 rounded-full ${hasLiked ? 'bg-blue-500 text-white' : 'bg-zinc-400 text-zinc-100'} dark:${hasLiked ? 'bg-blue-600 text-white' : 'bg-zinc-600 text-gray-400'}`}
+                  className={`flex items-center space-x-1 p-1.5 rounded-full ${hasLiked ? 'bg-blue-500 text-white' : 'bg-zinc-400 text-zinc-100'} dark:${hasLiked ? 'bg-blue-600 text-white' : 'bg-zinc-600 text-gray-400'}`}
                 >
                   {hasLiked ? <FaThumbsDown size={15} /> : <FaThumbsUp size={15} />}
                   <span className='text-sm w-10'>{hasLiked ? 'Unlike' : 'Like'}</span>
@@ -114,25 +113,25 @@ const MainShare: React.FC = () => {
         </div>
 
         {categoriesData.length > 0 && hasCategoriesWithWeight && (
-          <div className="w-full flex flex-row items-center py-10 justify-center mb-2 space-x-12">
-            <div className="w-64 h-64">
-              <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption}/>
-            </div>
-            <div>
-              <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption}/>
-            </div>
+          <div className="w-full flex flex-col sm:flex-row items-center justify-center sm:space-x-12 space-y-8 sm:space-y-0">
+             <div className="sm:w-64 h-64">
+                <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
+              </div>
+              <div className='w-full sm:w-fit'>
+                <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
+              </div>
           </div>
         )}
 
         <div className="overflow-hidden">
-          <div className="w-full">
+          <div className="w-full mt-5">
             {categoriesData.map((category) => (
               <CategoryShare key={category.id} categoryData={category} weightUnit={userData?.user?.weightOption}  />
             ))}
           </div>
         </div>
       </div>
-    </div>
+  
   );
 };
 

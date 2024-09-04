@@ -162,11 +162,11 @@ const BagDetails: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className='container mx-auto sm:mt-0 sm:p-0 mt-24'>
+    <div className='container mx-auto sm:mt-0 sm:p-4 mt-24 p-4'>
       <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
-            <div className='w-full sm:pl-10 sm:pr-10 sm:pt-10 pr-6 pt-6 pl-6'>
+            <div className='w-full sm:pl-6 sm:pr-6 sm:pt-6 pr-2 pt-2 pl-2'>
               <div className='flex flex-row sm:flex-row items-start'>
                 <div className='w-full w-8/12'>
                   <div className="flex items-center w-full sm:w-11/12">
@@ -219,13 +219,13 @@ const BagDetails: React.FC = () => {
               <div className="sm:w-64 h-64">
                 <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
-              <div className='w-full sm:w-fit p-4'>
+              <div className='w-full sm:w-fit'>
                 <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
               </div>
             </div>
           )}
 
-          <div className="p-2">
+        
             <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
               <FaPlus size={13}/>
             </button>
@@ -241,7 +241,7 @@ const BagDetails: React.FC = () => {
               </DndContext>
             </div>
           </div>
-        </div>
+      
       
         {/* {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null} */}
         <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />

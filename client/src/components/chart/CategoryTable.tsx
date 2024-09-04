@@ -89,7 +89,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
           {convertedCategories.map((category) => (
             <tr key={category.id} className="border-b border-neutral-400 dark:border-gray-500">
               <td className="px-4 sm:px-6 py-2"><div style={{ backgroundColor: category.color }} className="w-4 h-4 rounded-full"></div></td>
-              <td className="px-4 sm:px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white border-l border-r border-neutral-400 dark:border-gray-500"> {category.name.length > 12 ? `${category.name.substring(0, 12)}...` : category.name}</td>
+              <td className="px-4 sm:px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white border-l border-r border-neutral-400 dark:border-gray-500"> {category.name.length > 10 ? `${category.name.substring(0, 10)}...` : category.name}</td>
               <td className="px-4 sm:px-6 py-2">{category.totalWeight.toFixed(3)} {weightUnit}</td>
             </tr>
           ))}

@@ -61,6 +61,17 @@ const BagDetails: React.FC = () => {
   }, [loadingBag, dataBag, navigate]);
 
 
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      setIsSidePanelVisible(!isMobile); 
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
   const bag = dataBag?.bag;
 
   if (loadingBag || loadingCategories || loadingUser || loadingItems) {

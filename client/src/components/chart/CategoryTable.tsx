@@ -44,7 +44,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
             <select
             value={weightUnit}
             onChange={(e) => setWeightUnit(e.target.value)}
-            className="text-gray-900 dark:text-gray-200 focus:outline-none font-medium text-sm text-center bg-white dark:bg-zinc-600 border border-gray-300 dark:border-zinc-500"
+            className="text-gray-900 dark:text-gray-200 focus:outline-none dark:bg-transparent font-medium text-sm text-center border border-gray-300 dark:border-zinc-500"
              >
            {['lb', 'kg', 'g', 'oz'].map((unit) => (
            <option key={unit} className='dark:text-gray-900' value={unit}>

@@ -88,7 +88,7 @@ const BagDetails: React.FC = () => {
         <Message 
           width="w-fit" 
           title="Attention Needed" 
-          padding="p-5" 
+          padding="sm:p-5 p-3" 
           titleMarginBottom="mb-2" 
           message="Something went wrong. Please try again later." 
           type="error" 
@@ -247,7 +247,7 @@ const BagDetails: React.FC = () => {
               <FaPlus size={13}/>
             </button>
             <div className="w-full pb-14">
-              {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="p-5" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }
+              {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }
 
               <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
                 <SortableContext items={categoriesData.map((category) => category.id)} strategy={verticalListSortingStrategy}>

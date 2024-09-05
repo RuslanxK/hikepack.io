@@ -64,27 +64,12 @@ const ExploreBags: React.FC = () => {
 
   if (bagsError || userError || usersError) {
 
-     if(bagsError) {
-       
-        console.log(bagsError)
-     }
-
-     if(userError) {
-         console.log(userError)
-     }
-
-     if(usersError) {
-
-        console.log(usersError)
-     }
-
-
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Message 
           width="w-fit" 
           title="Attention Needed" 
-          padding="p-5" 
+          padding="sm:p-5 p-3" 
           titleMarginBottom="mb-2" 
           message="Something went wrong. Please try again later." 
           type="error" 
@@ -267,7 +252,7 @@ const ExploreBags: React.FC = () => {
         <Message 
           width="w-full" 
           title="No Bags Found" 
-          padding="p-5" 
+          padding="sm:p-5 p-3" 
           titleMarginBottom="mb-2" 
           message="There are no bags that match your search criteria. Please adjust your filters and try again." 
           type="info" 

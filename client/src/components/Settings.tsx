@@ -118,7 +118,7 @@ const Settings: React.FC = () => {
           <Message
             width="w-fit"
             title="Attention Needed"
-            padding="p-5"
+            padding="sm:p-5 p-3"
             titleMarginBottom="mb-2"
             message="Something went wrong. Please try again later."
             type="error"

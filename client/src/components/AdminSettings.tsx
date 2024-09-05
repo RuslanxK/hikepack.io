@@ -126,7 +126,7 @@ const AdminSettings: React.FC = () => {
             <Message
               width="w-full"
               title=""
-              padding="p-5"
+              padding="sm:p-5 p-3"
               titleMarginBottom=""
               message={successMessageChangelog}
               type="success"
@@ -137,7 +137,7 @@ const AdminSettings: React.FC = () => {
             <Message
               width="w-full"
               title=""
-              padding="p-5"
+              padding="sm:p-5 p-3"
               titleMarginBottom=""
               message={errorMessageChangelog}
               type="error"

@@ -33,7 +33,7 @@ const Changelog: React.FC = () => {
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Spinner w={10} h={10}/>
         {error && (
-           <Message width='w-fit' title="Attention Needed" padding="p-5" titleMarginBottom="mb-2" message="Something went wrong. Please try again later." type="error" />
+           <Message width='w-fit' title="Attention Needed" padding="sm:p-5 p-3" titleMarginBottom="mb-2" message="Something went wrong. Please try again later." type="error" />
         )}
       </div>
     );
@@ -66,7 +66,7 @@ const Changelog: React.FC = () => {
         </p>
 
         {changelogData.length === 0 ? (
-          <Message width='w-full' title="No Changelogs Available" padding="p-5" titleMarginBottom="mb-2" message="There are no changelogs available at the moment." type="info" />
+          <Message width='w-full' title="No Changelogs Available" padding="sm:p-5 p-3" titleMarginBottom="mb-2" message="There are no changelogs available at the moment." type="info" />
         ) : (
           <ul className="space-y-6">
             {changelogData.map((log, index) => (

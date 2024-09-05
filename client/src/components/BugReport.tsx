@@ -96,8 +96,8 @@ const BugReport: React.FC = () => {
           </button>
         </form>
 
-        {successMessage && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={successMessage} type="success" />}
-        {errorMessage && <Message width='w-full' title="" padding="p-5" titleMarginBottom="" message={errorMessage} type="error" />}
+        {successMessage && <Message width='w-full' title="" padding="sm:p-5 p-3" titleMarginBottom="" message={successMessage} type="success" />}
+        {errorMessage && <Message width='w-full' title="" padding="sm:p-5 p-3" titleMarginBottom="" message={errorMessage} type="error" />}
 
       </div>
       </div>

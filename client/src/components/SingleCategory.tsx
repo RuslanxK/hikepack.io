@@ -164,7 +164,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       <div className="w-full flex flex-col justify-center">
         <Spinner w={6} h={6} />
         {(error) && (
-           <Message width='w-fit' title="Attention Needed" padding="p-5" titleMarginBottom="mb-2" message="Something went wrong. Please try again later." type="error" />
+           <Message width='w-fit' title="Attention Needed" padding="sm:p-5 p-3" titleMarginBottom="mb-2" message="Something went wrong. Please try again later." type="error" />
         )}
       </div>
     );

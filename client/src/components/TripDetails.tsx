@@ -144,7 +144,7 @@ const TripDetails: React.FC = () => {
             ))}
 
             {dataBags?.bags.length === 0 && (
-            <Message title="Attention Needed" padding="p-5" width="w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a bag." type="info" />
+            <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a bag." type="info" />
           )}
           </ul>
         </div>

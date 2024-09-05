@@ -39,7 +39,7 @@ export const GET_USER = gql`
 `;
 
 export const GET_USER_SHARED = gql`
-query GetUser($bagId: ID!) {
+query GetSharedUser($bagId: ID!) {
   userShared(bagId: $bagId) {
     id
     email

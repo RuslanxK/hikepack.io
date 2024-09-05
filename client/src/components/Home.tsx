@@ -57,9 +57,12 @@ const Home: React.FC = () => {
     <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
     <div className='p-4 sm:p-10 flex flex-col items-start justify-start space-y-2'>
       <div className='mb-5'>
+        <div className='flex flex-row items-center'>
         <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
-          Welcome, {userData?.user?.username}
+          Welcome, 
         </h1>
+        <span className='text-lg font-semibold ml-1.5'>{userData?.user?.username}</span>
+        </div>
         <p className='text-base text-gray-700 dark:text-gray-300 mt-1'>
           The journey of a thousand miles begins with a single step.
         </p>

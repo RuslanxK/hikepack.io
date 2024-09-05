@@ -29,7 +29,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const [addItem, { loading: addingItem }] = useMutation<{ addItem: Item }, AddItemVariables>(ADD_ITEM);
   const [updateItemOrder] = useMutation(UPDATE_ITEM_ORDER);
   const [updateCategoryName] = useMutation(UPDATE_CATEGORY_NAME);
-  const [deleteItem] = useMutation(DELETE_ITEM); 
+  const [deleteItem, { loading: deletingItem }] = useMutation(DELETE_ITEM); 
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState<{ id: string, checked: boolean }[]>([]);
 
@@ -212,11 +212,11 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
            
            {checkedItems.length ? <button className="flex items-center pt-3 pb-3 text-red-400 hover:text-red-500 focus:outline-none" onClick={removeAllSelectedItems}>
               <TiDelete className="mr-1" size={19} />
-              Delete items
+              Delete items { deletingItem ? <Spinner h={4} w={4}/> : null }
             </button> :
             <button className="flex items-center pt-3 pb-3 text-blue-400 hover:text-blue-300 focus:outline-none" onClick={handleAddItemSubmit}>
               <FaPlus className="mr-1" size={14} />
-              Add item {addingItem ? <Spinner h={4} w={4}/> : null }
+              Add item {addingItem || deletingItem ? <Spinner h={4} w={4}/> : null }
             </button> }
           </div>
         

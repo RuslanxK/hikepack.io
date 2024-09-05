@@ -216,7 +216,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
             </button> :
             <button className="flex items-center pt-3 pb-3 text-blue-400 hover:text-blue-300 focus:outline-none" onClick={handleAddItemSubmit}>
               <FaPlus className="mr-1" size={14} />
-              Add item {addingItem || deletingItem ? <Spinner h={4} w={4}/> : null }
+              Add item {addingItem ? <Spinner h={4} w={4}/> : null }
             </button> }
           </div>
         

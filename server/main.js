@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const excludedResolvers = ['LoginUser', 'AddUser', 'GetSharedBag', 'GetCategories', 'GetItems', 'UpdateLikesBag', 'CheckEmailExistence', 'UpdateVerifiedCredentials', 'SendResetPasswordLink', 'ResetPassword, GetSharedBag']; 
+const excludedResolvers = ['LoginUser', 'AddUser', 'GetSharedBag', 'GetCategories', 'GetItems', 'UpdateLikesBag', 'CheckEmailExistence', 'UpdateVerifiedCredentials', 'SendResetPasswordLink', 'ResetPassword', 'GetSharedBag', 'GetSharedUser']; 
 
 const dynamicAuthMiddleware = async (resolve, parent, args, context, info) => {
 

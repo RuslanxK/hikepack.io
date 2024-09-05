@@ -23,7 +23,7 @@ const SidePanel: React.FC<SidePanelProps> = ({ isVisible, toggleVisibility, item
     >
       <button
         onClick={toggleVisibility}
-        className="fixed top-1/2 left-[-22px] bg-blue-400 dark:bg-zinc-500 text-white p-1"
+        className={`fixed top-0 ${isVisible ? "left-0" : "left-[-25px]"} bg-emerald-400 dark:bg-zinc-500 text-white p-1`}
       >
         {isVisible ? <GoArrowRight size={20} /> : <GoArrowLeft size={20} />}
       </button>

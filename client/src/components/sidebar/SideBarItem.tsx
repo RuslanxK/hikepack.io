@@ -9,7 +9,7 @@ interface SideBarItemProps {
   onClick?: () => void;
   showArrow?: boolean;
   isOpen?: boolean;
-  setIsSidebarOpen?: (isOpen: boolean) => void; // Added prop for controlling sidebar visibility
+  setIsSidebarOpen?: (isOpen: boolean) => void;
 }
 
 const SideBarItem: React.FC<SideBarItemProps> = ({ to, icon: Icon, label, onClick, showArrow, isOpen, setIsSidebarOpen }) => {
@@ -18,8 +18,8 @@ const SideBarItem: React.FC<SideBarItemProps> = ({ to, icon: Icon, label, onClic
     if (onClick) {
       onClick();
     }
-    // Close sidebar on mobile
-    if (setIsSidebarOpen) {
+    // Only close the sidebar if the item is not "Recent Bags"
+    if (setIsSidebarOpen && label !== 'Recent bags') {
       setIsSidebarOpen(false);
     }
   };

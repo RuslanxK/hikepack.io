@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FaPlus, FaHeart } from 'react-icons/fa';
-import { GET_BAG, UPDATE_EXPLORE_BAGS } from '../queries/bagQueries';
-import { GET_CATEGORIES, ADD_CATEGORY, UPDATE_CATEGORY_ORDER } from '../queries/categoryQueries';
+import { UPDATE_EXPLORE_BAGS } from '../mutations/bagMutations';
+import { GET_BAG } from '../queries/bagQueries';
+import { GET_CATEGORIES } from '../queries/categoryQueries';
+import { ADD_CATEGORY, UPDATE_CATEGORY_ORDER } from '../mutations/categoryMutations';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GetCategoriesData, Category } from '../types/category';

@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import Modal from './Modal';
 import Spinner from '../loading/Spinner';
 import { DeleteCategoryModalProps } from '../../types/category';
-import { DELETE_CATEGORY } from '../../queries/categoryQueries';
+import { DELETE_CATEGORY } from '../../mutations/categoryMutations';
 import { DeleteBagData, DeleteBagVars } from '../../types/bag';
 import { GET_CATEGORIES } from '../../queries/categoryQueries';
 import { useParams } from 'react-router-dom';

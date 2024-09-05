@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { UPDATE_BAG } from '../../queries/bagQueries'; 
+import { UPDATE_BAG } from '../../mutations/bagMutations'; 
 import { UpdateBagData, UpdateBagVars, UpdateBagModalProps } from '../../types/bag';
 import Modal from './Modal';
 import Form from '../form/Form';

@@ -26,7 +26,7 @@ const SideBar: React.FC = () => {
   const initialTheme = localStorage.getItem('theme') === 'dark';
   const [isDarkTheme, setIsDarkTheme] = useState(initialTheme);
   const [showLatestBags, setShowLatestBags] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
 
   const navigate = useNavigate();
   const params = useParams();

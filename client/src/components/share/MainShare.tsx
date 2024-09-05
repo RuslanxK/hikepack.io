@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaHeart, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
-import { GET_SHARED_BAG, UPDATE_LIKES_BAG } from '../../queries/bagQueries';
+import { GET_SHARED_BAG } from '../../queries/bagQueries';
+import { UPDATE_LIKES_BAG } from '../../mutations/bagMutations';
 import { GET_CATEGORIES } from '../../queries/categoryQueries';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';

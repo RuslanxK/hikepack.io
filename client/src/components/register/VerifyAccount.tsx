@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Spinner from '../loading/Spinner';
-import { UPDATE_VERIFIED_CREDENTIALS } from '../../queries/userQueries';
+import { UPDATE_VERIFIED_CREDENTIALS } from '../../mutations/userMutations';
 
 const VerifyAccount = () => {
   const [isVerified, setIsVerified] = useState(false);

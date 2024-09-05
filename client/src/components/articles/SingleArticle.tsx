@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { GET_ARTICLE } from '../../queries/articlesQueries';
+import { GET_ARTICLE } from '../../queries/articleQueries';
 import Spinner from '../loading/Spinner';
 import Message from '../message/Message';
 import { FaArrowLeft } from 'react-icons/fa';

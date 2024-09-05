@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../../queries/userQueries';
+import { LOGIN_USER } from '../../mutations/userMutations';
 import { LoginFormData } from '../../types/login/login';
 import Message from '../message/Message';
 import Spinner from '../loading/Spinner'; 

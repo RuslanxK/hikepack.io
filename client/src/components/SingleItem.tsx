@@ -5,11 +5,12 @@ import { GrDrag } from 'react-icons/gr';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useMutation } from '@apollo/client';
-import { UPDATE_ITEM, ADD_ITEM } from '../queries/itemQueries';
+import { UPDATE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
 import ItemPictureModal from './popups/ItemPictureModal';
 import AddLinkModal from './popups/AddLinkModal';
 import { GET_CATEGORIES } from '../queries/categoryQueries';
 import { GET_ITEMS, GET_ALL_ITEMS } from '../queries/itemQueries';
+import Spinner from './loading/Spinner';
 
 const inputClasses = "py-1 px-2 border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-primary dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
 const iconClasses = "transform transition-transform duration-200 hover:scale-125";
@@ -210,13 +211,13 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
         />
-        <FaCopy 
+       { addingItem ? <Spinner w={4} h={4} /> : <FaCopy 
           size={14} 
           className={`text-gray-500 dark:text-neutral-400 ${iconClasses}`} 
           onClick={handleCopyItem} 
           onMouseEnter={() => showTooltip('duplicate')}
           onMouseLeave={hideTooltip}
-        />
+        /> }
         <FaLink 
           size={14} 
           className={`${iconClasses} ${itemData.link ? 'text-cyan-500 dark:text-cyan-400' : 'text-gray-500 dark:text-neutral-300'}`} 

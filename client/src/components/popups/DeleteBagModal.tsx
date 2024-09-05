@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import Modal from './Modal';
 import Spinner from '../loading/Spinner';
 import { DeleteBagModalProps } from '../../types/bag';
-import { DELETE_BAG } from '../../queries/bagQueries';
+import { DELETE_BAG } from '../../mutations/bagMutations';
 import { DeleteBagData, DeleteBagVars } from '../../types/bag';
 import { GET_BAGS } from '../../queries/bagQueries';
 import Message from '../message/Message';

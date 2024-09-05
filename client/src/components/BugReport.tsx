@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useMutation } from '@apollo/client';
-import { ADD_BUG_REPORT } from '../queries/bugReportQueries';
+import { ADD_BUG_REPORT } from '../mutations/bugReportMutation';
 import Message from './message/Message';
 import Spinner from './loading/Spinner'; 
 

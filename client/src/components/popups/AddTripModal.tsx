@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_TRIP, GET_TRIPS} from '../../queries/tripQueries';
+import { GET_TRIPS} from '../../queries/tripQueries';
+import { ADD_TRIP } from '../../mutations/tripMutations';
 import { AddTripData, AddTripVars } from '../../types/trip';
 import Modal from './Modal';
 import Form from '../form/Form';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { DELETE_TRIP } from '../../queries/tripQueries';
+import { DELETE_TRIP } from '../../mutations/tripMutations';
 import { DeleteTripData, DeleteTripVars } from '../../types/trip';
 import Modal from './Modal';
 import Spinner from '../loading/Spinner';

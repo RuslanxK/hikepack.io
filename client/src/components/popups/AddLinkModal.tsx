@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { UPDATE_ITEM_LINK } from '../../queries/itemQueries'; 
+import { UPDATE_ITEM_LINK } from '../../mutations/itemMutation'; 
 import Modal from './Modal';
 import Spinner from '../loading/Spinner';
 import { AddLinkModalProps } from '../../types/item';

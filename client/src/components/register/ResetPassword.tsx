@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import Message from '../message/Message';
 import Spinner from '../loading/Spinner'; 
 import { useMutation } from '@apollo/client';
-import { RESET_PASSWORD } from '../../queries/userQueries';
+import { RESET_PASSWORD } from '../../mutations/userMutations';
 
 const ResetPassword: React.FC = () => {
   const [password, setPassword] = useState<string>("");

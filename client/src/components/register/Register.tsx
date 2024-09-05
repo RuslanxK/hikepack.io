@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { FormData } from '../../types/register/formdata';
-import { ADD_USER } from '../../queries/userQueries';
+import { ADD_USER } from '../../mutations/userMutations';
 import { useMutation, useQuery } from '@apollo/client';
 import { validateStep1, validateStep2 } from '../../utils/validationUtils';
 import { CHECK_EMAIL_EXISTENCE } from '../../queries/userQueries';
@@ -186,14 +186,12 @@ const Register: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row bg-white">
-      {/* Image Section */}
       <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto transform scale-x-[-1] sm:scale-x-100" style={{ backgroundImage: `url('/images/hiking.jpg')` }}>
       </div>
       <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
           <img src="/images/logo-black.png" alt="Logo" className="h-6 sm:h-8" />
       </div>
 
-      {/* Form Section */}
       <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
         <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleRegister}>
           <div className="flex justify-between items-center mb-10 sm:mb-16">

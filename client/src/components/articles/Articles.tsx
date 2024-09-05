@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import ArticleCard from './articleCard';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { GET_ARTICLES } from '../../queries/articlesQueries';
+import { GET_ARTICLES } from '../../queries/articleQueries';
 import Spinner from '../loading/Spinner';
 import Message from '../message/Message';
 

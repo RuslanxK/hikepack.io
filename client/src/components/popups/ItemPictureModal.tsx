@@ -5,7 +5,7 @@ import { ItemPictureModalProps } from '../../types/item';
 import Message from '../message/Message';
 import axios from 'axios';
 import { useMutation } from '@apollo/client';
-import { UPDATE_ITEM_PICTURE } from '../../queries/itemQueries';
+import { UPDATE_ITEM_PICTURE } from '../../mutations/itemMutation';
 import { FaCloudUploadAlt, FaCheckCircle } from 'react-icons/fa';
 import { API_BASE_URL } from '../../utils/apiConfigs';
 

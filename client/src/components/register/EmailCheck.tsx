@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Message from '../message/Message';
 import Spinner from '../loading/Spinner'; 
 import { useMutation } from '@apollo/client';
-import { SEND_RESET_PASSWORD_LINK } from '../../queries/userQueries';
+import { SEND_RESET_PASSWORD_LINK } from '../../mutations/userMutations';
 
 const EmailCheck: React.FC = () => {
   const [email, setEmail] = useState<string>("");

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from './Modal';
 import Spinner from '../loading/Spinner';
 import { AddItemToCategoryModalProps } from '../../types/category';
-import { ADD_ITEM } from '../../queries/itemQueries';
+import { ADD_ITEM } from '../../mutations/itemMutation';
 import { AddRecentItemVariables, Item } from '../../types/item';
 import { useMutation } from '@apollo/client';
 import { GET_ITEMS } from '../../queries/itemQueries';

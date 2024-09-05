@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { UPDATE_TRIP } from '../../queries/tripQueries';
+import { UPDATE_TRIP } from '../../mutations/tripMutations';
 import { UpdateTripData, UpdateTripVars } from '../../types/trip';
 import Modal from './Modal';
 import Form from '../form/Form';

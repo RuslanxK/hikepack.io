@@ -61,7 +61,7 @@ const Home: React.FC = () => {
         <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
           Welcome, 
         </h1>
-        <span className='text-lg font-semibold ml-1.5'>{userData?.user?.username}</span>
+        <span className='text-lg font-semibold ml-1.5 dark:text-white'>{userData?.user?.username}</span>
         </div>
         <p className='text-base text-gray-700 dark:text-gray-300 mt-1'>
           The journey of a thousand miles begins with a single step.

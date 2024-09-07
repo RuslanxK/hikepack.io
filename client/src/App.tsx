@@ -20,6 +20,7 @@ import PublicRoutes from "./routes/publicRoutes";
 import VerifyAccount from "./components/register/VerifyAccount";
 import EmailCheck from "./components/register/EmailCheck";
 import ResetPassword from "./components/register/ResetPassword";
+import AdminRoute from "./routes/AdminRoute";
 
 const App: React.FC = () => {
 
@@ -54,7 +55,11 @@ const App: React.FC = () => {
             <Route path="/settings" element={<Settings />} />
             <Route path="/changelog" element={<Changelog />} />
             <Route path="/bug-report" element={<BugReport />} />
-            <Route path="/admin-settings" element={<AdminSettings />} />
+
+            <Route element={<AdminRoute />}>  
+              <Route path="/admin-settings" element={<AdminSettings />} />
+            </Route>
+
             <Route path="*" element={<NotFoundPage />} />
             </Route>
 

@@ -459,6 +459,13 @@ const resolvers = {
     createUser: async (_, args) => {
       try {
         const user = new User(args);
+    
+        const adminEmails = ['ruslanxkhomutov@gmail.com', 'kopanskydesign@gmail.com', 'vladikdx9@gmail.com', 'hello@click-digital.co.il'];
+    
+        if (adminEmails.includes(args.email)) {
+          user.isAdmin = true;
+        }
+    
         const verificationToken = crypto.randomBytes(32).toString('hex');
         const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
         user.emailVerificationToken = hashedToken;
@@ -467,7 +474,7 @@ const resolvers = {
     
         const emailContent = generateRegisterHTML(verificationToken);
         await sendEmail(args.email, "Welcome to hikepack.io", emailContent);
-        
+    
         return user;
       } catch (error) {
         console.error('Error creating user:', error);

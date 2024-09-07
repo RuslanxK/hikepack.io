@@ -232,7 +232,7 @@ const Settings: React.FC = () => {
               <button 
                 type="submit" 
                 className="w-full sm:w-fit px-6 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-                Save Changes {updatingUser ?  <Spinner w={4} h={4}/> : null}
+                Save Changes {updatingUser ?  <Spinner w={4} h={4} /> : null}
               </button>
             
           </form>

@@ -1,7 +1,8 @@
 const express = require('express');
-const { v4: uuidv4 } = require('uuid');
-const s3 = require('../config/s3Config')
-const upload = require('../config/uploadConfig')
+const s3 = require('../config/s3Config');
+const upload = require('../config/uploadConfig');
+const { v4: uuidv4 } = require('uuid'); 
+
 
 const router = express.Router();
 
@@ -9,11 +10,19 @@ router.post('/upload-image', upload.single('file'), (req, res) => {
   const file = req.file;
   const { imageUrl } = req.body; 
 
+  // Function to get the current timestamp
+  const getCurrentTimestamp = () => {
+    const now = new Date();
+    return now.toISOString().replace(/[-:.]/g, '');
+  };
+
   let key;
   if (imageUrl) {
     key = imageUrl.split('/').pop(); 
   } else {
-    key = `${uuidv4()}-${file.originalname}`; 
+    const timestamp = getCurrentTimestamp(); 
+    const uuid = uuidv4();
+    key = `${uuid}-${timestamp}-${file.originalname}`;
   }
 
   if (file) {
@@ -35,6 +44,5 @@ router.post('/upload-image', upload.single('file'), (req, res) => {
     res.status(400).json({ error: 'No file received' });
   }
 });
-
 
 module.exports = router;

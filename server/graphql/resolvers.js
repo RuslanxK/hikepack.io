@@ -5,7 +5,6 @@ const Item = require("../models/item");
 const ChangeLog = require("../models/changelog")
 const User = require("../models/user");
 const Article = require("../models/article")
-const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const { generateRegisterHTML, sendEmail, generateForgotPasswordHTML, reportEmail, sendReportEmail } = require('../emails/email');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -27,20 +26,26 @@ const weightConversionRates = {
 
 
 
+
 async function deleteFile(imageUrl) {
+ 
+  const key = imageUrl.substring(imageUrl.lastIndexOf('/') + 1); 
+  console.log('Deleting file with key:', key); 
+
   const params = {
-    Bucket: process.env.AWS_S3_BUCKET, 
-    Key: imageUrl.split("https://light-pack-planner.s3.amazonaws.com/").pop(), 
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Key: decodeURIComponent(key), 
   };
 
   try {
     const data = await s3.deleteObject(params).promise();
-    console.log('File deleted successfully from S3', data);
+    console.log('File deleted successfully from S3:', data);
   } catch (error) {
-    console.error('Error deleting file from S3', error);
+    console.error('Error deleting file from S3:', error);
     throw new Error('Failed to delete file from S3');
   }
 }
+
 
 
 
@@ -541,8 +546,27 @@ const resolvers = {
       }
     },
 
+
+
     deleteTrip: async (_, { id }, { user }) => {
       try {
+
+        const trip = await Trip.findById(id);
+        if (!trip) {
+          throw new Error('Trip not found');
+        }
+        const items = await Item.find({ tripId: id, owner: user.userId });
+
+        for (const item of items) {
+          if (item.imageUrl) {
+            await deleteFile(item.imageUrl); 
+          }
+        }
+
+        if (trip.imageUrl) {
+          await deleteFile(trip.imageUrl); 
+        }
+
         await Item.deleteMany({ tripId: id, owner: user.userId });
         await Category.deleteMany({ tripId: id, owner: user.userId });
         await Bag.deleteMany({ tripId: id, owner: user.userId });
@@ -552,6 +576,8 @@ const resolvers = {
         throw new Error('Failed to delete trip');
       }
     },
+
+    
 
     addBag: async (_, args, { user }) => {
       try {
@@ -564,8 +590,17 @@ const resolvers = {
       }
     },
 
+
     deleteBag: async (_, { id }, { user }) => {
       try {
+
+        const items = await Item.find({ bagId: id, owner: user.userId });
+        for (const item of items) {
+          if (item.imageUrl) {
+            await deleteFile(item.imageUrl);
+          }
+        }
+
         await Item.deleteMany({ bagId: id, owner: user.userId });
         await Category.deleteMany({ bagId: id, owner: user.userId });
         return await Bag.findByIdAndDelete(ensureOwner(user, { _id: id }));
@@ -574,6 +609,7 @@ const resolvers = {
         throw new Error('Failed to delete bag');
       }
     },
+
 
     updateBag: async (_, args, { user }) => {
       try {
@@ -624,6 +660,13 @@ const resolvers = {
 
     deleteCategory: async (_, { id }, { user }) => {
       try {
+        const items = await Item.find({ categoryId: id, owner: user.userId });
+
+        for (const item of items) {
+          if (item.imageUrl) {
+            await deleteFile(item.imageUrl);
+          }
+        }
         await Item.deleteMany({ categoryId: id, owner: user.userId });
         return await Category.findByIdAndDelete(ensureOwner(user, { _id: id }));
       } catch (error) {
@@ -666,18 +709,18 @@ const resolvers = {
     
     deleteItem: async (_, { id }, { user }) => {
       try {
+        // Find the item first and ensure the user is the owner before deleting
         const item = await Item.findById(ensureOwner(user, { _id: id }));
-        if (!item) {
-          throw new Error('Item not found');
-        }
     
-        if (item.imageUrl) {
+        // If item exists and has an imageUrl, delete the file from S3
+        if (item && item.imageUrl && item.imageUrl.length > 0) {
           await deleteFile(item.imageUrl);
         }
     
+        // Proceed to delete the item from the database
         await Item.findByIdAndDelete(id);
     
-        return { success: true, message: 'Item deleted successfully' };
+        return item; // Return the deleted item or any other response you need
       } catch (error) {
         console.error(`Error deleting item with id ${id}:`, error);
         throw new Error('Failed to delete item');

@@ -1,9 +1,9 @@
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
 const Article = require("../models/article"); 
 const router = express.Router();
-const s3 = require("../config/s3Config")
-const upload = require("../config/uploadConfig")
+const s3 = require("../config/s3Config");
+const upload = require("../config/uploadConfig");
+const { v4: uuidv4 } = require("uuid"); 
 
 
 router.post("/upload-article", upload.single("file"), (req, res) => {
@@ -13,7 +13,15 @@ router.post("/upload-article", upload.single("file"), (req, res) => {
     return res.status(400).json({ error: 'All fields are required: file, title, and description' });
   }
 
-  const key = `${uuidv4()}-${file.originalname}`;
+  // Function to get the current timestamp
+  const getCurrentTimestamp = () => {
+    const now = new Date();
+    return now.toISOString().replace(/[-:.]/g, ''); // Removes special characters
+  };
+
+  const timestamp = getCurrentTimestamp(); 
+  const uuid = uuidv4();
+  key = `${uuid}-${timestamp}-${file.originalname}`;
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,

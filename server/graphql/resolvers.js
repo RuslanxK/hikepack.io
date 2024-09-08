@@ -26,6 +26,24 @@ const weightConversionRates = {
 };
 
 
+
+async function deleteFile(imageUrl) {
+  const params = {
+    Bucket: process.env.AWS_S3_BUCKET, 
+    Key: imageUrl.split("https://light-pack-planner.s3.amazonaws.com/").pop(), 
+  };
+
+  try {
+    const data = await s3.deleteObject(params).promise();
+    console.log('File deleted successfully from S3', data);
+  } catch (error) {
+    console.error('Error deleting file from S3', error);
+    throw new Error('Failed to delete file from S3');
+  }
+}
+
+
+
 const resolvers = {
   Query: {
 
@@ -644,14 +662,29 @@ const resolvers = {
       }
     },
 
+
+    
     deleteItem: async (_, { id }, { user }) => {
       try {
-        return await Item.findByIdAndDelete(ensureOwner(user, { _id: id }));
+        const item = await Item.findById(ensureOwner(user, { _id: id }));
+        if (!item) {
+          throw new Error('Item not found');
+        }
+    
+        if (item.imageUrl) {
+          await deleteFile(item.imageUrl);
+        }
+    
+        await Item.findByIdAndDelete(id);
+    
+        return { success: true, message: 'Item deleted successfully' };
       } catch (error) {
         console.error(`Error deleting item with id ${id}:`, error);
         throw new Error('Failed to delete item');
       }
     },
+
+
 
     updateItemOrder: async (_, args) => {
       try {

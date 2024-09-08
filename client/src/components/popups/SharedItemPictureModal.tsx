@@ -16,7 +16,7 @@ const SharedItemPictureModal: React.FC<SharedItemPictureModalProps> = ({ isOpen,
           <img
             src={imageUrl}
             alt={imageAlt}
-            className="w-full h-auto object-cover rounded"
+            className="w-full h-96 object-contain rounded"
           />
         </div>
       </div>

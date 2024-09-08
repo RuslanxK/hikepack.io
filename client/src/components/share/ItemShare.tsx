@@ -28,7 +28,7 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
               alt={itemData.name} 
               className="w-full h-full object-cover rounded cursor-pointer"
             />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black bg-opacity-50 rounded">
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black bg-opacity-30 rounded">
               <FaEye size={20} className="text-white" />
             </div>
           </div>

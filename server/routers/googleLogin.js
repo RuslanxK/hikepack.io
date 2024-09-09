@@ -20,15 +20,26 @@ const setTokenCookie = (res, token) => {
 
 const findOrCreateUser = async (profile) => {
   let user = await User.findOne({ email: profile.email });
+  
+  const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',') : [];
+  
   if (!user) {
     user = new User({
       email: profile.email,
       username: profile.name,
       googleId: profile.id,
       imageUrl: profile.picture,
+      isAdmin: adminEmails.includes(profile.email) ? true : false, 
     });
     await user.save();
+  } else {
+    
+    if (adminEmails.includes(profile.email) && !user.isAdmin) {
+      user.isAdmin = true;
+      await user.save();
+    }
   }
+
   return user;
 };
 

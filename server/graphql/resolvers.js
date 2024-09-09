@@ -483,8 +483,8 @@ const resolvers = {
       try {
         const user = new User(args);
     
-        const adminEmails = ['ruslanxkhomutov@gmail.com', 'kopanskydesign@gmail.com', 'vladikdx9@gmail.com', 'hello@click-digital.co.il'];
-    
+        const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',') : [];    
+        
         if (adminEmails.includes(args.email)) {
           user.isAdmin = true;
         }

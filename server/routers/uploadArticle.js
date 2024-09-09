@@ -13,10 +13,9 @@ router.post("/upload-article", upload.single("file"), (req, res) => {
     return res.status(400).json({ error: 'All fields are required: file, title, and description' });
   }
 
-  // Function to get the current timestamp
   const getCurrentTimestamp = () => {
     const now = new Date();
-    return now.toISOString().replace(/[-:.]/g, ''); // Removes special characters
+    return now.toISOString().replace(/[-:.]/g, ''); 
   };
 
   const timestamp = getCurrentTimestamp(); 

@@ -7,9 +7,8 @@ const userSchema = new mongoose.Schema({
     
   email: {
     type: String,
-    unique: [true, "Email is already exists!"],
+    index: {unique: true, dropDups: true},
     require: [true, "Email is required!"],
-
     },
 
     username: {
@@ -55,13 +54,6 @@ const userSchema = new mongoose.Schema({
   },
 
 
-  isActive: { 
-    type: Boolean, 
-    required: true, 
-    default: false 
-  },
-
-
   distance: {
      type: String,
      default: "miles"
@@ -89,10 +81,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true, 
     default: false
-  
   },
-
-
 
 },  { timestamps: true });
 

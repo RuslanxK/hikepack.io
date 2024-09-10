@@ -13,13 +13,11 @@ const { applyMiddleware } = require('graphql-middleware');
 const cookieParser = require('cookie-parser');
 const googleAuthRoute = require("./routers/googleLogin")
 
-const app = express();
 
+const app = express();
 const port = process.env.PORT || 4000;
 
-
 app.use(cors({ origin: process.env.CLIENT_URL })); 
-
 
 app.use(cookieParser()); 
 app.use(express.json());
@@ -43,6 +41,7 @@ const dynamicAuthMiddleware = async (resolve, parent, args, context, info) => {
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
+  
 });
 
 const schemaWithMiddleware = applyMiddleware(

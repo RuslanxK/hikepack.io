@@ -5,13 +5,7 @@ import { gql } from '@apollo/client';
 export const ADD_TRIP = gql`
   mutation AddTrip($name: String!, $about: String!, $distance: String!, $startDate: String!, $endDate: String!, $imageUrl: String) {
     addTrip(name: $name, about: $about, distance: $distance, startDate: $startDate, endDate: $endDate, imageUrl: $imageUrl ) {
-      name
-      about
-      distance
-      startDate
-      endDate
-      imageUrl
-      
+     id
     }
   }
 `;

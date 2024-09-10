@@ -6,21 +6,20 @@ const typeDefs = gql`
     id: ID!
     googleId: String
     email: String!
-    username: String
+    username: String!
     birthdate: String
     password: String!
-    weightOption: String
+    weightOption: String!
     verifiedCredentials: Boolean
     resetPasswordExpires: String
     resetPasswordToken: String
     emailVerificationToken: String
-    isActive: Boolean
     distance: String
     gender: String
     activityLevel: String
     country: String
     imageUrl: String
-    isAdmin: Boolean
+    isAdmin: Boolean!
     createdAt: String!
     updatedAt: String!
   }
@@ -168,7 +167,7 @@ const typeDefs = gql`
     deleteItem(id: ID!): Item
     updateItemLink(id: ID!, link: String!): Item
 
-    createUser(email: String!, username: String, birthdate: String, password: String!, weightOption: String, verifiedCredentials: Boolean, isActive: Boolean, distance: String, gender: String, activityLevel: String, country: String, isAdmin: Boolean, imageUrl: String): User
+    createUser(email: String!, username: String, birthdate: String, password: String!, weightOption: String, verifiedCredentials: Boolean, distance: String, gender: String, activityLevel: String, country: String, isAdmin: Boolean, imageUrl: String): User
     updateUser(id: ID!, email: String, username: String, birthdate: String, password: String, weightOption: String, imageUrl: String, verifiedCredentials: Boolean, isActive: Boolean, distance: String, gender: String, activityLevel: String, country: String, isAdmin: Boolean): User
 
     addChangeLog(title: String!, description: String!): ChangeLog

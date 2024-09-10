@@ -46,6 +46,7 @@ async function deleteFile(imageUrl) {
 
 
 const resolvers = {
+  
   Query: {
 
     changeLogs: async () => {
@@ -477,14 +478,17 @@ const resolvers = {
     
     createUser: async (_, args) => {
       try {
+       
+        const existingUser = await User.findOne({ email: args.email });
+        if (existingUser) {
+          throw new Error('Email already exists!');
+        }
         const user = new User(args);
-    
-        const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',') : [];    
-        
+        const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',') : [];
         if (adminEmails.includes(args.email)) {
           user.isAdmin = true;
         }
-    
+  
         const verificationToken = crypto.randomBytes(32).toString('hex');
         const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
         user.emailVerificationToken = hashedToken;
@@ -496,8 +500,11 @@ const resolvers = {
     
         return user;
       } catch (error) {
+        if (error.code === 11000) {
+          throw new Error('Email already exists!'); 
+        }
         console.error('Error creating user:', error);
-        return error;
+        throw new Error(error); 
       }
     },
     

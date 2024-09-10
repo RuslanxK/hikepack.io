@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import axios from 'axios';
 import useCountries from '../hooks/useCountries';
-import { GET_USER } from '../queries/userQueries';
+import { GET_USER_SETTINGS } from '../queries/userQueries';
 import { UPDATE_USER } from '../mutations/userMutations';
 import Spinner from './loading/Spinner';
 import Message from './message/Message';
@@ -23,7 +23,7 @@ const Settings: React.FC = () => {
   const { countryNameArr } = useCountries();
   const navigate = useNavigate();
   
-  const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
+  const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER_SETTINGS);
   const [updateUser, { loading: updatingUser, error: updateError }] = useMutation(UPDATE_USER);
 
   useEffect(() => {
@@ -75,17 +75,21 @@ const Settings: React.FC = () => {
     }
   };
 
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
+    if (updatingUser) return;
+  
     let imageUrl = profileImage || '';
-
+  
     if (selectedFile) {
       try {
         const uploadData = new FormData();
         uploadData.append('file', selectedFile);
         uploadData.append('imageUrl', userData.user.imageUrl);
-
+  
         const { data } = await axios.post(`${API_BASE_URL}/upload-image`, uploadData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
@@ -95,7 +99,7 @@ const Settings: React.FC = () => {
         return;
       }
     }
-
+  
     try {
       await updateUser({
         variables: {
@@ -104,11 +108,17 @@ const Settings: React.FC = () => {
           imageUrl: imageUrl || undefined,
         },
       });
+      
+      
+      setSelectedFile(null);
+      setPreview(null); 
     } catch (error) {
       console.error('Error updating user:', error);
     }
   };
 
+
+  
   const commonInputStyles = "w-full text-sm p-2 sm:p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500";
 
   if (loadingUser || errorUser || updateError || error) {
@@ -231,6 +241,7 @@ const Settings: React.FC = () => {
 
               <button 
                 type="submit" 
+                disabled={updatingUser}
                 className="w-full sm:w-fit px-6 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
                 Save Changes {updatingUser ?  <Spinner w={4} h={4} /> : null}
               </button>

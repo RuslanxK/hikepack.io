@@ -2,13 +2,12 @@ import { gql } from '@apollo/client';
 
 
 export const ADD_USER = gql`
-  mutation AddUser($email: String!, $username: String, $birthdate: String, $password: String!, $weightOption: String, $verifiedCredentials: Boolean, $isActive: Boolean, $distance: String, $gender: String, $activityLevel: String, $country: String, $isAdmin: Boolean, $imageUrl: String) {
-    createUser(email: $email, username: $username, birthdate: $birthdate, password: $password, weightOption: $weightOption, verifiedCredentials: $verifiedCredentials, isActive: $isActive, distance: $distance, gender: $gender, activityLevel: $activityLevel, country: $country, isAdmin: $isAdmin, imageUrl: $imageUrl) {
+  mutation AddUser($email: String!, $username: String, $birthdate: String, $password: String!, $weightOption: String, $verifiedCredentials: Boolean, $distance: String, $gender: String, $activityLevel: String, $country: String, $isAdmin: Boolean, $imageUrl: String) {
+    createUser(email: $email, username: $username, birthdate: $birthdate, password: $password, weightOption: $weightOption, verifiedCredentials: $verifiedCredentials, distance: $distance, gender: $gender, activityLevel: $activityLevel, country: $country, isAdmin: $isAdmin, imageUrl: $imageUrl) {
       id
       email
       username
       birthdate
-      isActive
       isAdmin
       imageUrl
     }
@@ -16,9 +15,9 @@ export const ADD_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $email: String, $username: String, $birthdate: String, $password: String, $weightOption: String, $imageUrl: String, $verifiedCredentials: Boolean, $isActive: Boolean, $distance: String, $gender: String, $activityLevel: String, $country: String, $isAdmin: Boolean) {
-    updateUser(id: $id, email: $email, username: $username, birthdate: $birthdate, password: $password, weightOption: $weightOption, imageUrl: $imageUrl, verifiedCredentials: $verifiedCredentials, isActive: $isActive, distance: $distance, gender: $gender, activityLevel: $activityLevel, country: $country, isAdmin: $isAdmin) {
-      id, email, username, birthdate, weightOption, distance, gender, activityLevel, country, imageUrl, isActive, isAdmin
+  mutation UpdateUser($id: ID!, $email: String, $username: String, $birthdate: String, $password: String, $weightOption: String, $imageUrl: String, $verifiedCredentials: Boolean, $distance: String, $gender: String, $activityLevel: String, $country: String, $isAdmin: Boolean) {
+    updateUser(id: $id, email: $email, username: $username, birthdate: $birthdate, password: $password, weightOption: $weightOption, imageUrl: $imageUrl, verifiedCredentials: $verifiedCredentials, distance: $distance, gender: $gender, activityLevel: $activityLevel, country: $country, isAdmin: $isAdmin) {
+      id, email, username, birthdate, weightOption, distance, gender, activityLevel, country, imageUrl, isAdmin
     }
   }
 `;

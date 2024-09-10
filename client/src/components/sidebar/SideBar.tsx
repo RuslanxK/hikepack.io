@@ -26,6 +26,7 @@ const SideBar: React.FC = () => {
   const [showLatestBags, setShowLatestBags] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+
   const navigate = useNavigate();
   const params = useParams();
 
@@ -45,7 +46,6 @@ const SideBar: React.FC = () => {
     { to: "/settings", icon: FaCog, label: "Settings" },
     { to: "/changelog", icon: FaHistory, label: "Changelog" },
     { to: "/bug-report", icon: FaBug, label: "Report a Bug" },
-    // Conditionally display Admin settings only if the user is an admin
     ...(userData?.user?.isAdmin
       ? [{ to: "/admin-settings", icon: FaUserShield, label: "Admin settings" }]
       : [])
@@ -54,6 +54,7 @@ const SideBar: React.FC = () => {
   const handleBagClick = (bagId: string) => {
     navigate(`/bag/${bagId}`);
   };
+
 
   const toggleTheme = () => {
     const newTheme = !isDarkTheme;
@@ -128,7 +129,7 @@ const SideBar: React.FC = () => {
                   onClick={item.onClick}
                   showArrow={item.label === "Recent bags"}
                   isOpen={showLatestBags}
-                  setIsSidebarOpen={setIsSidebarOpen} // Pass down the function
+                  setIsSidebarOpen={setIsSidebarOpen} 
                 />
                 {item.label === "Recent bags" && showLatestBags && (
                   <ul className="mt-1 mb-2">
@@ -149,7 +150,7 @@ const SideBar: React.FC = () => {
                         className="p-2 pl-2 pr-2 flex items-center cursor-pointer dark:hover:bg-button-dark hover:bg-button-light rounded text-sm"
                         onClick={() => {
                           handleBagClick(bag.id);
-                          setIsSidebarOpen(false); // Close sidebar on item click
+                          setIsSidebarOpen(false); 
                         }}
                       >
                         <GiSchoolBag style={{ marginRight: "10px" }} />
@@ -218,11 +219,11 @@ const SideBar: React.FC = () => {
         </div>
       </div>
 
-      {/* Overlay when sidebar is open */}
+  
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-30 sm:hidden"
-          onClick={() => setIsSidebarOpen(false)} // Close sidebar when clicking outside
+          onClick={() => setIsSidebarOpen(false)} 
         />
       )}
     </>

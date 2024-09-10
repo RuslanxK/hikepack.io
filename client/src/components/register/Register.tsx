@@ -29,9 +29,10 @@ const Register: React.FC = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [registerError, setRegisterError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<any>(null);
   const [profilePicturePreview, setProfilePicturePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
 
   const navigate = useNavigate();
   const { countryNameArr } = useCountries();
@@ -91,13 +92,13 @@ const Register: React.FC = () => {
 
   const handlePrevStep = () => setStep((prevStep) => prevStep - 1);
 
+
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
+    if (loading || userLoading) return;
     setRegisterError(null);
     setLoading(true); 
-    
     let imageUrl = '';
-  
     try {
       if (formData.profilePicture) {
         try {
@@ -128,12 +129,15 @@ const Register: React.FC = () => {
       });
       localStorage.setItem("registrationSuccess", "true");
     } catch (error) {
-      setRegisterError('error');
+      setRegisterError("An error occurred")
       console.error('Registration failed:', error);
     } finally {
+      setFormData((prevData) => ({ ...prevData, profilePicture: null }));
       setLoading(false); 
     }
   };
+
+
 
   const renderInput = (
     name: keyof FormData,
@@ -346,13 +350,14 @@ const Register: React.FC = () => {
                 </button>
                 <button
                   type="submit"
+                  disabled={loading || userLoading}
                   className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
                 >
                  Register  {loading || userLoading ?  <Spinner w={4} h={4} /> : null}
                 </button>
 
                 {registerError ? (
-                  <Message width="w-full" title="" padding="p-3 sm:p-5" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />
+                  <Message width="w-full" title="" padding="p-3 sm:p-5" titleMarginBottom="" message={registerError} type="error" />
                 ) : null}
               </div>
             </>

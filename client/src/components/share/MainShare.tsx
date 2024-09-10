@@ -149,8 +149,10 @@ const MainShare: React.FC = () => {
       </div>
 
     
-      <footer className="mt-10 p-4 text-center text-gray-700 dark:text-gray-200">
-        <p className="text-sm">Shared by <span className="font-semibold text-blue-600">{userData?.userShared?.username}</span></p>
+      <footer className="mt-10 p-4 text-center text-gray-700 dark:text-gray-200 flex items-center w-full justify-center">
+        <p className="text-sm">Shared by</p>
+        <img src={userData?.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-2 ml-2' /> 
+        <span className="font-semibold text-blue-600 text-sm">{userData?.userShared?.username}</span>
       </footer>
     </div>
   );

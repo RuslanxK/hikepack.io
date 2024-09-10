@@ -39,7 +39,6 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
         try {
           const formData = new FormData();
           formData.append('file', file);
-      
           const { data } = await axios.post(`${API_BASE_URL}/upload-image`, formData, {headers: { 'Content-Type': 'multipart/form-data'}});
           imageUrl = data.data.Location; 
         } catch (error) {

@@ -187,6 +187,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
               defaultValue={categoryData.name}
               placeholder='e.g., Clothes'
               ref={categoryNameRef}
+              onClick={() => console.log(data)}
               onBlur={handleCategoryNameBlur}
               className="border-b border-neutral-200 dark:border-neutral-600 px-2 py-1 mr-4 flex-grow bg-transparent focus:outline-none focus:ring-1 focus:ring-primary w-full text-gray-800 dark:text-gray-200"
             />

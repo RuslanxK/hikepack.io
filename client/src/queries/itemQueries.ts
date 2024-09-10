@@ -37,7 +37,7 @@ export const GET_ITEMS = gql`
       imageUrl
       worn
       order
-       weightOption
+      weightOption
     }
   }
 `;

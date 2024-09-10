@@ -25,8 +25,6 @@ const weightConversionRates = {
 };
 
 
-
-
 async function deleteFile(imageUrl) {
  
   const key = imageUrl.substring(imageUrl.lastIndexOf('/') + 1); 
@@ -45,8 +43,6 @@ async function deleteFile(imageUrl) {
     throw new Error('Failed to delete file from S3');
   }
 }
-
-
 
 
 const resolvers = {

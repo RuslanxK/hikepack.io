@@ -6,10 +6,7 @@ export const GET_BAGS = gql`
       id
       tripId
       name
-      description
-      goal
      
-      
     }
   }
 `;

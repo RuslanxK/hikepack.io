@@ -5,8 +5,8 @@ export const GET_TRIPS = gql`
     trips {
       id
       name
-      startDate
       imageUrl
+      
     }
   }
 `;

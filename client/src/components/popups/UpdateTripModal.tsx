@@ -10,6 +10,7 @@ import Message from '../message/Message';
 import { FaCloudUploadAlt, FaCheckCircle } from 'react-icons/fa';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/apiConfigs';
+import { GET_TRIP } from '../../queries/tripQueries';
 
 const UpdateTripModal: React.FC<UpdateTripModalProps> = ({ isOpen, onClose, trip, distanceUnit}) => {
   const [name, setName] = useState(trip.name);
@@ -75,8 +76,7 @@ const UpdateTripModal: React.FC<UpdateTripModalProps> = ({ isOpen, onClose, trip
     try {
       await updateTrip({
         variables: { id: trip.id, name, about, distance, startDate, endDate, imageUrl },
-       
-      });
+        refetchQueries: [{ query: GET_TRIP, variables: { id: trip.id } }],});
 
       setError('');
       onClose();

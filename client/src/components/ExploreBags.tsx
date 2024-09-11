@@ -156,10 +156,10 @@ const ExploreBags: React.FC = () => {
         Discover top-rated bags for every journey. Whether you're conquering remote peaks or exploring dense forests, find your perfect companion.
       </p>
   
-      {paginatedBags.length > 0 ? (
+     
         
           <div className="inline-block min-w-full align-middle">
-            <div className="border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700 bg-white dark:bg-box">
+            <div className="border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700 bg-white dark:bg-box mb-3">
               <div className="py-4 px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="relative">
@@ -177,7 +177,7 @@ const ExploreBags: React.FC = () => {
                 </div>
               </div>
               
-               <div id="scroll" className='overflow-x-scroll sm:overflow-x-visible '>
+               <div id="scroll" className='overflow-x-scroll sm:overflow-x-visible'>
                 <div className='w-48 sm:w-full'>
                 <table className="w-full divide-y divide-gray-200 dark:divide-neutral-700">
                   <thead className="bg-gray-50 dark:bg-neutral-700">
@@ -248,16 +248,15 @@ const ExploreBags: React.FC = () => {
               )}
             </div>
        
-      ) : (
-        <Message 
+      { paginatedBags.length > 0 ? null : <Message 
           width="w-full" 
           title="No Bags Found" 
           padding="sm:p-5 p-3" 
           titleMarginBottom="mb-2" 
           message="There are no bags that match your search criteria. Please adjust your filters and try again." 
           type="info" 
-        />
-      )}
+        />  }
+   
     </div>
   </div>
   

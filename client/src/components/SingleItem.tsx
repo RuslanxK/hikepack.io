@@ -44,7 +44,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const handleBlur = (field: string, value: any) => {
     updateItem({
       variables: { id: itemData.id, [field]: value },
-      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }, { query: GET_ALL_ITEMS }]
+      refetchQueries: [ { query: GET_ITEM, variables: { id: itemData.id } }, { query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }, { query: GET_ALL_ITEMS }]
     });
   };
 

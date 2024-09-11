@@ -24,12 +24,14 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const [weightOption, setWeightOption] = useState(itemData.weightOption || weightUnit);
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipVisible, setTooltipVisible] = useState(false);
-
+  const [priority, setPriority] = useState(itemData.priority || 'low');
 
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [addItem, { loading: addingItem }] = useMutation(ADD_ITEM); 
 
-  const priorityClass = itemData.priority === 'low' ? 'bg-emerald-100 dark:bg-emerald-600' : itemData.priority === 'med' ? 'bg-yellow-100 dark:bg-yellow-600' : 'bg-red-100 dark:bg-red-600';
+  const priorityClass = priority === 'low' ? 'bg-emerald-100 dark:bg-emerald-600' : 
+  priority === 'med' ? 'bg-yellow-100 dark:bg-yellow-600' : 
+  'bg-red-100 dark:bg-red-600';
 
   useEffect(() => {
     if (itemData.weightOption) {
@@ -44,7 +46,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const handleBlur = (field: string, value: any) => {
     updateItem({
       variables: { id: itemData.id, [field]: value },
-      refetchQueries: [ { query: GET_ITEM, variables: { id: itemData.id } }, { query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }, { query: GET_ALL_ITEMS }]
+      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }, { query: GET_ALL_ITEMS }]
     });
   };
 
@@ -56,9 +58,12 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     });
   };
 
-  const handlePriorityChange = (priority: string) => {
-    handleBlur('priority', priority);
-    
+  const handlePriorityChange = (newPriority: string) => {
+    setPriority(newPriority); 
+    updateItem({
+      variables: { id: itemData.id, priority: newPriority },
+      refetchQueries: [{ query: GET_ITEM, variables: { id: itemData.id } }]
+    });
   };
 
   const handleQtyChange = (value: number) => {
@@ -188,7 +193,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     
   <select
     id="priority-select"
-    value={itemData.priority}
+    value={priority}
     onChange={(e) => handlePriorityChange(e.target.value)} 
     className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} rounded-none`} // Add `rounded-none`
   >

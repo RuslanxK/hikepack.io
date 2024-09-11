@@ -21,18 +21,18 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
   return (
     <div id="scroll" className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible relative">
       <div className="flex flex-row items-center justify-between w-48 space-x-2 sm:w-full">
-        {imageUrl && (
-          <div className="relative w-12 h-12 flex-shrink-0" onClick={togglePopup}>
+       
+          <div className="relative w-12 h-12 flex-shrink-0" onClick={imageUrl ? togglePopup : undefined}>
             <img 
-              src={imageUrl} 
+              src={imageUrl ? imageUrl : '/images/no-picture.png'} 
               alt={itemData.name} 
               className="w-full h-full object-cover rounded cursor-pointer"
             />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black bg-opacity-30 rounded">
+            { imageUrl ? <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black bg-opacity-30 rounded">
               <FaEye size={20} className="text-white" />
-            </div>
+            </div> : null }
           </div>
-        )}
+        
         <input 
           type="text" 
           placeholder="name" 

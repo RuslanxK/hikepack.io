@@ -20,7 +20,7 @@ const MainShare: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { data: dataBag, loading: loadingBag, error: errorBag } = useQuery(GET_SHARED_BAG, { variables: { id } });
+  const { data: dataBag, loading: loadingBag, error: errorBag, refetch } = useQuery(GET_SHARED_BAG, { variables: { id } });
   const { loading: loadingCategories, error: errorCategories, data: dataCategories } = useQuery<GetCategoriesData>(GET_CATEGORIES, { variables: { bagId: id } });
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER_SHARED, { variables: { bagId: id }});
 
@@ -51,11 +51,13 @@ const MainShare: React.FC = () => {
       likedBags.push(id);
       localStorage.setItem('likedBags', JSON.stringify(likedBags));
       setHasLiked(true);
+      refetch()
     } else {
       await updateLikes({ variables: { bagId: id, increment: -1 } });
       const updatedLikes = likedBags.filter((bagId: string) => bagId !== id);
       localStorage.setItem('likedBags', JSON.stringify(updatedLikes));
       setHasLiked(false);
+      refetch()
     }
   };
 
@@ -151,7 +153,7 @@ const MainShare: React.FC = () => {
     
       <footer className="mt-10 p-4 text-center text-gray-700 dark:text-gray-200 flex items-center w-full justify-center">
         <p className="text-sm">Shared by</p>
-        <img src={userData?.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-2 ml-2' /> 
+        <img src={userData.userShared.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-2 ml-2' /> 
         <span className="font-semibold text-blue-600 text-sm">{userData?.userShared?.username}</span>
       </footer>
     </div>

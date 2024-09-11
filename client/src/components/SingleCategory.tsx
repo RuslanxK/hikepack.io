@@ -126,7 +126,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       try {
         await updateCategoryName({
           variables: { id: categoryData.id, name: categoryNameRef.current.value },
-        });
+          refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: categoryData.bagId }}]});
         
       } catch (error) {
         console.error('Error updating category name:', error);

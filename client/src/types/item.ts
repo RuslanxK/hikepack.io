@@ -56,6 +56,7 @@ export interface Item {
     onClose: () => void;
     itemId: string
     itemPicLink: string
+    categoryId: string
   }
   
   
@@ -70,5 +71,6 @@ export interface Item {
     onClose: () => void;
     itemLink?: string
     itemId: string;  
+    categoryId: string
   }
   

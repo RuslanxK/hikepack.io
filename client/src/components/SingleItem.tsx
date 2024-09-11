@@ -76,6 +76,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const handleToggleWorn = () => {
     updateItem({ variables: { id: itemData.id, worn: !itemData.worn },
       refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } },
+        { query: GET_ITEMS, variables: { categoryId: itemData.categoryId } },
         { query: GET_ITEM, variables: { id: itemData.id } }
       ]
     });
@@ -240,8 +241,8 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 )}
       </div>
 
-      <ItemPictureModal isOpen={isModalPicOpen} onClose={() => setIsModalPicOpen(false)} itemId={itemData.id} itemPicLink={itemData.imageUrl || ''} />
-      <AddLinkModal isOpen={isModalLinkOpen} onClose={() => setIsModalLinkOpen(false)} itemId={itemData.id} itemLink={itemData.link} />
+      <ItemPictureModal isOpen={isModalPicOpen} onClose={() => setIsModalPicOpen(false)} itemId={itemData.id} categoryId={itemData.categoryId}  itemPicLink={itemData.imageUrl || ''} />
+      <AddLinkModal isOpen={isModalLinkOpen} onClose={() => setIsModalLinkOpen(false)} itemId={itemData.id} categoryId={itemData.categoryId} itemLink={itemData.link} />
     </div>
     </div>
   );

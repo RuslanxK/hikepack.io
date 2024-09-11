@@ -5,9 +5,9 @@ import Modal from './Modal';
 import Spinner from '../loading/Spinner';
 import { AddLinkModalProps } from '../../types/item';
 import Message from '../message/Message';
-import { GET_ITEM } from '../../queries/itemQueries';
+import { GET_ITEM, GET_ITEMS } from '../../queries/itemQueries';
 
-const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, itemLink }) => {
+const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, categoryId, itemLink }) => {
 
   const [link, setLink] = useState(itemLink || '');
   const [error, setError] = useState('');
@@ -23,7 +23,7 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, it
     try {
       await updateItemLink({
         variables: { id: itemId, link },
-        refetchQueries: [{ query: GET_ITEM, variables: { id: itemId } },]
+        refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: categoryId } }, { query: GET_ITEM, variables: { id: itemId } },]
         
       });
 

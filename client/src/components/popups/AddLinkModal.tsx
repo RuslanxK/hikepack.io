@@ -5,6 +5,7 @@ import Modal from './Modal';
 import Spinner from '../loading/Spinner';
 import { AddLinkModalProps } from '../../types/item';
 import Message from '../message/Message';
+import { GET_ITEM } from '../../queries/itemQueries';
 
 const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, itemLink }) => {
 
@@ -22,6 +23,7 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, it
     try {
       await updateItemLink({
         variables: { id: itemId, link },
+        refetchQueries: [{ query: GET_ITEM, variables: { id: itemId } },]
         
       });
 

@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_ITEM_PICTURE } from '../../mutations/itemMutation';
 import { FaCloudUploadAlt, FaCheckCircle } from 'react-icons/fa';
 import { API_BASE_URL } from '../../utils/apiConfigs';
+import { GET_ITEM } from '../../queries/itemQueries';
 
 const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, itemId, itemPicLink }) => {
   const [loading, setLoading] = useState(false);
@@ -91,7 +92,8 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
     }
 
     try {
-      await updateItem({ variables: { id: itemId, imageUrl } });
+      await updateItem({ variables: { id: itemId, imageUrl },  
+      refetchQueries: [{ query: GET_ITEM, variables: { id: itemId } },]});
       onClose();
     } catch (e) {
       setError('Error updating item picture. Please try again.');

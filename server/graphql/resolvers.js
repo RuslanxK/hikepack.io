@@ -250,6 +250,14 @@ const resolvers = {
       }
     },
 
+    item: async (_, { id }) => {
+      try {
+        return await Item.findOne({ _id: id });
+      } catch (error) {
+        console.error(`Error fetching item with id ${id}:`, error);
+        throw new Error('Failed to fetch item');
+      }
+    },
 
     latestBags: async (_, __, { user }) => {
       try {

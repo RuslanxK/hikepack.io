@@ -9,7 +9,7 @@ import { UPDATE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
 import ItemPictureModal from './popups/ItemPictureModal';
 import AddLinkModal from './popups/AddLinkModal';
 import { GET_CATEGORIES } from '../queries/categoryQueries';
-import { GET_ITEMS, GET_ALL_ITEMS } from '../queries/itemQueries';
+import { GET_ITEMS, GET_ALL_ITEMS, GET_ITEM } from '../queries/itemQueries';
 import Spinner from './loading/Spinner';
 
 const inputClasses = "py-1 px-2 border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-primary dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
@@ -26,7 +26,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
 
-  const [updateItem, { loading: updatingItem }] = useMutation(UPDATE_ITEM);
+  const [updateItem] = useMutation(UPDATE_ITEM);
   const [addItem, { loading: addingItem }] = useMutation(ADD_ITEM); 
 
   const priorityClass = itemData.priority === 'low' ? 'bg-emerald-100 dark:bg-emerald-600' : itemData.priority === 'med' ? 'bg-yellow-100 dark:bg-yellow-600' : 'bg-red-100 dark:bg-red-600';
@@ -75,7 +75,9 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   const handleToggleWorn = () => {
     updateItem({ variables: { id: itemData.id, worn: !itemData.worn },
-      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }]
+      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } },
+        { query: GET_ITEM, variables: { id: itemData.id } }
+      ]
     });
   };
 

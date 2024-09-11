@@ -26,7 +26,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
 
-  const [updateItem] = useMutation(UPDATE_ITEM);
+  const [updateItem, { loading: updatingItem }] = useMutation(UPDATE_ITEM);
   const [addItem, { loading: addingItem }] = useMutation(ADD_ITEM); 
 
   const priorityClass = itemData.priority === 'low' ? 'bg-emerald-100 dark:bg-emerald-600' : itemData.priority === 'med' ? 'bg-yellow-100 dark:bg-yellow-600' : 'bg-red-100 dark:bg-red-600';
@@ -204,13 +204,13 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           onMouseEnter={() => showTooltip('image')}
           onMouseLeave={hideTooltip}
         />
-        <FaWalking 
+       <FaWalking 
           size={14} 
           className={`${iconClasses} ${itemData.worn ? 'text-green dark:text-green' : 'text-gray-500 dark:text-neutral-300'}`} 
           onClick={handleToggleWorn} 
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
-        />
+        /> 
        { addingItem ? <Spinner w={4} h={4} /> : <FaCopy 
           size={14} 
           className={`text-gray-500 dark:text-neutral-400 ${iconClasses}`} 

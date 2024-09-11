@@ -47,7 +47,7 @@ const BagDetails: React.FC = () => {
 
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
-  const [isSidePanelVisible, setIsSidePanelVisible] = useState(true); 
+  const [isSidePanelVisible, setIsSidePanelVisible] = useState( window.matchMedia('(max-width: 767px)').matches ? false : true); 
 
 
   useEffect(() => {
@@ -63,15 +63,6 @@ const BagDetails: React.FC = () => {
   }, [loadingBag, dataBag, navigate]);
 
 
-  useEffect(() => {
-    const handleResize = () => {
-      const isMobile = window.matchMedia('(max-width: 767px)').matches;
-      setIsSidePanelVisible(!isMobile); 
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
 
   const bag = dataBag?.bag;

@@ -135,9 +135,7 @@ const typeDefs = gql`
     sharedBag(id: ID!): Bag
     bag(id: ID!): Bag
     categories(bagId: ID!): [Category!]!
-    category(id: ID!): Category
     items(categoryId: ID!): [Item!]!
-    item(id: ID!): Item
     latestBags: [Bag!]!
     latestBagWithDetails: BagWithDetails
     allItems: [Item!]!

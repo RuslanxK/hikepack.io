@@ -42,24 +42,5 @@ export const GET_ITEMS = gql`
   }
 `;
 
-export const GET_ITEM = gql`
-  query GetItem($id: ID!) {
-    item(id: $id) {
-      id
-      tripId
-      bagId
-      categoryId
-      name
-      qty
-      description
-      weight
-      priority
-      link
-      imageUrl
-      worn
-      order
-      weightOption
-    }
-  }
-`;
+
 

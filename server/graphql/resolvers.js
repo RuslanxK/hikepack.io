@@ -121,7 +121,13 @@ const resolvers = {
 
 
     trips: async (_, __, { user }) => {
+      try {
       return await Trip.find(ensureOwner(user));
+      }
+      catch(error) {
+
+        console.log(error)
+      }
     },
 
     trip: async (_, { id }, { user }) => {
@@ -234,14 +240,6 @@ const resolvers = {
     },
 
     
-    category: async (_, { id }) => {
-      try {
-        return await Category.findOne({ _id: id });
-      } catch (error) {
-        console.error(`Error fetching category with id ${id}:`, error);
-        throw new Error('Failed to fetch category');
-      }
-    },
 
     items: async (_, { categoryId }) => {
       try {
@@ -252,14 +250,6 @@ const resolvers = {
       }
     },
 
-    item: async (_, { id }) => {
-      try {
-        return await Item.findOne({ _id: id });
-      } catch (error) {
-        console.error(`Error fetching item with id ${id}:`, error);
-        throw new Error('Failed to fetch item');
-      }
-    },
 
     latestBags: async (_, __, { user }) => {
       try {

@@ -34,10 +34,7 @@ export const GET_SHARED_BAG = gql`
       tripId
       name
       description
-      goal
       likes
-      exploreBags
-     
     }
   }
 `;

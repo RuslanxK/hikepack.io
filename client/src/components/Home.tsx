@@ -19,9 +19,6 @@ const Home: React.FC = () => {
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-  console.log(data)
-
   const handleAddTrip = () => {
     setIsModalOpen(true);
   };

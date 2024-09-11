@@ -47,6 +47,7 @@ export const GET_ITEM = gql`
     item(id: $id) {
       id
       link
+      order
       imageUrl
       worn
    

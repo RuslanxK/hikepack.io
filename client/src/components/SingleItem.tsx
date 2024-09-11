@@ -214,7 +214,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
         /> 
-       { addingItem ? <Spinner w={4} h={4} /> : <FaCopy 
+       { addingItem ? <Spinner w={3} h={3} /> : <FaCopy 
           size={14} 
           className={`text-gray-500 dark:text-neutral-400 ${iconClasses}`} 
           onClick={handleCopyItem} 

@@ -55,7 +55,7 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, ca
             disabled={loading}
           >
             SAVE
-            {loading && <Spinner w={4} h={4 }/>}
+            {loading && <Spinner w={4} h={4}/>}
           </button>
        
           {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />}

@@ -1,43 +1,25 @@
 import React, { useState, useEffect} from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { useQuery } from '@apollo/client';
 import { CategoryProps } from '../../types/category';
-import { GET_ITEMS} from '../../queries/itemQueries';
-import { GetItemsData, Item } from '../../types/item';
+import {  Item } from '../../types/item';
 import ItemShare from './ItemShare'
-import Spinner from '../loading/Spinner';
-import Message from '../message/Message';
 
 const CategoryShare: React.FC<CategoryProps> = ({ categoryData, weightUnit }) => {
   const [expanded, setExpanded] = useState(true);
 
-  const { loading, error, data } = useQuery<GetItemsData>(GET_ITEMS, { variables: { categoryId: categoryData.id } });
   const [itemsData, setItemsData] = useState<Item[]>([]);
 
   useEffect(() => {
-    if (data) {
-      setItemsData(data.items.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+    if (categoryData.items) {
+      setItemsData(categoryData.items.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
     }
-  }, [data]);
+  }, [categoryData.items]);
 
   const handleRowClick = () => {
     setExpanded(!expanded);
   };
 
-  if (loading  || error) {
-    if (error) {
-      console.error('Error fetching item details:', error);
-    }
-    return (
-      <div className="w-full flex flex-col justify-center">
-        <Spinner w={6} h={6} />
-        {(error) && (
-          <Message width='w-fit' title="Attention Needed" padding="sm:p-5 p-3" titleMarginBottom="mb-2" message="Something went wrong. Please try again later." type="error" />
-        )}
-      </div>
-    );
-  }
-
+  
   return (
     <div className="mb-2" >
       <div className="cursor-pointer bg-white dark:bg-zinc-800 w-full">

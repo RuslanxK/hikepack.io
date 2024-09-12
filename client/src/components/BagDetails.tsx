@@ -223,10 +223,10 @@ const BagDetails: React.FC = () => {
               </div>
 
               <div className="sm:w-64 h-64">
-                <CategoryChart categories={dataBag.bag.categories} weightUnit={userData?.user?.weightOption} />
+                <CategoryChart categories={dataBag?.bag?.categories} weightUnit={userData?.user?.weightOption} />
               </div>
               <div className='w-full sm:w-fit'>
-                <CategoryTable categories={dataBag.bag.categories} weightUnit={userData?.user?.weightOption} />
+                <CategoryTable categories={dataBag?.bag?.categories} weightUnit={userData?.user?.weightOption} />
               </div>
             </div>
           )}
@@ -247,7 +247,7 @@ const BagDetails: React.FC = () => {
             </div>
           </div>
       
-        {dataBag.bag.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataBag.bag.allItems}  /> : null}
+        {dataBag?.bag?.allItems?.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataBag?.bag?.allItems}  /> : null}
         <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />
       </div>
     </div>

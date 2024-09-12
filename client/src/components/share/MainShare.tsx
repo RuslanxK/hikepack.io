@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FaHeart, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
-import { GET_SHARED_BAG } from '../../queries/bagQueries';
 import { UPDATE_LIKES_BAG } from '../../mutations/bagMutations';
-import { GET_CATEGORIES } from '../../queries/categoryQueries';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { GetCategoriesData, Category } from '../../types/category';
+import { Category } from '../../types/category';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import CategoryChart from '../chart/CategoryChart';
 import CategoryTable from '../chart/CategoryTable';
@@ -13,6 +11,7 @@ import CategoryShare from './CategoryShare';
 import Message from '../message/Message';
 import { GET_USER_SHARED } from '../../queries/userQueries';
 import Spinner from '../loading/Spinner';
+import { GET_SHARED_BAG } from '../../queries/bagQueries';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -20,20 +19,22 @@ const MainShare: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { data: dataBag, loading: loadingBag, error: errorBag, refetch } = useQuery(GET_SHARED_BAG, { variables: { id } });
-  const { loading: loadingCategories, error: errorCategories, data: dataCategories } = useQuery<GetCategoriesData>(GET_CATEGORIES, { variables: { bagId: id } });
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER_SHARED, { variables: { bagId: id }});
+  const { data: dataBag, loading: loadingBag, error: errorBag, refetch } = useQuery(GET_SHARED_BAG, { variables: { id } });
+
 
 
   const [updateLikes] = useMutation(UPDATE_LIKES_BAG);
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);
   const [hasLiked, setHasLiked] = useState(false);
 
+
+
   useEffect(() => {
-    if (dataCategories) {
-      setCategoriesData(dataCategories.categories.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+    if (dataBag?.sharedBag?.categories) {
+      setCategoriesData(dataBag?.sharedBag?.categories.slice().sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)));
     }
-  }, [dataCategories]);
+  }, [dataBag?.sharedBag?.categories]);
 
   useEffect(() => {
     const likedBags = JSON.parse(localStorage.getItem('likedBags') || '[]');
@@ -52,18 +53,22 @@ const MainShare: React.FC = () => {
       localStorage.setItem('likedBags', JSON.stringify(likedBags));
       setHasLiked(true);
       refetch()
+     
+    
     } else {
       await updateLikes({ variables: { bagId: id, increment: -1 } });
       const updatedLikes = likedBags.filter((bagId: string) => bagId !== id);
       localStorage.setItem('likedBags', JSON.stringify(updatedLikes));
       setHasLiked(false);
       refetch()
+     
+    
     }
   };
 
   const bag = dataBag?.sharedBag;
 
-  if (loadingBag || loadingCategories || loadingUser) {
+  if (loadingBag || loadingUser) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Spinner w={10} h={10} />
@@ -71,7 +76,7 @@ const MainShare: React.FC = () => {
     );
   }
 
-  if (errorUser || errorBag || errorCategories) {
+  if (errorUser || errorBag) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Message 
@@ -134,10 +139,10 @@ const MainShare: React.FC = () => {
           </div>
 
           <div className="sm:w-64 h-64">
-            <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.userShared?.weightOption} />
+            <CategoryChart categories={dataBag.sharedBag.categories} weightUnit={userData?.userShared?.weightOption} />
           </div>
           <div className="w-full sm:w-fit">
-            <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.userShared?.weightOption} />
+            <CategoryTable categories={dataBag.sharedBag.categories} weightUnit={userData?.userShared?.weightOption} />
           </div>
         </div>
       )}

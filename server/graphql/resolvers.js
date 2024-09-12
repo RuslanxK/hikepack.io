@@ -152,7 +152,52 @@ const resolvers = {
 
     sharedBag: async (_, { id }) => {
       try {
-        return await Bag.findOne({ _id: id });
+        // Fetch the shared bag by its ID
+        const bag = await Bag.findOne({ _id: id });
+    
+        if (!bag) {
+          throw new Error(`Bag with id ${id} not found`);
+        }
+    
+        const categories = await Category.find({ bagId: bag._id });
+        const categoriesWithDetails = await Promise.all(
+          categories.map(async (category) => {
+            const items = await Item.find({ categoryId: category._id });
+    
+            const totalWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.weight * item.qty * conversionRate);
+            }, Promise.resolve(0));
+    
+            const totalWornWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.worn ? item.weight * item.qty * conversionRate : 0);
+            }, Promise.resolve(0));
+    
+            return {
+              ...category.toObject(),
+              id: category._id.toString(),
+              totalWeight,
+              totalWornWeight,
+              items
+            };
+          })
+        );
+    
+        return {
+          ...bag.toObject(),
+          id: bag._id.toString(), // Ensure _id is mapped to id
+          categories: categoriesWithDetails,
+        };
+    
       } catch (error) {
         console.error(`Error fetching shared bag with id ${id}:`, error);
         throw new Error('Failed to fetch shared bag');
@@ -258,6 +303,7 @@ const resolvers = {
 
 
   Bag: {
+
     categories: async (parent) => {
       try {
         const categories = await Category.find({ bagId: parent.id });
@@ -302,28 +348,27 @@ const resolvers = {
       }
     },
 
-    allItems: async (_, __, { user }) => {
-      try {
-        const items = await Item.find(
-          {
-            ...ensureOwner(user),
-            name: { $ne: "", $exists: true }
-          }
-        )
-        .sort({ createdAt: -1 })
-        .exec();
-
-        const uniqueItems = items.filter(
-          (item, index, self) => index === self.findIndex((t) => t.name === item.name)
-        );
-    
-        return uniqueItems.slice(0, 50);
-    
-      } catch (error) {
-        console.error('Error fetching all items:', error);
-        throw new Error('Failed to fetch all items');
+   allItems: async () => {
+  try {
+    const items = await Item.find(
+      {
+        name: { $ne: "", $exists: true }
       }
-    },
+    )
+    .sort({ createdAt: -1 })
+    .exec();
+
+    const uniqueItems = items.filter(
+      (item, index, self) => index === self.findIndex((t) => t.name === item.name)
+    );
+
+    return uniqueItems.slice(0, 50);
+
+  } catch (error) {
+    console.error('Error fetching all items:', error);
+    throw new Error('Failed to fetch all items');
+  }
+},
     
   },
 
@@ -341,7 +386,6 @@ const resolvers = {
      
   },
   
-
 
 
   

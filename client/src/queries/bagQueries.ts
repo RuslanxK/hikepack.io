@@ -64,7 +64,37 @@ export const GET_SHARED_BAG = gql`
       tripId
       name
       description
+      goal
       likes
+      exploreBags
+      
+      categories {
+      id
+      tripId
+      bagId
+      name
+      order
+      color
+      totalWeight
+      totalWornWeight
+      items {
+         id
+         categoryId
+         bagId
+         tripId
+         name
+         description
+         qty
+         weight
+         weightOption
+         priority
+         imageUrl
+         link
+         worn
+         order
+       }
+      }
+      
     }
   }
 `;

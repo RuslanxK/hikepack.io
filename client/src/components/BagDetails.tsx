@@ -232,7 +232,7 @@ const BagDetails: React.FC = () => {
           )}
         
             <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
-              {addingCategory ? <Spinner w={4} h={4}/> : <FaPlus size={13} /> }
+              {addingCategory ? <Spinner w={3} h={3}/> : <FaPlus size={13} /> }
             </button>
             <div className="w-full pb-14">
               {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }

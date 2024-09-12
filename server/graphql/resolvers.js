@@ -21,6 +21,7 @@ const { deleteFile} = require('../utils/s3Utils')
 const { getCategoryDetails } = require('../utils/categoryUtils');
 
 
+
 const resolvers = {
   Query: {
     changeLogs: async () => {
@@ -285,7 +286,9 @@ const resolvers = {
     },
   },
 
+  
   Category: {
+
     items: async (parent) => {
       try {
         return await Item.find({ categoryId: parent.id });
@@ -602,8 +605,6 @@ const resolvers = {
     },
 
   
-
-    
     addCategory: async (_, args, { user }) => {
       try {
         const categoriesCount = await Category.countDocuments({
@@ -643,11 +644,9 @@ const resolvers = {
 
     updateCategory: async (_, args, { user }) => {
       try {
-        console.log(args);
+        
         const updateData = { ...args, owner: user.userId };
-        return await Category.findByIdAndUpdate(args.id, updateData, {
-          new: true,
-        });
+        return await Category.findByIdAndUpdate(args.id, updateData,{new: true});
       } catch (error) {
         console.error(`Error updating category with id ${id}:`, error);
         throw new Error("Failed to update category");

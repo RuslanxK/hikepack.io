@@ -39,8 +39,6 @@ const BagDetails: React.FC = () => {
   const sensors = useSensors(mouseSensor, touchSensor);
 
 
-  console.log(dataBag)
-
   const [updateBag] = useMutation(UPDATE_BAG);
   const [addCategory, {loading: addingCategory }] = useMutation(ADD_CATEGORY);
   const [updateCategory] = useMutation(UPDATE_CATEGORY);
@@ -53,7 +51,7 @@ const BagDetails: React.FC = () => {
     if (dataBag?.bag?.categories) {
       setCategoriesData(dataBag.bag?.categories?.slice().sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)));
     }
-  }, [dataBag?.bag?.categories]);
+  }, [dataBag]);
 
   useEffect(() => {
     if (!loadingBag && !dataBag?.bag) {
@@ -133,6 +131,7 @@ const BagDetails: React.FC = () => {
         reorderedCategories.map((category) =>
           updateCategory({
             variables: { id: category.id, order: category.order },
+            
           })
         )
       );

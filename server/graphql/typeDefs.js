@@ -152,6 +152,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+
     addTrip(name: String!, about: String!, distance: String!, startDate: String!, endDate: String!, imageUrl: String): Trip
     deleteTrip(id: ID!): Trip
     updateTrip(id: ID!, name: String, about: String, distance: String, startDate: String, endDate: String, imageUrl: String): Trip
@@ -162,7 +163,6 @@ const typeDefs = gql`
     addCategory(tripId: String!, bagId: String!, name: String!, order: Int, color: String): Category
     deleteCategory(id: ID!): Category
     updateCategory(id: ID!, order: Int, name: String): Category
-
     updateItem(id: ID!, name: String, qty: Int, description: String, weight: Float, priority: String, link: String, worn: Boolean, imageUrl: String, weightOption: String, order: Int): Item
     addItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String): Item
     deleteItem(id: ID!): Item

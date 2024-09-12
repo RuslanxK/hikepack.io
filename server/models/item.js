@@ -14,7 +14,7 @@ const itemSchema = new mongoose.Schema({
     link: String,
     worn: {type: Boolean, default: false},
     imageUrl: { type: String, default: null },
-    order: {type: Number, default: null},
+    order: {type: Number, default: null, index: true},
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

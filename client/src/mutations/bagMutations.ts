@@ -28,8 +28,6 @@ export const DELETE_BAG = gql`
 `;
 
 
-
-
 export const UPDATE_LIKES_BAG = gql`
   mutation UpdateLikesBag($bagId: ID!, $increment: Int!) {
     updateLikesBag(bagId: $bagId, increment: $increment) {

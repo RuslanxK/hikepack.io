@@ -28,3 +28,4 @@ export const UPDATE_CATEGORY = gql`
     }
   }
 `;
+

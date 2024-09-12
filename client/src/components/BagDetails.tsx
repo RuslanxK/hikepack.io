@@ -51,7 +51,7 @@ const BagDetails: React.FC = () => {
     if (dataBag?.bag?.categories) {
       setCategoriesData(dataBag.bag?.categories?.slice().sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)));
     }
-  }, [dataBag]);
+  }, [dataBag?.bag?.categories]);
 
   useEffect(() => {
     if (!loadingBag && !dataBag?.bag) {

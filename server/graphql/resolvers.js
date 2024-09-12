@@ -2,40 +2,70 @@ const Trip = require("../models/trip");
 const Bag = require("../models/bag");
 const Category = require("../models/category");
 const Item = require("../models/item");
-const ChangeLog = require("../models/changelog");
+const ChangeLog = require("../models/changelog")
 const User = require("../models/user");
-const Article = require("../models/article");
-const {
-  generateRegisterHTML,
-  sendEmail,
-  generateForgotPasswordHTML,
-  reportEmail,
-  sendReportEmail,
-} = require("../emails/email");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const { ObjectId } = require("mongodb");
-const { ensureOwner} = require("../utils/ownerUtils")
-const { deleteFile} = require('../utils/s3Utils')
-const { getCategoryDetails } = require('../utils/categoryUtils');
+const Article = require("../models/article")
+const { generateRegisterHTML, sendEmail, generateForgotPasswordHTML, reportEmail, sendReportEmail } = require('../emails/email');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const { ObjectId } = require('mongodb'); 
+const s3 = require("../config/s3Config")
 
+const ensureOwner = (user, query = {}) => {
+  if (!user) throw new Error('Not authenticated');
+  return { ...query, owner: user.userId };
+};
+
+const weightConversionRates = {
+  lb: { lb: 1, kg: 0.453592, g: 453.592, oz: 16 },
+  kg: { lb: 2.20462, kg: 1, g: 1000, oz: 35.274 },
+  g: { lb: 0.00220462, kg: 0.001, g: 1, oz: 0.035274 },
+  oz: { lb: 0.0625, kg: 0.0283495, g: 28.3495, oz: 1 },
+};
+
+
+async function deleteFile(imageUrl) {
+ 
+  const key = imageUrl.substring(imageUrl.lastIndexOf('/') + 1); 
+  console.log('Deleting file with key:', key); 
+
+  const params = {
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Key: decodeURIComponent(key), 
+  };
+
+  try {
+    const data = await s3.deleteObject(params).promise();
+    console.log('File deleted successfully from S3:', data);
+  } catch (error) {
+    console.error('Error deleting file from S3:', error);
+    throw new Error('Failed to delete file from S3');
+  }
+}
 
 
 const resolvers = {
+  
   Query: {
+
     changeLogs: async () => {
       try {
         const logs = await ChangeLog.find();
-        return logs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(log => ({
+    
+        const formattedLogs = logs.map(log => ({
           id: log._id.toString(),
           ...log.toObject(),
-          createdAt: log.createdAt.toISOString(),
-          updatedAt: log.updatedAt.toISOString(),
+          createdAt: log.createdAt.toISOString(), 
+          updatedAt: log.updatedAt.toISOString(),  
         }));
+    
+        const sortedLogs = formattedLogs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    
+        return sortedLogs;
       } catch (error) {
-        console.error('Failed to fetch changelogs:', error);
-        throw new Error('Failed to fetch changelogs');
+        console.error("Failed to fetch changelogs:", error);
+        throw new Error("Failed to fetch changelogs");
       }
     },
 
@@ -44,17 +74,17 @@ const resolvers = {
         const user = await User.findOne({ email });
         return user ? true : false;
       } catch (error) {
-        console.error("Error checking email existence:", error);
-        throw new Error("Failed to check email existence");
+        console.error('Error checking email existence:', error);
+        throw new Error('Failed to check email existence');
       }
     },
 
-    users: async (_) => {
+    users: async (_, ) => {
       try {
         return await User.find();
       } catch (error) {
-        console.error("Error fetching users:", error);
-        throw new Error("Failed to fetch users");
+        console.error('Error fetching users:', error);
+        throw new Error('Failed to fetch users');
       }
     },
 
@@ -63,36 +93,40 @@ const resolvers = {
         return await User.findOne({ _id: user.userId });
       } catch (error) {
         console.error(`Error fetching user with id ${user.userId}:`, error);
-        throw new Error("Failed to fetch user");
+        throw new Error('Failed to fetch user');
       }
     },
 
     userShared: async (_, { bagId }) => {
       try {
+      
         const bag = await Bag.findOne({ _id: new ObjectId(bagId) });
-
+  
         if (!bag) {
-          throw new Error("Bag not found");
+          throw new Error('Bag not found');
         }
-
+    
         const ownerId = bag.owner;
         const owner = await User.findOne({ _id: new ObjectId(ownerId) });
 
         if (!owner) {
-          throw new Error("Owner not found");
+          throw new Error('Owner not found');
         }
         return owner;
       } catch (error) {
         console.error(`Error fetching owner with bag id ${bagId}:`, error);
-        throw new Error("Failed to fetch owner");
+        throw new Error('Failed to fetch owner');
       }
     },
 
+
     trips: async (_, __, { user }) => {
       try {
-        return await Trip.find(ensureOwner(user));
-      } catch (error) {
-        console.log(error);
+      return await Trip.find(ensureOwner(user));
+      }
+      catch(error) {
+
+        console.log(error)
       }
     },
 
@@ -101,101 +135,120 @@ const resolvers = {
         return await Trip.findOne(ensureOwner(user, { _id: id }));
       } catch (error) {
         console.error(`Error fetching trip with id ${id}:`, error);
-        throw new Error("Failed to fetch trip");
+        throw new Error('Failed to fetch trip');
       }
     },
+
 
     bag: async (_, { id }, { user }) => {
       try {
         return await Bag.findOne(ensureOwner(user, { _id: id }));
       } catch (error) {
         console.error(`Error fetching bag with id ${id}:`, error);
-        throw new Error("Failed to fetch bag");
+        throw new Error('Failed to fetch bag');
       }
     },
 
+
     sharedBag: async (_, { id }) => {
       try {
+
         const bag = await Bag.findOne({ _id: id });
-        if (!bag) throw new Error(`Bag with id ${id} not found`);
+    
+        if (!bag) {
+          throw new Error(`Bag with id ${id} not found`);
+        }
     
         const categories = await Category.find({ bagId: bag._id });
         const categoriesWithDetails = await Promise.all(
           categories.map(async (category) => {
-            const { items, totalWeight, totalWornWeight } = await getCategoryDetails(category._id);
+            const items = await Item.find({ categoryId: category._id });
+    
+            const totalWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.weight * item.qty * conversionRate);
+            }, Promise.resolve(0));
+    
+            const totalWornWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.worn ? item.weight * item.qty * conversionRate : 0);
+            }, Promise.resolve(0));
+    
             return {
               ...category.toObject(),
               id: category._id.toString(),
               totalWeight,
               totalWornWeight,
-              items,
+              items
             };
           })
         );
     
         return {
           ...bag.toObject(),
-          id: bag._id.toString(),
+          id: bag._id.toString(), // Ensure _id is mapped to id
           categories: categoriesWithDetails,
         };
+    
       } catch (error) {
         console.error(`Error fetching shared bag with id ${id}:`, error);
         throw new Error('Failed to fetch shared bag');
       }
     },
 
+
     exploreBags: async () => {
       try {
         const bags = await Bag.find({ exploreBags: true });
-
+    
         const bagData = await Promise.all(
           bags.map(async (bag) => {
-            const totalCategories = await Category.countDocuments({
-              bagId: bag._id,
-            });
+            const totalCategories = await Category.countDocuments({ bagId: bag._id });
             const totalItems = await Item.countDocuments({ bagId: bag._id });
-
+    
             return {
-              id: bag._id.toString(),
+              id: bag._id.toString(),  
               ...bag._doc,
               totalCategories,
               totalItems,
             };
           })
         );
-
+    
         return bagData;
       } catch (error) {
         console.error("Error fetching explore bags:", error);
         throw new Error("Failed to fetch explore bags.");
       }
     },
+  
 
     latestBags: async (_, __, { user }) => {
       try {
-        return await Bag.find(ensureOwner(user))
-          .sort({ updatedAt: -1 })
-          .limit(3);
+        return await Bag.find(ensureOwner(user)).sort({ updatedAt: -1 }).limit(3);
       } catch (error) {
-        console.error("Error fetching latest bags:", error);
-        throw new Error("Failed to fetch latest bags");
+        console.error('Error fetching latest bags:', error);
+        throw new Error('Failed to fetch latest bags');
       }
     },
 
     latestBagWithDetails: async (_, __, { user }) => {
       try {
-        const bag = await Bag.findOne(ensureOwner(user)).sort({
-          updatedAt: -1,
-        });
+        const bag = await Bag.findOne(ensureOwner(user)).sort({ updatedAt: -1 });
         if (!bag) return null;
         const categories = await Category.find({ bagId: bag.id });
         const totalCategories = categories.length;
         const items = await Item.find({ bagId: bag.id });
         const totalItems = items.length;
-        const totalWeight = items.reduce(
-          (sum, item) => sum + item.weight * item.qty,
-          0
-        );
+        const totalWeight = items.reduce((sum, item) => sum + item.weight * item.qty, 0);
         return {
           id: bag.id,
           name: bag.name,
@@ -205,17 +258,19 @@ const resolvers = {
           totalWeight,
         };
       } catch (error) {
-        console.error("Error fetching latest bag with details:", error);
-        throw new Error("Failed to fetch latest bag with details");
+        console.error('Error fetching latest bag with details:', error);
+        throw new Error('Failed to fetch latest bag with details');
       }
     },
+
+  
 
     getArticles: async () => {
       try {
         const articles = await Article.find();
         return articles;
       } catch (error) {
-        throw new Error("Failed to fetch articles");
+        throw new Error('Failed to fetch articles');
       }
     },
 
@@ -223,33 +278,61 @@ const resolvers = {
       try {
         const article = await Article.findById(id);
         if (!article) {
-          throw new Error("Article not found");
+          throw new Error('Article not found');
         }
         return article;
       } catch (error) {
-        throw new Error("Failed to fetch article");
+        throw new Error('Failed to fetch article');
       }
     },
+    
   },
+
 
   Trip: {
     bags: async (parent) => {
       try {
+      
         return await Bag.find({ tripId: parent.id });
       } catch (error) {
         console.error(`Error fetching bags for trip ${parent.id}:`, error);
-        throw new Error("Failed to fetch bags");
+        throw new Error('Failed to fetch bags');
       }
-    },
+    }
   },
 
+
   Bag: {
+
     categories: async (parent) => {
       try {
         const categories = await Category.find({ bagId: parent.id });
         const categoriesWithDetails = await Promise.all(
           categories.map(async (category) => {
-            const { totalWeight, totalWornWeight } = await getCategoryDetails(category._id);
+            const items = await Item.find({ categoryId: category._id });
+  
+            const totalWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+  
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+  
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.weight * item.qty * conversionRate);
+            }, Promise.resolve(0));
+  
+            const totalWornWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+  
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+  
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.worn ? item.weight * item.qty * conversionRate : 0);
+            }, Promise.resolve(0));
+  
             return {
               ...category.toObject(),
               id: category._id.toString(),
@@ -265,167 +348,164 @@ const resolvers = {
       }
     },
 
-    allItems: async () => {
-      try {
-        const items = await Item.find({
-          name: { $ne: "", $exists: true },
-        })
-          .sort({ createdAt: -1 })
-          .exec();
-
-        const uniqueItems = items.filter(
-          (item, index, self) =>
-            index === self.findIndex((t) => t.name === item.name)
-        );
-
-        return uniqueItems.slice(0, 50);
-      } catch (error) {
-        console.error("Error fetching all items:", error);
-        throw new Error("Failed to fetch all items");
+   allItems: async () => {
+  try {
+    const items = await Item.find(
+      {
+        name: { $ne: "", $exists: true }
       }
-    },
+    )
+    .sort({ createdAt: -1 })
+    .exec();
+
+    const uniqueItems = items.filter(
+      (item, index, self) => index === self.findIndex((t) => t.name === item.name)
+    );
+
+    return uniqueItems.slice(0, 50);
+
+  } catch (error) {
+    console.error('Error fetching all items:', error);
+    throw new Error('Failed to fetch all items');
+  }
+},
+    
   },
 
-  
+
   Category: {
 
     items: async (parent) => {
       try {
         return await Item.find({ categoryId: parent.id });
       } catch (error) {
-        console.error(
-          `Error fetching items for categoryId ${parent.categoryId}:`,
-          error
-        );
-        throw new Error("Failed to fetch items");
+        console.error(`Error fetching items for categoryId ${parent.categoryId}:`, error);
+        throw new Error('Failed to fetch items');
       }
     },
+     
   },
+  
 
+
+  
   Mutation: {
-
+    
     loginUser: async (_, { email, password }, { res }) => {
       try {
         const user = await User.findOne({ email });
         if (!user) {
-          throw new Error("Invalid email or password.");
+          throw new Error('Invalid email or password.');
         }
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
-          throw new Error("Invalid email or password.");
+          throw new Error('Invalid email or password.');
         }
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-          expiresIn: "24h",
-        });
-        res.cookie("token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "Strict",
-          maxAge: 86400000,
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        res.cookie('token', token, {
+          httpOnly: true, 
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'Strict',
+          maxAge: 86400000,   
         });
         return { token, user };
       } catch (error) {
-        console.log(error.message);
 
-        if (error.message === "Invalid email or password.") {
+        console.log(error.message)
+
+        if (error.message === 'Invalid email or password.') {
           throw new Error(error.message);
-        } else {
-          throw new Error("Something went wrong. Please try again later.");
+        } 
+        
+        else {
+          throw new Error('Something went wrong. Please try again later.');
         }
       }
     },
 
-    addBugReport: async (_, { title, description }, { user }) => {
+
+
+    addBugReport: async (_, { title, description }, {user}) => {
       try {
-        const foundUser = await User.findOne({
-          _id: new ObjectId(user.userId),
-        });
-
+     
+        const foundUser = await User.findOne({ _id: new ObjectId(user.userId) });
+  
         const emailContent = reportEmail(title, description, foundUser);
-        await sendReportEmail(
-          foundUser.email,
-          `${foundUser.username} sent a new bug message`,
-          emailContent
-        );
+        await sendReportEmail(foundUser.email, `${foundUser.username} sent a new bug message` ,emailContent);
 
-        return { success: true, message: "Bug report submitted successfully." };
+        return { success: true, message: 'Bug report submitted successfully.' };
+
       } catch (error) {
-        console.error("Error sending bug report email:", error);
-        throw new Error("Failed to send bug report email.");
+        console.error('Error sending bug report email:', error);
+        throw new Error('Failed to send bug report email.');
       }
     },
+
+
 
     updateVerifiedCredentials: async (_, { token }) => {
       try {
-        const hashedToken = crypto
-          .createHash("sha256")
-          .update(token)
-          .digest("hex");
-
+        const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+    
         const user = await User.findOne({
           emailVerificationToken: hashedToken,
         });
-
+    
         if (!user) {
-          throw new Error("Token is invalid.");
+          throw new Error('Token is invalid.');
         }
-
+  
         user.verifiedCredentials = true;
-
+       
+        
         await user.save();
         return user;
+    
       } catch (error) {
-        throw new Error(error.message || "Email verification failed");
+        throw new Error(error.message || 'Email verification failed');
       }
     },
+    
+
 
 
     sendResetPasswordLink: async (_, { email }) => {
       const user = await User.findOne({ email });
       if (!user) {
-        throw new Error("Email does not exist.");
+        throw new Error('Email does not exist.');
       }
 
-      const resetToken = crypto.randomBytes(32).toString("hex");
-      const hashedToken = crypto
-        .createHash("sha256")
-        .update(resetToken)
-        .digest("hex");
+      const resetToken = crypto.randomBytes(32).toString('hex');
+      const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
       user.resetPasswordToken = hashedToken;
-      user.resetPasswordExpires = Date.now() + 3600000;
+      user.resetPasswordExpires = Date.now() + 3600000; 
       await user.save();
       const emailContent = generateForgotPasswordHTML(resetToken);
 
-      await sendEmail(
-        email,
-        "Action Required: Reset Your Hikepack.io Password",
-        emailContent
-      );
-      return "A password reset link has been sent to your email address.";
+      await sendEmail(email,"Action Required: Reset Your Hikepack.io Password", emailContent)
+      return 'A password reset link has been sent to your email address.';
     },
 
 
+
     resetPassword: async (_, { token, newPassword }) => {
-      const hashedToken = crypto
-        .createHash("sha256")
-        .update(token)
-        .digest("hex");
+      const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
       const user = await User.findOne({
         resetPasswordToken: hashedToken,
-        resetPasswordExpires: { $gt: Date.now() },
+        resetPasswordExpires: { $gt: Date.now() }
       });
-
+    
       if (!user) {
-        throw new Error("Token is invalid or has expired.");
+        throw new Error('Token is invalid or has expired.');
       }
-
-      user.password = newPassword;
+    
+      user.password = newPassword; 
       user.resetPasswordToken = undefined;
       user.resetPasswordExpires = undefined;
-      user.verifiedCredentials = true;
+      user.verifiedCredentials = true
       await user.save();
-
-      return "Your password has been successfully reset.";
+    
+      return 'Your password has been successfully reset.';
     },
 
 
@@ -436,49 +516,51 @@ const resolvers = {
         await changeLog.save();
         return changeLog;
       } catch (error) {
-        console.error("Error adding changelog:", error);
-        throw new Error("Failed to add changelog");
+        console.error('Error adding changelog:', error);
+        throw new Error('Failed to add changelog');
       }
     },
+  
+  
 
+    
     createUser: async (_, args) => {
       try {
+       
         const existingUser = await User.findOne({ email: args.email });
         if (existingUser) {
-          throw new Error("Email already exists!");
+          throw new Error('Email already exists!');
         }
         const user = new User(args);
-        const adminEmails = process.env.ADMIN_EMAILS
-          ? process.env.ADMIN_EMAILS.split(",")
-          : [];
+        const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',') : [];
         if (adminEmails.includes(args.email)) {
           user.isAdmin = true;
         }
-
-        const verificationToken = crypto.randomBytes(32).toString("hex");
-        const hashedToken = crypto
-          .createHash("sha256")
-          .update(verificationToken)
-          .digest("hex");
+  
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
         user.emailVerificationToken = hashedToken;
-
+    
         await user.save();
-
+    
         const emailContent = generateRegisterHTML(verificationToken);
         await sendEmail(args.email, "Welcome to hikepack.io", emailContent);
-
+    
         return user;
       } catch (error) {
         if (error.code === 11000) {
-          throw new Error("Email already exists!");
+          throw new Error('Email already exists!'); 
         }
-        console.error("Error creating user:", error);
-        throw new Error(error);
+        console.error('Error creating user:', error);
+        throw new Error(error); 
       }
     },
+    
+
 
     updateUser: async (_, args, { user }) => {
       try {
+
         return await User.findByIdAndUpdate(
           args.id,
           { ...args, id: user.userId },
@@ -486,9 +568,10 @@ const resolvers = {
         );
       } catch (error) {
         console.error(`Error updating user with id ${args.id}:`, error);
-        throw new Error("Failed to update user");
+        throw new Error('Failed to update user');
       }
     },
+
 
     updateTrip: async (_, args, { user }) => {
       try {
@@ -499,7 +582,7 @@ const resolvers = {
         );
       } catch (error) {
         console.error(`Error updating trip with id ${args.id}:`, error);
-        throw new Error("Failed to update trip");
+        throw new Error('Failed to update trip');
       }
     },
 
@@ -509,27 +592,30 @@ const resolvers = {
         await trip.save();
         return trip;
       } catch (error) {
-        console.error("Error adding trip:", error);
-        throw new Error("Failed to add trip");
+        console.error('Error adding trip:', error);
+        throw new Error('Failed to add trip');
       }
     },
 
+
+
     deleteTrip: async (_, { id }, { user }) => {
       try {
+
         const trip = await Trip.findById(id);
         if (!trip) {
-          throw new Error("Trip not found");
+          throw new Error('Trip not found');
         }
         const items = await Item.find({ tripId: id, owner: user.userId });
 
         for (const item of items) {
           if (item.imageUrl) {
-            await deleteFile(item.imageUrl);
+            await deleteFile(item.imageUrl); 
           }
         }
 
         if (trip.imageUrl) {
-          await deleteFile(trip.imageUrl);
+          await deleteFile(trip.imageUrl); 
         }
 
         await Item.deleteMany({ tripId: id, owner: user.userId });
@@ -537,10 +623,12 @@ const resolvers = {
         await Bag.deleteMany({ tripId: id, owner: user.userId });
         return await Trip.findByIdAndDelete(ensureOwner(user, { _id: id }));
       } catch (error) {
-        console.error("Error deleting trip:", error);
-        throw new Error("Failed to delete trip");
+        console.error('Error deleting trip:', error);
+        throw new Error('Failed to delete trip');
       }
     },
+
+    
 
     addBag: async (_, args, { user }) => {
       try {
@@ -548,86 +636,76 @@ const resolvers = {
         await bag.save();
         return bag;
       } catch (error) {
-        console.error("Error adding bag:", error);
-        throw new Error("Failed to add bag");
+        console.error('Error adding bag:', error);
+        throw new Error('Failed to add bag');
       }
     },
 
+
     deleteBag: async (_, { id }, { user }) => {
       try {
+
         const items = await Item.find({ bagId: id, owner: user.userId });
         for (const item of items) {
           if (item.imageUrl) {
             await deleteFile(item.imageUrl);
           }
         }
+
         await Item.deleteMany({ bagId: id, owner: user.userId });
         await Category.deleteMany({ bagId: id, owner: user.userId });
         return await Bag.findByIdAndDelete(ensureOwner(user, { _id: id }));
       } catch (error) {
         console.error(`Error deleting bag with id ${id}:`, error);
-        throw new Error("Failed to delete bag");
+        throw new Error('Failed to delete bag');
       }
     },
 
 
     updateBag: async (_, args, { user }) => {
       try {
-        return await Bag.findByIdAndUpdate(
-          args.bagId,
-          { ...args, owner: user.userId },
-          { new: true }
-        );
+        return await Bag.findByIdAndUpdate(args.bagId, { ...args, owner: user.userId }, { new: true });
       } catch (error) {
         console.error(`Error updating bag with id ${args.bagId}:`, error);
-        throw new Error("Failed to update bag");
+        throw new Error('Failed to update bag');
       }
     },
 
     updateLikesBag: async (_, { bagId, increment }) => {
       try {
         const updatedBag = await Bag.findByIdAndUpdate(
-          bagId,
-          { $inc: { likes: increment } },
-          { new: true }
+          bagId, 
+          { $inc: { likes: increment } }, 
+          { new: true } 
         );
         if (!updatedBag) {
           throw new Error(`Bag with id ${bagId} not found`);
         }
         return updatedBag;
       } catch (error) {
-        console.error(
-          `Error updating likes for bag with id ${bagId}:`,
-          error.message
-        );
-        throw new Error("Failed to update bag likes");
+        console.error(`Error updating likes for bag with id ${bagId}:`, error.message);
+        throw new Error('Failed to update bag likes');
       }
     },
 
-  
+    
+
     addCategory: async (_, args, { user }) => {
       try {
-        const categoriesCount = await Category.countDocuments({
-          bagId: args.bagId,
-          owner: user.userId,
-        });
-        const category = new Category({
-          ...args,
-          order: categoriesCount + 1,
-          owner: user.userId,
-        });
+        const categoriesCount = await Category.countDocuments({ bagId: args.bagId, owner: user.userId });
+        const category = new Category({ ...args, order: categoriesCount + 1, owner: user.userId });
         await category.save();
         return category;
       } catch (error) {
-        console.error("Error adding category:", error);
-        throw new Error("Failed to add category");
+        console.error('Error adding category:', error);
+        throw new Error('Failed to add category');
       }
     },
-
 
     deleteCategory: async (_, { id }, { user }) => {
       try {
         const items = await Item.find({ categoryId: id, owner: user.userId });
+
         for (const item of items) {
           if (item.imageUrl) {
             await deleteFile(item.imageUrl);
@@ -637,69 +715,48 @@ const resolvers = {
         return await Category.findByIdAndDelete(ensureOwner(user, { _id: id }));
       } catch (error) {
         console.error(`Error deleting category with id ${id}:`, error);
-        throw new Error("Failed to delete category");
+        throw new Error('Failed to delete category');
       }
     },
 
-
-    updateCategory: async (_, args, { user }) => {
-      try {
-        
-        const updateData = { ...args, owner: user.userId };
-        return await Category.findByIdAndUpdate(args.id, updateData,{new: true});
-      } catch (error) {
-        console.error(`Error updating category with id ${id}:`, error);
-        throw new Error("Failed to update category");
-      }
-    },
-
+   
 
     addItem: async (_, args, { user }) => {
       try {
-        const itemsCount = await Item.countDocuments({
-          categoryId: args.categoryId,
-          owner: user.userId,
-        });
-        const item = new Item({
-          ...args,
-          order: itemsCount + 1,
-          owner: user.userId,
-        });
+        const itemsCount = await Item.countDocuments({ categoryId: args.categoryId, owner: user.userId });
+        const item = new Item({ ...args, order: itemsCount + 1, owner: user.userId });
         await item.save();
         return item;
       } catch (error) {
-        console.error("Error adding item:", error);
-        throw new Error("Failed to add item");
+        console.error('Error adding item:', error);
+        throw new Error('Failed to add item');
       }
     },
-
 
 
     deleteItem: async (_, { id }, { user }) => {
       try {
+      
         const item = await Item.findById(ensureOwner(user, { _id: id }));
         if (item && item.imageUrl && item.imageUrl.length > 0) {
           await deleteFile(item.imageUrl);
         }
+    
         await Item.findByIdAndDelete(id);
-        return item;
+        return item; 
       } catch (error) {
         console.error(`Error deleting item with id ${id}:`, error);
-        throw new Error("Failed to delete item");
+        throw new Error('Failed to delete item');
       }
     },
 
 
     updateItem: async (_, args, { user }) => {
       try {
-        return await Item.findByIdAndUpdate(
-          args.id,
-          { ...args, owner: user.userId },
-          { new: true }
-        );
+        return await Item.findByIdAndUpdate(args.id, { ...args, owner: user.userId }, { new: true });
       } catch (error) {
         console.error(`Error updating item with id ${args.id}:`, error);
-        throw new Error("Failed to update item");
+        throw new Error('Failed to update item');
       }
     },
   },

@@ -13,7 +13,7 @@ export const GET_TRIPS = gql`
 
 
 export const GET_TRIP = gql`
-  query GetTrip($id: ID!) {
+ query GetTrip($id: ID!) {
     trip(id: $id) {
       id
       name
@@ -22,6 +22,10 @@ export const GET_TRIP = gql`
       startDate
       endDate
       imageUrl
+      bags {
+        id
+        name
+      }
     }
   }
 `;

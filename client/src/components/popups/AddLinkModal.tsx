@@ -5,13 +5,17 @@ import Modal from './Modal';
 import Spinner from '../loading/Spinner';
 import { AddLinkModalProps } from '../../types/item';
 import Message from '../message/Message';
-import { GET_ITEM, GET_ITEMS } from '../../queries/itemQueries';
+import { useParams } from 'react-router-dom';
+import { GET_BAG } from '../../queries/bagQueries';
 
-const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, categoryId, itemLink }) => {
+const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, itemLink }) => {
 
   const [link, setLink] = useState(itemLink || '');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const { id } = useParams<{ id: string }>();
+
 
   const [updateItemLink] = useMutation(UPDATE_ITEM_LINK);
 
@@ -23,7 +27,7 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, ca
     try {
       await updateItemLink({
         variables: { id: itemId, link },
-        refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: categoryId } }, { query: GET_ITEM, variables: { id: itemId } },]
+        refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
         
       });
 

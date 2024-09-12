@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { GET_BAGS } from '../../queries/bagQueries';
+import { GET_TRIP } from '../../queries/tripQueries';
 import { ADD_BAG } from '../../mutations/bagMutations';
 import { AddBagData, AddBagVars } from '../../types/bag';
 import Modal from './Modal';
@@ -33,7 +33,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
     try {
       await addBag({
         variables: { tripId: id, name, description, goal, exploreBags: false },
-        refetchQueries: [{ query: GET_BAGS, variables: { tripId: id } }],
+        refetchQueries: [{ query: GET_TRIP, variables: { id: id } }],
       });
       
       setName('');

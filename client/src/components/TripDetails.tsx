@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaPlus, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { useQuery } from '@apollo/client';
 import { GET_TRIP } from '../queries/tripQueries';
-import { GET_BAGS } from '../queries/bagQueries';
 import { GET_USER } from '../queries/userQueries';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GetBagsData } from '../types/bag';
 import SingleBag from './SingleBag';
 import AddBagModal from './popups/AddBagModal';
 import { AiFillEdit } from "react-icons/ai";
@@ -25,7 +23,6 @@ const TripDetails: React.FC = () => {
 
   const { id } = useParams<{ id: string }>();
   const { loading: loadingTrip, error: errorTrip, data: dataTrip } = useQuery(GET_TRIP, { variables: { id } });
-  const { loading: loadingBags, error: errorBags, data: dataBags } = useQuery<GetBagsData>(GET_BAGS, { variables: { tripId: id }});
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
 
 
@@ -50,7 +47,7 @@ const TripDetails: React.FC = () => {
   };
 
 
-  if (loadingTrip || loadingBags || loadingUser) {
+  if (loadingTrip || loadingUser) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Spinner w={10} h={10} />
@@ -58,7 +55,7 @@ const TripDetails: React.FC = () => {
     );
   }
 
-  if (errorUser || errorTrip || errorBags) {
+  if (errorUser || errorTrip) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Message 
@@ -138,12 +135,12 @@ const TripDetails: React.FC = () => {
               onClick={handleAddBag}>
               <FaPlus className='text-xl' />
             </li>
-            {dataBags?.bags.map((trip) => (
+            {dataTrip.trip.bags.map((trip: any) => (
               
               <SingleBag key={trip.id} bagData={trip} />
             ))}
 
-            {dataBags?.bags.length === 0 && (
+            {dataTrip.trip.bags.length === 0 && (
             <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a bag." type="info" />
           )}
           </ul>

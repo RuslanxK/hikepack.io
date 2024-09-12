@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { FaPlus, FaHeart } from 'react-icons/fa';
 import { UPDATE_EXPLORE_BAGS } from '../mutations/bagMutations';
 import { GET_BAG } from '../queries/bagQueries';
-import { GET_CATEGORIES } from '../queries/categoryQueries';
 import { ADD_CATEGORY, UPDATE_CATEGORY_ORDER } from '../mutations/categoryMutations';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { GetCategoriesData, Category } from '../types/category';
+import { Category } from '../types/category';
 import SingleCategory from './SingleCategory';
 import { DndContext, closestCorners, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -18,7 +17,6 @@ import { IoMdShare } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import UpdateBagModal from './popups/UpdateBagModal';
 import SidePanel from './sidepanel/SidePanel';
-import { GET_ALL_ITEMS } from '../queries/itemQueries';
 import Message from './message/Message';
 import { FaArrowLeft } from 'react-icons/fa';
 import Spinner from './loading/Spinner';
@@ -33,9 +31,8 @@ const BagDetails: React.FC = () => {
   const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-full p-1.5 dark:focus:ring-orange-800 dark:hover:bg-button-hover';
 
   const { data: dataBag, loading: loadingBag, error: errorBag } = useQuery(GET_BAG, { variables: { id } });
-  const { loading: loadingCategories, error: errorCategories, data: dataCategories } = useQuery<GetCategoriesData>(GET_CATEGORIES, { variables: { bagId: id } });
-  const { loading: loadingItems, error: errorItems, data: dataItems } = useQuery(GET_ALL_ITEMS);
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
+
 
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } });
@@ -49,12 +46,11 @@ const BagDetails: React.FC = () => {
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [isSidePanelVisible, setIsSidePanelVisible] = useState( window.matchMedia('(max-width: 767px)').matches ? false : true); 
 
-
   useEffect(() => {
-    if (dataCategories) {
-      setCategoriesData(dataCategories.categories.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+    if (dataBag?.bag?.categories) {
+      setCategoriesData(dataBag.bag?.categories?.slice().sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)));
     }
-  }, [dataCategories]);
+  }, [dataBag?.bag?.categories]);
 
   useEffect(() => {
     if (!loadingBag && !dataBag?.bag) {
@@ -63,11 +59,9 @@ const BagDetails: React.FC = () => {
   }, [loadingBag, dataBag, navigate]);
 
 
-
-
   const bag = dataBag?.bag;
 
-  if (loadingBag || loadingCategories || loadingUser || loadingItems) {
+  if (loadingBag || loadingUser) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Spinner w={10} h={10} />
@@ -75,7 +69,7 @@ const BagDetails: React.FC = () => {
     );
   }
 
-  if (errorUser || errorBag || errorCategories || errorItems) {
+  if (errorUser || errorBag) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Message 
@@ -97,7 +91,7 @@ const BagDetails: React.FC = () => {
 
       await addCategory({
         variables: { tripId: bag.tripId, bagId: id, name: 'new category', color: newColor },
-        refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: id } }],
+        refetchQueries: [{ query: GET_BAG, variables: { id: id } }],
       });
     } catch (error) {
       console.error('Error adding category:', error);
@@ -117,6 +111,7 @@ const BagDetails: React.FC = () => {
       console.error('Error updating bag:', error);
     }
   };
+
 
   const moveCategory = async (fromIndex: number, toIndex: number) => {
     try {
@@ -141,6 +136,7 @@ const BagDetails: React.FC = () => {
       console.error("Failed to move category:", error);
     }
   };
+
 
   const onDragEnd = (event: any) => {
     const { active, over } = event;
@@ -167,7 +163,7 @@ const BagDetails: React.FC = () => {
 
   return (
     <div className='container mx-auto sm:mt-0 sm:p-4 mt-24 p-4'>
-      <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataItems?.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
+      <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataBag.bag.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
             <div className='w-full sm:pl-6 sm:pr-6 sm:pt-6 pr-2 pt-2 pl-2'>
@@ -227,14 +223,13 @@ const BagDetails: React.FC = () => {
               </div>
 
               <div className="sm:w-64 h-64">
-                <CategoryChart categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
+                <CategoryChart categories={dataBag.bag.categories} weightUnit={userData?.user?.weightOption} />
               </div>
               <div className='w-full sm:w-fit'>
-                <CategoryTable categories={dataCategories ? dataCategories.categories : []} weightUnit={userData?.user?.weightOption} />
+                <CategoryTable categories={dataBag.bag.categories} weightUnit={userData?.user?.weightOption} />
               </div>
             </div>
           )}
-
         
             <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
               <FaPlus size={13}/>
@@ -252,8 +247,7 @@ const BagDetails: React.FC = () => {
             </div>
           </div>
       
-      
-        {dataItems?.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataItems?.allItems}  /> : null}
+        {dataBag.bag.allItems.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataBag.bag.allItems}  /> : null}
         <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />
       </div>
     </div>

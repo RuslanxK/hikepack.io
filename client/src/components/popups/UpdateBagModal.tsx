@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { UPDATE_BAG } from '../../mutations/bagMutations'; 
+import { GET_BAG } from '../../queries/bagQueries';
 import { UpdateBagData, UpdateBagVars, UpdateBagModalProps } from '../../types/bag';
 import Modal from './Modal';
 import Form from '../form/Form';
@@ -23,18 +24,17 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
 
   
   const handleUpdateBag = async (e: React.FormEvent) => {
-
     e.preventDefault();
     if (!name || !description || !goal || !id) {
       setError('Name, Description, Goal, and Trip ID are required.');
       return;
     }
-
     setLoading(true);
-
     try {
       await updateBag({
-      variables: { bagId: bag.id, name, description, goal }});
+      variables: { bagId: bag.id, name, description, goal },
+      refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
+     
       onClose();
     } catch (e) {
       setError('Error updating bag. Please try again.');

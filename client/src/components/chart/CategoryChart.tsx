@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { CategoryChartProps } from '../../types/category';
 
 
-const CategoryChart: React.FC<CategoryChartProps> = ({ categories}) => {
+const CategoryChart: React.FC<CategoryChartProps> = ({ categories }) => {
   const chartData = {
     labels: categories.map((category) => category.name),
     datasets: [

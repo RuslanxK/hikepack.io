@@ -40,6 +40,8 @@ const typeDefs = gql`
     createdAt: String!
     updatedAt: String!
     imageUrl: String
+    user: User!
+    bags: [Bag!]!
   }
 
   type Bag {
@@ -56,6 +58,9 @@ const typeDefs = gql`
     updatedAt: String!
     totalCategories: Int
     totalItems: Int
+    user: User!
+    categories: [Category!]!
+    allItems: [Item!]!
   }
 
   type Category {
@@ -70,6 +75,7 @@ const typeDefs = gql`
     totalWornWeight: Float
     createdAt: String!
     updatedAt: String!
+    items: [Item!]!
   }
 
   type Item {

@@ -7,7 +7,6 @@ import Spinner from '../loading/Spinner';
 import { DeleteTripModalProps } from '../../types/trip';
 import { GET_TRIPS } from '../../queries/tripQueries';
 import Message from '../message/Message';
-import { GET_ALL_ITEMS } from '../../queries/itemQueries';
 import { GET_LATEST_BAG_WITH_DETAILS } from '../../queries/bagQueries';
 
 const DeleteTripModal: React.FC<DeleteTripModalProps> = ({ isOpen, onClose, trip}) => {
@@ -22,7 +21,7 @@ const DeleteTripModal: React.FC<DeleteTripModalProps> = ({ isOpen, onClose, trip
     try {
       await deleteTrip({
         variables: { id: trip.id },
-        refetchQueries: [{ query: GET_TRIPS }, {query: GET_ALL_ITEMS,}, {query: GET_LATEST_BAG_WITH_DETAILS}],
+        refetchQueries: [{ query: GET_TRIPS }, {query: GET_LATEST_BAG_WITH_DETAILS}],
       });
       onClose();
     } catch (e) {

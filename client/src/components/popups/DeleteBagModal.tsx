@@ -5,13 +5,14 @@ import Spinner from '../loading/Spinner';
 import { DeleteBagModalProps } from '../../types/bag';
 import { DELETE_BAG } from '../../mutations/bagMutations';
 import { DeleteBagData, DeleteBagVars } from '../../types/bag';
-import { GET_BAGS } from '../../queries/bagQueries';
+import { GET_TRIP } from '../../queries/tripQueries';
 import Message from '../message/Message';
-import { GET_ALL_ITEMS } from '../../queries/itemQueries';
+import { useParams } from 'react-router-dom';
 
 const DeleteBagModal: React.FC<DeleteBagModalProps> = ({ isOpen, onClose, bag }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { id } = useParams<{ id: string }>();
 
 
   const [deleteBag] = useMutation<DeleteBagData, DeleteBagVars>(DELETE_BAG);
@@ -21,9 +22,7 @@ const DeleteBagModal: React.FC<DeleteBagModalProps> = ({ isOpen, onClose, bag })
     try {
       await deleteBag({
         variables: { id: bag.id },
-        refetchQueries: [{ query: GET_BAGS, variables: { tripId: bag.tripId } },
-          { query: GET_ALL_ITEMS }
-        ],
+        refetchQueries: [{ query: GET_TRIP, variables: { id: id } }],
       });
       onClose();
      

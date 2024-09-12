@@ -8,9 +8,9 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
 import ItemPictureModal from './popups/ItemPictureModal';
 import AddLinkModal from './popups/AddLinkModal';
-import { GET_CATEGORIES } from '../queries/categoryQueries';
-import { GET_ITEMS, GET_ALL_ITEMS, GET_ITEM } from '../queries/itemQueries';
+import { GET_BAG } from '../queries/bagQueries';
 import Spinner from './loading/Spinner';
+import { useParams } from 'react-router-dom';
 
 const inputClasses = "py-1 px-2 border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-primary dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
 const iconClasses = "transform transition-transform duration-200 hover:scale-125";
@@ -29,6 +29,9 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [addItem, { loading: addingItem }] = useMutation(ADD_ITEM); 
 
+  const { id } = useParams<{ id: string }>();
+
+
   const priorityClass = priority === 'low' ? 'bg-emerald-100 dark:bg-emerald-600' : 
   priority === 'med' ? 'bg-yellow-100 dark:bg-yellow-600' : 
   'bg-red-100 dark:bg-red-600';
@@ -46,7 +49,6 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const handleBlur = (field: string, value: any) => {
     updateItem({
       variables: { id: itemData.id, [field]: value },
-      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }, { query: GET_ALL_ITEMS }]
     });
   };
 
@@ -54,7 +56,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     setWeightOption(unit);
     updateItem({
       variables: { id: itemData.id, weightOption: unit },
-      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }, { query: GET_ALL_ITEMS }]
+      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
     });
   };
 
@@ -62,28 +64,25 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     setPriority(newPriority); 
     updateItem({
       variables: { id: itemData.id, priority: newPriority },
-      refetchQueries: [{ query: GET_ITEM, variables: { id: itemData.id } }]
+      
     });
   };
 
   const handleQtyChange = (value: number) => {
     updateItem({ variables: { id: itemData.id, qty: value },
-      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }]
+      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
     });
   };
 
   const handleWeightChange = (value: number) => {
     updateItem({ variables: { id: itemData.id, weight: value },
-      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }]
+      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
     });
   };
 
   const handleToggleWorn = () => {
     updateItem({ variables: { id: itemData.id, worn: !itemData.worn },
-      refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: itemData.bagId } },
-        { query: GET_ITEMS, variables: { categoryId: itemData.categoryId } },
-        { query: GET_ITEM, variables: { id: itemData.id } }
-      ]
+      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
     });
   };
 
@@ -105,8 +104,8 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           priority: itemData.priority,
           worn: itemData.worn,
         },
-        refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: itemData.categoryId } },
-          { query: GET_CATEGORIES, variables: { bagId: itemData.bagId } }
+        refetchQueries: [{ query: GET_BAG, variables: { id: id } },
+         
         ]
       });
     } catch (error) {

@@ -9,6 +9,7 @@ export interface Category {
     color: string;
     totalWeight: number
     totalWornWeight: number
+    items: Item[];
     
     
   }
@@ -29,6 +30,7 @@ export interface Category {
       tripId: string;
       bagId: string;
       name: string;
+      items: Item[];
     };
 
     weightUnit: string

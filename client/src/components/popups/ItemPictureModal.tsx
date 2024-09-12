@@ -8,9 +8,10 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_ITEM_PICTURE } from '../../mutations/itemMutation';
 import { FaCloudUploadAlt, FaCheckCircle } from 'react-icons/fa';
 import { API_BASE_URL } from '../../utils/apiConfigs';
-import { GET_ITEM, GET_ITEMS } from '../../queries/itemQueries';
+import { GET_BAG } from '../../queries/bagQueries';
+import { useParams } from 'react-router-dom';
 
-const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, itemId, categoryId, itemPicLink }) => {
+const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, itemId, itemPicLink }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -19,6 +20,9 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
   const [isFileUploaded, setIsFileUploaded] = useState(false);
 
   const [updateItem] = useMutation(UPDATE_ITEM_PICTURE);
+
+  const { id } = useParams<{ id: string }>();
+
 
   useEffect(() => {
     if (selectedFile) {
@@ -93,7 +97,7 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
 
     try {
       await updateItem({ variables: { id: itemId, imageUrl },  
-      refetchQueries: [ { query: GET_ITEMS, variables: { categoryId: categoryId } } ,{ query: GET_ITEM, variables: { id: itemId } } ]});
+      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]});
 
       
       onClose();

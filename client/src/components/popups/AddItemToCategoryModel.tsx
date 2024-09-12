@@ -5,9 +5,9 @@ import { AddItemToCategoryModalProps } from '../../types/category';
 import { ADD_ITEM } from '../../mutations/itemMutation';
 import { AddRecentItemVariables, Item } from '../../types/item';
 import { useMutation } from '@apollo/client';
-import { GET_ITEMS } from '../../queries/itemQueries';
-import { GET_CATEGORIES } from '../../queries/categoryQueries';
+import { GET_BAG } from '../../queries/bagQueries';
 import Message from '../message/Message';
+import { useParams } from 'react-router-dom';
 
 const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen, onClose, categories, item}) => {
 
@@ -17,6 +17,8 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
   const [categoryId, setCategoryId] = useState('');
 
   const [addItem] = useMutation<{ addItem: Item }, AddRecentItemVariables>(ADD_ITEM);
+
+  const { id } = useParams<{ id: string }>();
 
   const handleAddItemSubmit = async () => {
 
@@ -36,8 +38,8 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
             worn: item.worn || false,
             link: item.link || ''
           },
-          refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: categoryId } },
-            { query: GET_CATEGORIES, variables: { bagId: item.bagId } }
+          refetchQueries: [{ query: GET_BAG, variables: { id: id } },
+           
           ]
 
         });

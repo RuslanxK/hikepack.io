@@ -1,15 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const GET_BAGS = gql`
-  query GetBags($tripId: ID!) {
-    bags(tripId: $tripId) {
-      id
-      tripId
-      name
-     
-    }
-  }
-`;
 
 export const GET_BAG = gql`
   query GetBag($id: ID!) {
@@ -21,6 +11,46 @@ export const GET_BAG = gql`
       goal
       likes
       exploreBags
+      
+      categories {
+      id
+      tripId
+      bagId
+      name
+      order
+      color
+      totalWeight
+      totalWornWeight
+      items {
+         id
+         categoryId
+         bagId
+         tripId
+         name
+         description
+         qty
+         weight
+         weightOption
+         priority
+         imageUrl
+         link
+         worn
+         order
+       }
+      }
+
+      allItems {
+          id
+          tripId
+          bagId
+          categoryId
+          name
+          qty
+          weight
+          priority
+          worn
+          link
+      }
       
     }
   }

@@ -2,31 +2,30 @@ import React, { useState, useEffect, useRef, useCallback} from 'react';
 import { GrDrag } from 'react-icons/gr';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useSortable } from '@dnd-kit/sortable';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CSS } from '@dnd-kit/utilities';
 import { CategoryProps } from '../types/category';
 import SingleItem from './SingleItem';
 import { GET_ITEMS } from '../queries/itemQueries';
 import { UPDATE_ITEM_ORDER, DELETE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
 import { UPDATE_CATEGORY_NAME } from '../mutations/categoryMutations';
-import { GetItemsData, AddItemVariables, Item } from '../types/item';
+import { AddItemVariables, Item } from '../types/item';
 import { FaPlus } from 'react-icons/fa';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { DndContext, closestCorners, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import DeleteCategoryModal from './popups/DeleteCategoryModal';
-import { GET_CATEGORIES } from '../queries/categoryQueries';
-import { GET_ALL_ITEMS } from '../queries/itemQueries';
 import Spinner from './loading/Spinner';
-import Message from './message/Message';
 import { TiDelete } from "react-icons/ti";
-
+import { GET_BAG } from '../queries/bagQueries';
+import { useParams } from 'react-router-dom';
 
 
 const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) => {
-  
+
+  const { id } = useParams<{ id: string }>();
+
   const [expanded, setExpanded] = useState(true);
   const categoryNameRef = useRef<HTMLInputElement>(null);
-  const { loading, error, data } = useQuery<GetItemsData>(GET_ITEMS, { variables: { categoryId: categoryData.id } });
   const [addItem, { loading: addingItem }] = useMutation<{ addItem: Item }, AddItemVariables>(ADD_ITEM);
   const [updateItemOrder] = useMutation(UPDATE_ITEM_ORDER);
   const [updateCategoryName] = useMutation(UPDATE_CATEGORY_NAME);
@@ -43,12 +42,11 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const buttonClass ='text-red-300 hover:text-red-400 rounded-full p-1 transform transition-transform duration-200 hover:scale-125';
 
   useEffect(() => {
-    if (data) {
-      setItemsData(data.items.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+    if (categoryData.items) {
+      setItemsData(categoryData.items.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
     }
-  }, [data]);
+  }, [categoryData]);
 
-  
 
   const moveItem = async (fromIndex: number, toIndex: number) => {
     if (fromIndex === toIndex) return;
@@ -85,7 +83,6 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
     }
   };
   
-  
 
   const handleRowClick = () => {
     setExpanded(!expanded);
@@ -111,7 +108,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       await addItem({
         variables: { tripId: categoryData.tripId, bagId: categoryData.bagId, categoryId: categoryData.id, name: '', qty: 1, weight: 0.1 },
         refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: categoryData.id }},
-        { query: GET_CATEGORIES, variables: { bagId: categoryData.bagId }},
+        { query: GET_BAG, variables: { id: id }},
       ]});
       
     } catch (error) {
@@ -126,7 +123,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       try {
         await updateCategoryName({
           variables: { id: categoryData.id, name: categoryNameRef.current.value },
-          refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: categoryData.bagId }}]});
+          refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
         
       } catch (error) {
         console.error('Error updating category name:', error);
@@ -141,10 +138,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
         checkedItems.map(async (item) => {
           await deleteItem({ variables: { id: item.id },
           refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: categoryData.id }},
-          { query: GET_CATEGORIES, variables: { bagId: categoryData.bagId }},
-          {query: GET_ALL_ITEMS}
-
-          ]});
+          { query: GET_BAG, variables: { id: id }}]});
         })
       );
       setCheckedItems([]); 
@@ -157,24 +151,8 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: categoryData.id });
 
 
-  if (loading  || error) {
-    if (error) {
-      console.error('Error fetching item details:', error);
-    }
-    return (
-      <div className="w-full flex flex-col justify-center">
-        <Spinner w={6} h={6} />
-        {(error) && (
-           <Message width='w-fit' title="Attention Needed" padding="sm:p-5 p-3" titleMarginBottom="mb-2" message="Something went wrong. Please try again later." type="error" />
-        )}
-      </div>
-    );
-  }
-
   const style = { transform: CSS.Translate.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   
-
-
 
   return (
     <div className="mb-2" ref={setNodeRef} style={style}>

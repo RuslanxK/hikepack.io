@@ -5,11 +5,9 @@ import Spinner from '../loading/Spinner';
 import { DeleteCategoryModalProps } from '../../types/category';
 import { DELETE_CATEGORY } from '../../mutations/categoryMutations';
 import { DeleteBagData, DeleteBagVars } from '../../types/bag';
-import { GET_CATEGORIES } from '../../queries/categoryQueries';
 import { useParams } from 'react-router-dom';
-import { GET_ALL_ITEMS } from '../../queries/itemQueries';
 import Message from '../message/Message';
-
+import { GET_BAG } from '../../queries/bagQueries';
 const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({ isOpen, onClose, categoryId, categoryName}) => {
 
   const [loading, setLoading] = useState(false);
@@ -24,10 +22,7 @@ const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({ isOpen, onClo
     try {
       await deleteCategory({
         variables: { id: categoryId },
-        refetchQueries: [{ query: GET_CATEGORIES, variables: { bagId: id }},
-        {query: GET_ALL_ITEMS}
-        ],
-      });
+        refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
       onClose();
     } catch (e) {
       setError('Error deleting category. Please try again.');

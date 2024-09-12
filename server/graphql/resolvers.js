@@ -139,15 +139,6 @@ const resolvers = {
       }
     },
 
-    bags: async (_, { tripId }, { user }) => {
-      try {
-        return await Bag.find(ensureOwner(user, { tripId }));
-      } catch (error) {
-        console.error(`Error fetching bags for tripId ${tripId}:`, error);
-        throw new Error('Failed to fetch bags');
-      }
-    },
-    
 
     bag: async (_, { id }, { user }) => {
       try {
@@ -193,71 +184,7 @@ const resolvers = {
         throw new Error("Failed to fetch explore bags.");
       }
     },
-    
-    
-    categories: async (_, { bagId }) => {
-      try {
-        const categories = await Category.find({ bagId });
-        const categoriesWithDetails = await Promise.all(
-          categories.map(async (category) => {
-            const items = await Item.find({ categoryId: category._id });
-    
-            const totalWeight = await items.reduce(async (sumPromise, item) => {
-              const sum = await sumPromise;
-    
-              const user = await User.findById(item.owner);
-              const userWeightOption = user?.weightOption;
-    
-              const itemWeightOption = item.weightOption || userWeightOption;
-              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
-              return sum + (item.weight * item.qty * conversionRate);
-            }, Promise.resolve(0));
-    
-            const totalWornWeight = await items.reduce(async (sumPromise, item) => {
-              const sum = await sumPromise;
-    
-              const user = await User.findById(item.owner);
-              const userWeightOption = user?.weightOption; 
-    
-              const itemWeightOption = item.weightOption || userWeightOption;
-              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
-              return sum + (item.worn ? item.weight * item.qty * conversionRate : 0);
-            }, Promise.resolve(0));
-    
-            return {
-              ...category.toObject(),
-              id: category._id.toString(),
-              totalWeight,
-              totalWornWeight,
-            };
-          })
-        );
-        return categoriesWithDetails;
-      } catch (error) {
-        console.error(`Error fetching categories for bagId ${bagId}:`, error);
-        throw new Error('Failed to fetch categories');
-      }
-    },
-
-    
-
-    items: async (_, { categoryId }) => {
-      try {
-        return await Item.find({ categoryId });
-      } catch (error) {
-        console.error(`Error fetching items for categoryId ${categoryId}:`, error);
-        throw new Error('Failed to fetch items');
-      }
-    },
-
-    item: async (_, { id }) => {
-      try {
-        return await Item.findOne({ _id: id });
-      } catch (error) {
-        console.error(`Error fetching item with id ${id}:`, error);
-        throw new Error('Failed to fetch item');
-      }
-    },
+  
 
     latestBags: async (_, __, { user }) => {
       try {
@@ -291,29 +218,7 @@ const resolvers = {
       }
     },
 
-    allItems: async (_, __, { user }) => {
-      try {
-        const items = await Item.find(
-          {
-            ...ensureOwner(user),
-            name: { $ne: "", $exists: true }
-          }
-        )
-        .sort({ createdAt: -1 })
-        .exec();
-
-        const uniqueItems = items.filter(
-          (item, index, self) => index === self.findIndex((t) => t.name === item.name)
-        );
-    
-        return uniqueItems.slice(0, 50);
-    
-      } catch (error) {
-        console.error('Error fetching all items:', error);
-        throw new Error('Failed to fetch all items');
-      }
-    },
-
+  
 
     getArticles: async () => {
       try {
@@ -337,6 +242,107 @@ const resolvers = {
     },
     
   },
+
+
+  Trip: {
+    bags: async (parent) => {
+      try {
+      
+        return await Bag.find({ tripId: parent.id });
+      } catch (error) {
+        console.error(`Error fetching bags for trip ${parent.id}:`, error);
+        throw new Error('Failed to fetch bags');
+      }
+    }
+  },
+
+
+  Bag: {
+    categories: async (parent) => {
+      try {
+        const categories = await Category.find({ bagId: parent.id });
+        const categoriesWithDetails = await Promise.all(
+          categories.map(async (category) => {
+            const items = await Item.find({ categoryId: category._id });
+  
+            const totalWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+  
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+  
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.weight * item.qty * conversionRate);
+            }, Promise.resolve(0));
+  
+            const totalWornWeight = await items.reduce(async (sumPromise, item) => {
+              const sum = await sumPromise;
+  
+              const user = await User.findById(item.owner);
+              const userWeightOption = user?.weightOption;
+  
+              const itemWeightOption = item.weightOption || userWeightOption;
+              const conversionRate = weightConversionRates[itemWeightOption][userWeightOption];
+              return sum + (item.worn ? item.weight * item.qty * conversionRate : 0);
+            }, Promise.resolve(0));
+  
+            return {
+              ...category.toObject(),
+              id: category._id.toString(),
+              totalWeight,
+              totalWornWeight,
+            };
+          })
+        );
+        return categoriesWithDetails;
+      } catch (error) {
+        console.error(`Error fetching categories for bag ${parent.id}:`, error);
+        throw new Error('Failed to fetch categories');
+      }
+    },
+
+    allItems: async (_, __, { user }) => {
+      try {
+        const items = await Item.find(
+          {
+            ...ensureOwner(user),
+            name: { $ne: "", $exists: true }
+          }
+        )
+        .sort({ createdAt: -1 })
+        .exec();
+
+        const uniqueItems = items.filter(
+          (item, index, self) => index === self.findIndex((t) => t.name === item.name)
+        );
+    
+        return uniqueItems.slice(0, 50);
+    
+      } catch (error) {
+        console.error('Error fetching all items:', error);
+        throw new Error('Failed to fetch all items');
+      }
+    },
+    
+  },
+
+
+  Category: {
+
+    items: async (parent) => {
+      try {
+        return await Item.find({ categoryId: parent.id });
+      } catch (error) {
+        console.error(`Error fetching items for categoryId ${parent.categoryId}:`, error);
+        throw new Error('Failed to fetch items');
+      }
+    },
+     
+  },
+  
+
+
 
   
   Mutation: {

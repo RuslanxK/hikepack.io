@@ -35,7 +35,7 @@
 }
 
 #scroll::-webkit-scrollbar-track:hover {
-  background-color: rgba(240, 240, 240, 0.5); /* Lighter color on hover for track */
+  background-color: rgba(240, 240, 240, 0.5); 
 }
 
 
@@ -51,7 +51,6 @@ body, html {
    overflow-x: hidden !important;
 
 }
-
 
 
 

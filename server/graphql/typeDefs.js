@@ -40,25 +40,23 @@ const typeDefs = gql`
     createdAt: String!
     updatedAt: String!
     imageUrl: String
-    user: User!
     bags: [Bag!]!
   }
 
   type Bag {
     id: ID!
     tripId: ID!
-    owner: ID!  
-    name: String!
-    description: String!
-    goal: String!
-    passed: Boolean!
+    owner: ID!
+    name: String
+    description: String
+    goal: String
+    passed: Boolean
     likes: Int
-    exploreBags: Boolean!
-    createdAt: String!
-    updatedAt: String!
+    exploreBags: Boolean
+    createdAt: String
+    updatedAt: String
     totalCategories: Int
     totalItems: Int
-    user: User!
     categories: [Category!]!
     allItems: [Item!]!
   }
@@ -159,18 +157,15 @@ const typeDefs = gql`
     updateTrip(id: ID!, name: String, about: String, distance: String, startDate: String, endDate: String, imageUrl: String): Trip
     addBag(tripId: String!, name: String!, description: String!, goal: String!, exploreBags: Boolean!): Bag
     deleteBag(id: ID!): Bag
-    updateBag(bagId: ID!, name: String, description: String, goal: String, exploreBags: String): Bag
-    updateExploreBags(bagId: ID!, exploreBags: Boolean!): Bag
+    updateBag(bagId: ID!, name: String, description: String, goal: String, exploreBags: Boolean): Bag
     updateLikesBag(bagId: ID!, increment: Int!): Bag
     addCategory(tripId: String!, bagId: String!, name: String!, order: Int, color: String): Category
     deleteCategory(id: ID!): Category
-    updateCategoryOrder(id: ID!, order: Int!): Category
-    updateCategoryName(id: ID!, name: String!): Category
-    updateItemOrder(id: ID!, order: Int!): Item
-    updateItem(id: ID!, name: String, qty: Int, description: String, weight: Float, priority: String, link: String, worn: Boolean, imageUrl: String, weightOption: String): Item
+    updateCategory(id: ID!, order: Int, name: String): Category
+
+    updateItem(id: ID!, name: String, qty: Int, description: String, weight: Float, priority: String, link: String, worn: Boolean, imageUrl: String, weightOption: String, order: Int): Item
     addItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String): Item
     deleteItem(id: ID!): Item
-    updateItemLink(id: ID!, link: String!): Item
 
     createUser(email: String!, username: String, birthdate: String, password: String!, weightOption: String, verifiedCredentials: Boolean, distance: String, gender: String, activityLevel: String, country: String, isAdmin: Boolean, imageUrl: String): User
     updateUser(id: ID!, email: String, username: String, birthdate: String, password: String, weightOption: String, imageUrl: String, verifiedCredentials: Boolean, isActive: Boolean, distance: String, gender: String, activityLevel: String, country: String, isAdmin: Boolean): User

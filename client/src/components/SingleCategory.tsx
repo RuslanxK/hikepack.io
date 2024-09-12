@@ -6,8 +6,8 @@ import { useMutation } from '@apollo/client';
 import { CSS } from '@dnd-kit/utilities';
 import { CategoryProps } from '../types/category';
 import SingleItem from './SingleItem';
-import { UPDATE_ITEM_ORDER, DELETE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
-import { UPDATE_CATEGORY_NAME } from '../mutations/categoryMutations';
+import { UPDATE_ITEM, DELETE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
+import { UPDATE_CATEGORY } from '../mutations/categoryMutations';
 import { AddItemVariables, Item } from '../types/item';
 import { FaPlus } from 'react-icons/fa';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -26,8 +26,8 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const [expanded, setExpanded] = useState(true);
   const categoryNameRef = useRef<HTMLInputElement>(null);
   const [addItem, { loading: addingItem }] = useMutation<{ addItem: Item }, AddItemVariables>(ADD_ITEM);
-  const [updateItemOrder] = useMutation(UPDATE_ITEM_ORDER);
-  const [updateCategoryName] = useMutation(UPDATE_CATEGORY_NAME);
+  const [updateItem] = useMutation(UPDATE_ITEM);
+  const [updateCategory] = useMutation(UPDATE_CATEGORY);
   const [deleteItem, { loading: deletingItem }] = useMutation(DELETE_ITEM); 
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState<{ id: string, checked: boolean }[]>([]);
@@ -63,8 +63,9 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       setItemsData(reorderedItems);
       await Promise.all(
         reorderedItems.map((item) =>
-          updateItemOrder({
+          updateItem({
             variables: { id: item.id, order: item.order },
+            refetchQueries: [{ query: GET_BAG, variables: { id: id }}]
           })
         )
       );
@@ -118,7 +119,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const handleCategoryNameBlur = async () => {
     if (categoryNameRef.current && categoryNameRef.current.value !== categoryData.name) {
       try {
-        await updateCategoryName({
+        await updateCategory({
           variables: { id: categoryData.id, name: categoryNameRef.current.value },
           refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
         

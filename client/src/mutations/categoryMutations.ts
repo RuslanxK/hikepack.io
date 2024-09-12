@@ -18,18 +18,13 @@ export const DELETE_CATEGORY = gql`
   }
 `;
 
-export const UPDATE_CATEGORY_ORDER = gql`
-  mutation UpdateCategoryOrder($id: ID!, $order: Int!) {
-    updateCategoryOrder(id: $id, order: $order) {
+export const UPDATE_CATEGORY = gql`
+  mutation UpdateCategory($id: ID!, $order: Int, $name: String) {
+    updateCategory(id: $id, order: $order, name: $name ) {
       id
-    }
-  }
-`;
-
-export const UPDATE_CATEGORY_NAME = gql`
-  mutation UpdateCategoryName($id: ID!, $name: String!) {
-    updateCategoryName(id: $id, name: $name) {
-      id
+      name
+      order
+      color
     }
   }
 `;

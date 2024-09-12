@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FaPlus, FaHeart } from 'react-icons/fa';
-import { UPDATE_EXPLORE_BAGS } from '../mutations/bagMutations';
+import { UPDATE_BAG } from '../mutations/bagMutations';
 import { GET_BAG } from '../queries/bagQueries';
-import { ADD_CATEGORY, UPDATE_CATEGORY_ORDER } from '../mutations/categoryMutations';
+import { ADD_CATEGORY, UPDATE_CATEGORY } from '../mutations/categoryMutations';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { Category } from '../types/category';
@@ -38,9 +38,12 @@ const BagDetails: React.FC = () => {
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } });
   const sensors = useSensors(mouseSensor, touchSensor);
 
-  const [updateExploreBags] = useMutation(UPDATE_EXPLORE_BAGS);
+
+  console.log(dataBag)
+
+  const [updateBag] = useMutation(UPDATE_BAG);
   const [addCategory, {loading: addingCategory }] = useMutation(ADD_CATEGORY);
-  const [updateCategoryOrder] = useMutation(UPDATE_CATEGORY_ORDER);
+  const [updateCategory] = useMutation(UPDATE_CATEGORY);
 
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
@@ -99,8 +102,9 @@ const BagDetails: React.FC = () => {
   };
 
   const handleToggleShareToExplore = async () => {
+
     try {
-      await updateExploreBags({
+      await updateBag({
         variables: {
           bagId: id,
           exploreBags: !bag.exploreBags,
@@ -127,7 +131,7 @@ const BagDetails: React.FC = () => {
       setCategoriesData(reorderedCategories);
       await Promise.all(
         reorderedCategories.map((category) =>
-          updateCategoryOrder({
+          updateCategory({
             variables: { id: category.id, order: category.order },
           })
         )

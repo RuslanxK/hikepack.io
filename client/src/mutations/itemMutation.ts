@@ -17,18 +17,11 @@ export const DELETE_ITEM = gql`
   }
 `;
 
-export const UPDATE_ITEM_ORDER = gql`
-  mutation UpdateItemOrder($id: ID!, $order: Int!) {
-    updateItemOrder(id: $id, order: $order) {
-      id
-    }
-  }
-`;
 
 
 export const UPDATE_ITEM = gql`
-  mutation UpdateItem($id: ID!, $name: String, $qty: Int, $description: String, $weight: Float, $priority: String, $link: String, $worn: Boolean, $weightOption: String) {
-    updateItem(id: $id, name: $name, qty: $qty, description: $description, weight: $weight, priority: $priority, link: $link, worn: $worn, weightOption: $weightOption) {
+  mutation UpdateItem($id: ID!, $name: String, $qty: Int, $description: String, $weight: Float, $priority: String, $link: String, $worn: Boolean, $weightOption: String, $order: Int) {
+    updateItem(id: $id, name: $name, qty: $qty, description: $description, weight: $weight, priority: $priority, link: $link, worn: $worn, weightOption: $weightOption, order: $order) {
       id
     }
   }
@@ -44,11 +37,3 @@ export const UPDATE_ITEM_PICTURE = gql`
   }
 `;
 
-
-export const UPDATE_ITEM_LINK = gql`
-  mutation UpdateItemLink($id: ID!, $link: String!) {
-    updateItemLink(id: $id, link: $link) {
-      id
-    }
-  }
-`;

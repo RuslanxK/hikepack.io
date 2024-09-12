@@ -12,8 +12,8 @@ export const ADD_BAG = gql`
 
 
 export const UPDATE_BAG = gql`
-  mutation UpdateBag($bagId: ID!, $name: String!, $description: String!, $goal: String!) {
-    updateBag(bagId: $bagId, name: $name, description: $description, goal: $goal) {
+  mutation UpdateBag($bagId: ID!, $name: String, $description: String, $goal: String, $exploreBags: Boolean) {
+    updateBag(bagId: $bagId, name: $name, description: $description, goal: $goal, exploreBags: $exploreBags) {
       id
     }
   }
@@ -28,14 +28,6 @@ export const DELETE_BAG = gql`
 `;
 
 
-
-export const UPDATE_EXPLORE_BAGS = gql`
-  mutation UpdateExploreBags($bagId: ID!, $exploreBags: Boolean!) {
-    updateExploreBags(bagId: $bagId, exploreBags: $exploreBags) {
-      id
-    }
-  }
-`;
 
 
 export const UPDATE_LIKES_BAG = gql`

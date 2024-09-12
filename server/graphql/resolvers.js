@@ -152,7 +152,6 @@ const resolvers = {
 
     sharedBag: async (_, { id }) => {
       try {
-        // Fetch the shared bag by its ID
         const bag = await Bag.findOne({ _id: id });
     
         if (!bag) {
@@ -194,7 +193,7 @@ const resolvers = {
     
         return {
           ...bag.toObject(),
-          id: bag._id.toString(), // Ensure _id is mapped to id
+          id: bag._id.toString(), 
           categories: categoriesWithDetails,
         };
     

@@ -6,7 +6,6 @@ import { useMutation } from '@apollo/client';
 import { CSS } from '@dnd-kit/utilities';
 import { CategoryProps } from '../types/category';
 import SingleItem from './SingleItem';
-import { GET_ITEMS } from '../queries/itemQueries';
 import { UPDATE_ITEM_ORDER, DELETE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
 import { UPDATE_CATEGORY_NAME } from '../mutations/categoryMutations';
 import { AddItemVariables, Item } from '../types/item';
@@ -107,9 +106,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
     try {
       await addItem({
         variables: { tripId: categoryData.tripId, bagId: categoryData.bagId, categoryId: categoryData.id, name: '', qty: 1, weight: 0.1 },
-        refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: categoryData.id }},
-        { query: GET_BAG, variables: { id: id }},
-      ]});
+        refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
       
     } catch (error) {
       console.error('Error adding item:', error);
@@ -137,8 +134,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       await Promise.all(
         checkedItems.map(async (item) => {
           await deleteItem({ variables: { id: item.id },
-          refetchQueries: [{ query: GET_ITEMS, variables: { categoryId: categoryData.id }},
-          { query: GET_BAG, variables: { id: id }}]});
+          refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
         })
       );
       setCheckedItems([]); 

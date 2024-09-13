@@ -81,6 +81,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       const toIndex = itemsData.findIndex((item) => item.id === over?.id);
       moveItem(fromIndex, toIndex);
     }
+   
   };
   
 
@@ -153,7 +154,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   
 
   return (
-    <div className="mb-2" ref={setNodeRef} style={style}>
+    <div className={`mb-2`} ref={setNodeRef} style={style}>
       <div className="cursor-pointer bg-white dark:bg-box shadow-md w-full">
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">

@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { Category } from '../types/category';
 import SingleCategory from './SingleCategory';
-import { DndContext, closestCorners, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { DndContext, closestCenter,  MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { getRandomDarkColor } from '../utils/color';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
@@ -267,7 +267,7 @@ const BagDetails: React.FC = () => {
             <div className="w-full pb-14">
               {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }
 
-              <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
+              <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
                 <SortableContext items={categoriesData.map((category) => category.id)} strategy={verticalListSortingStrategy}>
                   {categoriesData.map((category) => (
                     <SingleCategory key={category.id} categoryData={category} weightUnit={userData?.user?.weightOption}/>

@@ -7,7 +7,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { CategoryProps } from '../types/category';
 import SingleItem from './SingleItem';
 import { UPDATE_ITEM, DELETE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
-import { UPDATE_CATEGORY } from '../mutations/categoryMutations';
+import { UPDATE_CATEGORY_NAME } from '../mutations/categoryMutations';
 import { AddItemVariables, Item } from '../types/item';
 import { FaPlus } from 'react-icons/fa';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -27,7 +27,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const categoryNameRef = useRef<HTMLInputElement>(null);
   const [addItem, { loading: addingItem }] = useMutation<{ addItem: Item }, AddItemVariables>(ADD_ITEM);
   const [updateItem] = useMutation(UPDATE_ITEM);
-  const [updateCategory] = useMutation(UPDATE_CATEGORY);
+  const [updateCategoryName] = useMutation(UPDATE_CATEGORY_NAME);
   const [deleteItem, { loading: deletingItem }] = useMutation(DELETE_ITEM); 
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [checkedItems, setCheckedItems] = useState<{ id: string, checked: boolean }[]>([]);
@@ -119,7 +119,8 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const handleCategoryNameBlur = async () => {
     if (categoryNameRef.current && categoryNameRef.current.value !== categoryData.name) {
       try {
-        await updateCategory({
+
+        await updateCategoryName({
           variables: { id: categoryData.id, name: categoryNameRef.current.value },
           refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
         

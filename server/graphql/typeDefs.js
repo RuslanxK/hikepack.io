@@ -162,7 +162,9 @@ const typeDefs = gql`
     updateLikesBag(bagId: ID!, increment: Int!): Bag
     addCategory(tripId: String!, bagId: String!, name: String!, order: Int, color: String): Category
     deleteCategory(id: ID!): Category
-    updateCategory(id: ID!, order: Int, name: String): Category
+    updateCategoryName(id: ID!, name: String!): Category
+    updateCategoryOrder(id: ID!, order: Int!): Category
+
     updateItem(id: ID!, name: String, qty: Int, description: String, weight: Float, priority: String, link: String, worn: Boolean, imageUrl: String, weightOption: String, order: Int): Item
     addItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String): Item
     deleteItem(id: ID!): Item

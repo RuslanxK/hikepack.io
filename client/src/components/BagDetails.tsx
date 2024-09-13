@@ -62,6 +62,33 @@ const BagDetails: React.FC = () => {
 
   const bag = dataBag?.bag;
 
+  useEffect(() => {
+    if (dataBag?.bag?.categories) {
+      const hasItems = dataBag.bag.categories.some((category: Category) => category.items.length > 0);
+  
+      if (!hasItems && bag?.exploreBags) {
+        const updateExploreBags = async () => {
+          try {
+            await updateBag({
+              variables: {
+                bagId: id,
+                exploreBags: false, 
+              },
+              refetchQueries: [{ query: GET_BAG, variables: { id } }],
+            });
+            console.log('Bag exploreBags set to false due to no items.');
+          } catch (error) {
+            console.error('Error updating bag:', error);
+          }
+        };
+  
+        updateExploreBags();
+      }
+    }
+  }, [dataBag?.bag?.categories, bag?.exploreBags, id, updateBag]);
+
+
+
   if (loadingBag || loadingUser) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
@@ -185,7 +212,7 @@ const BagDetails: React.FC = () => {
                   </div>
                 </div>
                 <div className='w-fit sm:w-4/12 flex flex-row items-center justify-end'>
-                <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:mr-5 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-40 w-full sm:w-48 sm:static bg-gray-100 sm:bg-transparent sm:dark:bg-transparent dark:bg-theme-dark">
+             { bag.categories.some((category: Category) => category.items.length > 0) ? <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:mr-5 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-40 w-full sm:w-48 sm:static bg-gray-100 sm:bg-transparent sm:dark:bg-transparent dark:bg-theme-dark">
               <input
                 type="checkbox"
                 checked={bag?.exploreBags}
@@ -194,7 +221,7 @@ const BagDetails: React.FC = () => {
                   />
              <span className="mr-3 dark:text-white">Share to explore</span>
             <div className="relative w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-400 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-400"></div>
-            </label>
+            </label> : null }
                   <button type="button" className={buttonClass} onClick={() => window.open(`/share/${bag.id}`, '_blank')}>
                     <IoMdShare size={19} />
                   </button>

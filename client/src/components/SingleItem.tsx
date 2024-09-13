@@ -133,7 +133,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
       <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
         <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
-        <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300"/>
+        <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300 cursor-pointer"/>
       </div>
 
       <input 
@@ -181,7 +181,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     id="weight-unit-select"
     value={weightOption}
     onChange={(e) => handleWeightOptionChange(e.target.value)} 
-    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border bg-white ${inputClasses}`}
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border bg-white cursor-pointer ${inputClasses}`}
   >
     <option value="lb" className="bg-white dark:bg-zinc-700">lb</option>
     <option value="kg" className="bg-white dark:bg-zinc-700">kg</option>
@@ -194,7 +194,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     id="priority-select"
     value={priority}
     onChange={(e) => handlePriorityChange(e.target.value)} 
-    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} rounded-none`} // Add `rounded-none`
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer rounded-none`} // Add `rounded-none`
   >
     <option value="low" className="bg-emerald-100 dark:bg-emerald-600 dark:text-white">Low Priority</option>
     <option value="med" className="bg-yellow-100 dark:bg-yellow-600 dark:text-white">Med Priority</option>
@@ -206,28 +206,28 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
       <div className="flex space-x-3 pl-2 relative">
         <FaImage 
           size={14} 
-          className={`text-gray-500 dark:text-gray-300 ${iconClasses} ${itemData.imageUrl ? 'text-indigo-400 dark:text-indigo-300' : 'text-gray-500 dark:text-neutral-300'}`} 
+          className={`text-gray-500 dark:text-gray-300 cursor-pointer ${iconClasses} ${itemData.imageUrl ? 'text-indigo-400 dark:text-indigo-300' : 'text-gray-500 dark:text-neutral-300'}`} 
           onClick={handlePicModal} 
           onMouseEnter={() => showTooltip('image')}
           onMouseLeave={hideTooltip}
         />
        <FaWalking 
           size={14} 
-          className={`${iconClasses} ${itemData.worn ? 'text-green dark:text-green' : 'text-gray-500 dark:text-neutral-300'}`} 
+          className={`cursor-pointer ${iconClasses} ${itemData.worn ? 'text-green dark:text-green' : 'text-gray-500 dark:text-neutral-300'}`} 
           onClick={handleToggleWorn} 
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
         /> 
        { addingItem ? <Spinner w={3} h={3} /> : <FaCopy 
           size={14} 
-          className={`text-gray-500 dark:text-neutral-400 ${iconClasses}`} 
+          className={`cursor-pointer text-gray-500 dark:text-neutral-400 ${iconClasses}`} 
           onClick={handleCopyItem} 
           onMouseEnter={() => showTooltip('duplicate')}
           onMouseLeave={hideTooltip}
         /> }
         <FaLink 
           size={14} 
-          className={`${iconClasses} ${itemData.link ? 'text-cyan-500 dark:text-cyan-400' : 'text-gray-500 dark:text-neutral-300'}`} 
+          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-cyan-500 dark:text-cyan-400' : 'text-gray-500 dark:text-neutral-300'}`} 
           onClick={() => setIsModalLinkOpen(true)} 
           onMouseEnter={() => showTooltip('link')}
           onMouseLeave={hideTooltip}

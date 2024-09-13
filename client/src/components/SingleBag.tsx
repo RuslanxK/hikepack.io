@@ -28,7 +28,7 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
         <img 
           src="/images/backpack.png" 
           alt={bagData.name} 
-          className='w-16 h-16 object-contain'
+          className='w-16 h-16 object-contain cursor-pointer'
           onClick={handleViewDetails}
         />
       </div>

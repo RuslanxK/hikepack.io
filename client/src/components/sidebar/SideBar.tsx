@@ -91,7 +91,7 @@ const SideBar: React.FC = () => {
         <img
           src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
           width="90px"
-          className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3'
+          className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3 cursor-pointer'
           alt="logo"
           onClick={() => navigate('/')}
         />
@@ -106,7 +106,7 @@ const SideBar: React.FC = () => {
           <img
             src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
             width="90px"
-            className='pb-2 pl-2 pr-2 sm:p-0'
+            className='pb-2 pl-2 pr-2 sm:p-0 cursor-pointer'
             alt="logo"
             onClick={() => navigate('/')}
           />

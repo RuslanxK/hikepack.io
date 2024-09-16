@@ -17,15 +17,16 @@ const googleAuthRoute = require("./routers/googleLogin")
 const app = express();
 const port = process.env.PORT || 4000;
 
-app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: '*',  // Allows all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allows these HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Allows these headers
+  credentials: true  // Allows sending cookies or credentials if needed
+}));
 
 app.use(cookieParser()); 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  next();
-});
 
 const excludedResolvers = ['LoginUser', 'AddUser', 'GetSharedBag', 'GetCategories', 'GetItems', 'GetItem', 'UpdateLikesBag', 'CheckEmailExistence', 'UpdateVerifiedCredentials', 'SendResetPasswordLink', 'ResetPassword', 'GetSharedUser']; 
 

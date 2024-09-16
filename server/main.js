@@ -18,10 +18,15 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(cors({
-  origin: '*',  // Allows all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allows these HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Allows these headers
-  credentials: true  // Allows sending cookies or credentials if needed
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+    // Allow any origin
+    return callback(null, true);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Allows cookies and credentials
 }));
 
 app.use(cookieParser()); 

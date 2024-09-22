@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaHome, FaBook, FaSearch, FaCog, FaHistory, FaBug, FaUserShield, FaSignOutAlt, FaSun, FaMoon } from 'react-icons/fa';
+import { FaHome, FaBook, FaSearch, FaCog, FaHistory, FaBug, FaUserShield, FaSignOutAlt, FaSun, FaMoon  } from 'react-icons/fa';
+import { PiEmptyBold } from "react-icons/pi";
 import { GiHiking, GiSchoolBag } from 'react-icons/gi';
 import { FaBasketShopping } from "react-icons/fa6";
 import SideBarItem from './SideBarItem';
@@ -75,7 +76,7 @@ const SideBar: React.FC = () => {
     document.documentElement.classList.remove('dark');
     localStorage.setItem('theme', 'light');
     Cookies.remove('token');
-    navigate('/');
+     window.location.href = '/login'
   };
 
   return (
@@ -138,12 +139,19 @@ const SideBar: React.FC = () => {
                         <Spinner w={4} h={4} />
                       </li>
                     )}
-                    {error && (
-                      <Message width='w-full' title="Error occurs" padding="p-2" titleMarginBottom="" message="" type="error" />
-                    )}
-                    {!data?.latestBags.length && (
-                      <Message title="No bags yet." padding="p-2" width="w-full" titleMarginBottom="" message="" type="info" />
-                    )}
+                    
+                   {error && (
+    <span className="text-sm flex items-center p-2 bg-gray-100 rounded dark:bg-gray-800">
+      <PiEmptyBold className="mr-2" size={18}/>
+      Error occurs.
+    </span>
+  )}
+  {!data?.latestBags.length && (
+    <span className="text-sm flex items-center p-2 bg-gray-100 rounded dark:bg-gray-800">
+      <PiEmptyBold className="mr-2" size={18}/>
+      No bags yet.
+    </span>
+  )}
                     {!loading && !error && data?.latestBags?.map((bag: { id: string, name: string }) => (
                       <li
                         key={bag.id}

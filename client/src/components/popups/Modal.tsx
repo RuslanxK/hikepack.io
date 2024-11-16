@@ -13,10 +13,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-5">{title}</h2>
             <button
-              className="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100"
+              className="text-black dark:text-white hover:text-accent dark:hover:text-accent"
               onClick={onClose}
             >
-               <FaTimes size={20}  className='mb-5'/>
+               <FaTimes size={20} className='mb-5'/>
             </button>
            
           </div>

@@ -13,7 +13,6 @@ module.exports = {
         "4xl": "1920px",
       },
 
-
       boxShadow: {
         airbnb: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
       },
@@ -21,9 +20,10 @@ module.exports = {
       colors: {
         primary: "#058373",
         secondary: "#FAFAFA",
-        accent: "#878787",
+        accent: "#7a7a7a",
         green: "#04ba32",
-        black: "#000000",
+        black: "#292929",
+        blue: "#3DBCE0",
 
         info: {
           headline: "#2563EB",
@@ -39,7 +39,7 @@ module.exports = {
           yellow: "#CBB64D",
           lightGreen: "#02ccb2",
           red: "#C13C3C",
-          purple: "#7963CD"
+          purple: "#7963CD",
         },
 
         box: {

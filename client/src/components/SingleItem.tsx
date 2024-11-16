@@ -132,7 +132,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     <div id='scroll' className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible relative" ref={setNodeRef} style={style}>
       <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
-        <GrDrag className="mr-2 text-accent no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
+        <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
         <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300 cursor-pointer"/>
       </div>
 
@@ -196,9 +196,9 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     onChange={(e) => handlePriorityChange(e.target.value)} 
     className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer`} // Add `rounded-none`
   >
-    <option value="low" className="bg-emerald-100 dark:bg-emerald-600 dark:text-white">Low Priority</option>
-    <option value="med" className="bg-yellow-100 dark:bg-yellow-600 dark:text-white">Med Priority</option>
-    <option value="high" className="bg-red-100 dark:bg-red-600 dark:text-white">High Priority</option>
+    <option value="low" className="bg-emerald-100 dark:bg-primary">Low Priority</option>
+    <option value="med" className="bg-yellow-100 dark:bg-button-yellow dark:text-white">Med Priority</option>
+    <option value="high" className="bg-red-100 dark:bg-button-orange dark:text-white">High Priority</option>
   </select>
 
 
@@ -206,28 +206,28 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
       <div className="flex space-x-3 pl-2 relative">
         <FaImage 
           size={14} 
-          className={`text-accent cursor-pointer ${iconClasses} ${itemData.imageUrl ? 'text-indigo-400 dark:text-indigo-300' : 'text-accent'}`} 
+          className={`text-accent cursor-pointer ${iconClasses} ${itemData.imageUrl ? 'text-button-orange dark:text-button-orange' : 'text-accent dark:text-gray-400'}`} 
           onClick={handlePicModal} 
           onMouseEnter={() => showTooltip('image')}
           onMouseLeave={hideTooltip}
         />
        <FaWalking 
           size={14} 
-          className={`cursor-pointer ${iconClasses} ${itemData.worn ? 'text-green dark:text-green' : 'text-accent'}`} 
+          className={`cursor-pointer ${iconClasses} ${itemData.worn ? 'text-primary dark:text-button-lightGreen' : 'text-accent dark:text-gray-400'}`} 
           onClick={handleToggleWorn} 
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
         /> 
        { addingItem ? <Spinner w={3} h={3} /> : <FaCopy 
           size={14} 
-          className={`cursor-pointer text-accent ${iconClasses}`} 
+          className={`cursor-pointer text-accent dark:text-gray-400 ${iconClasses}`} 
           onClick={handleCopyItem} 
           onMouseEnter={() => showTooltip('duplicate')}
           onMouseLeave={hideTooltip}
         /> }
         <FaLink 
           size={14} 
-          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-cyan-500 dark:text-cyan-400' : 'text-accent'}`} 
+          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-blue dark:text-cyan-400' : 'text-accent dark:text-gray-400'}`} 
           onClick={() => setIsModalLinkOpen(true)} 
           onMouseEnter={() => showTooltip('link')}
           onMouseLeave={hideTooltip}

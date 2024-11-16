@@ -163,7 +163,7 @@ const SideBar: React.FC = () => {
                         }}
                       >
                         <GiSchoolBag className="mr-2 text-black dark:text-white group-hover:text-white" style={{ marginRight: "10px" }} />
-                        <span className='group-hover:text-white'>{bag.name && bag.name.length > 18 ? `${bag.name.substring(0, 18)}...` : bag.name}</span>
+                        <span className='text-black group-hover:text-white dark:text-white'>{bag.name && bag.name.length > 18 ? `${bag.name.substring(0, 18)}...` : bag.name}</span>
                       </li>
                     ))}
                   </ul>
@@ -206,8 +206,8 @@ const SideBar: React.FC = () => {
         </div>
 
         <div className="p-4 border-t border-gray-300 dark:border-gray-600 flex items-center">
-          <button className="flex items-center w-full p-2 rounded hover:bg-button-light dark:hover:bg-button-dark text-sm" onClick={handleLogout}>
-            <FaSignOutAlt className="mr-3" />
+          <button className="text-black dark:text-white flex items-center w-full p-2 rounded hover:bg-button-light dark:hover:bg-button-dark text-sm" onClick={handleLogout}>
+            <FaSignOutAlt className="mr-3 text-black dark:text-white" />
             Logout
           </button>
           <div className="flex items-center justify-center p-4">

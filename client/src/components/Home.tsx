@@ -58,19 +58,19 @@ const Home: React.FC = () => {
     <div className='p-4 sm:p-10 flex flex-col items-start justify-start space-y-2'>
       <div className='mb-5'>
         <div className='flex flex-row items-center'>
-        <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
+        <h1 className='text-xl font-semibold text-black dark:text-white'>
           Welcome, 
         </h1>
-        <span className='text-lg font-semibold ml-1.5 dark:text-white'>{userData?.user?.username}</span>
+        <span className='text-lg text-black font-semibold ml-1.5 dark:text-white'>{userData?.user?.username}</span>
         </div>
-        <p className='text-base text-gray-700 dark:text-gray-300 mt-1'>
+        <p className='text-base text-black dark:text-gray-300 mt-1'>
           The journey of a thousand miles begins with a single step.
         </p>
 
-        <h2 className='text-xl font-semibold text-gray-900 dark:text-white mt-4'>
+        <h2 className='text-xl font-semibold text-black dark:text-white mt-4'>
           My last planned trips
         </h2>
-        <p className='text-base text-gray-600 dark:text-gray-300 mt-1'>
+        <p className='text-base text-black dark:text-gray-300 mt-1'>
           Seamless Trip Planning and Bag Organization Made Simple.
         </p>
       </div>

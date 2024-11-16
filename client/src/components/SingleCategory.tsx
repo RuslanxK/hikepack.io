@@ -38,7 +38,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } });
   const sensors = useSensors(mouseSensor, touchSensor);
 
-  const buttonClass ='text-button-red hover:text-accent rounded-full p-1 transform transition-transform duration-200 hover:scale-125';
+  const buttonClass ='text-accent dark:text-gray-400 hover:text-accent rounded-full p-1 transform transition-transform duration-200 hover:scale-125';
 
   useEffect(() => {
     if (categoryData.items) {
@@ -158,14 +158,14 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       <div className="cursor-pointer bg-white dark:bg-box  w-full rounded-t-lg">
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">
-            <GrDrag className="mr-2 text-accent no-outline cursor-grabbing" size={19} {...attributes} {...listeners} />
+            <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing" size={16} {...attributes} {...listeners} />
             <input
               type="text"
               defaultValue={categoryData.name}
               placeholder='e.g., Clothes'
               ref={categoryNameRef}
               onBlur={handleCategoryNameBlur}
-              className="border-b border-neutral-200 dark:border-neutral-600 px-2 py-1 mr-4 flex-grow bg-transparent focus:outline-none focus:ring-1 focus:ring-primary w-full text-gray-800 dark:text-gray-200"
+              className="border-b border-neutral-200 dark:border-neutral-600 px-2 py-1 mr-4 flex-grow bg-transparent focus:outline-none focus:ring-1 focus:ring-button-lightGreen rounded w-full text-gray-800 dark:text-gray-200"
             />
             <div className="flex items-center">
               <span className="mr-2 text-gray-400 dark:text-gray-500" onClick={handleRowClick}>

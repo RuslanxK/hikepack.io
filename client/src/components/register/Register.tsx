@@ -216,7 +216,7 @@ const Register: React.FC = () => {
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
+                className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
               >
                 Next
               </button>
@@ -238,7 +238,7 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
                 >
                   Next
                 </button>
@@ -291,7 +291,7 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
                 >
                   Next
                 </button>
@@ -351,7 +351,7 @@ const Register: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading || userLoading}
-                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
                 >
                  Register  {loading || userLoading ?  <Spinner w={4} h={4} /> : null}
                 </button>

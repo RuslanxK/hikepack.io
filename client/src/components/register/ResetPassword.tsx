@@ -119,7 +119,7 @@ const ResetPassword: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors flex items-center justify-center"
+            className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors flex items-center justify-center"
             disabled={loading}
           >
             {loading ? <Spinner w={4} h={4} /> : "Reset Password"}

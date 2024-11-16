@@ -214,7 +214,7 @@ const UpdateTripModal: React.FC<UpdateTripModalProps> = ({ isOpen, onClose, trip
             </div>
           </div>
         </div>
-        <button type="submit" className="text-sm bg-orange-400 font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-orange-500 flex items-center justify-center" disabled={loading}>
+        <button type="submit" className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-hover flex items-center justify-center" disabled={loading}>
           UPDATE
           {loading && <Spinner w={4} h={4} />}
         </button>

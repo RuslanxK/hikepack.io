@@ -19,7 +19,7 @@ const TripDetails: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-full p-1.5 dark:focus:ring-orange-800 dark:hover:bg-button-hover';
+  const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white rounded p-1.5  dark:hover:bg-button-hover';
 
   const { id } = useParams<{ id: string }>();
   const { loading: loadingTrip, error: errorTrip, data: dataTrip } = useQuery(GET_TRIP, { variables: { id } });
@@ -86,54 +86,61 @@ const TripDetails: React.FC = () => {
     <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
     <div className='p-4 sm:p-10 space-y-6'>
       <div className='flex flex-col lg:flex-row'>
-        <div className="w-full flex flex-col space-y-4">
-          <div className='flex flex-row justify-between items-center'>
+        <div className="w-full flex flex-col space-y-8 ">
+          <div className='flex flex-row justify-between items-center bg-white dark:bg-box rounded-lg p-5'>
             <div className="flex items-center">
               <button 
                 type="button" 
-                className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm" 
+                className="mr-4 text-white dark:text-gray-100 bg-primary dark:bg-button hover:bg-button-hover dark:hover:bg-button-hover p-2 rounded hover:shadow-sm" 
                 onClick={() => navigate(-1)}>
                 <FaArrowLeft size={17} />
               </button>
 
-              <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
+              <h1 className='text-xl font-semibold text-black dark:text-white'>
                 {trip.name}
               </h1>
             </div>
-            
+
+            <div className="flex justify-between w-72 pl-5">
+            <p className="text-black dark:text-white flex items-center">
+              <FaMapMarkerAlt className="mr-1 text-black dark:text-white" />
+              {trip.distance} {userData?.user?.distance}
+            </p>
+            <p className={`flex items-center ${daysLeft === 'Traveled' ? 'text-black' : 'text-primary'} dark:text-white`}>
+              <FaClock className="mr-1 text-black dark:text-white" />
+              {daysLeft === 'Traveled' ? 'Traveled' : daysLeft}
+            </p>
+
             <button type="button" className={buttonClass} onClick={handleUpdateTrip}>
               <AiFillEdit size={19} />
             </button>
+            </div>
           </div>
 
-          <p className="text-base text-gray-700 dark:text-gray-200 ">
+          <div className="bg-white rounded-lg p-5 w-full dark:bg-box">
+
+          <h2 className='text-xl font-semibold text-black dark:text-white pb-3'>
+            My Bags
+          </h2>
+          <p className='text-base text-black dark:text-white mb-5'>
+            Organize and manage your bags for trips.
+    
+          </p>
+
+          <hr className="border-t-2 border-gray-300 dark:border-zinc-600 my-4" />
+
+          <p className="text-accent dark:text-white">
             {trip.about}
           </p>
 
-          <div className="flex items-center space-x-4">
-            <p className="text-base font-medium text-gray-700 dark:text-gray-200 flex items-center">
-              <FaMapMarkerAlt className="mr-1" />
-              {trip.distance} {userData?.user?.distance}
-            </p>
-            <p className={`text-base font-semibold flex items-center ${daysLeft === 'Traveled' ? 'text-gray-700' : 'text-blue-500'} dark:text-white`}>
-              <FaClock className="mr-1" />
-              {daysLeft === 'Traveled' ? 'Traveled' : daysLeft}
-            </p>
           </div>
 
-          <h2 className='text-xl font-semibold text-gray-900 dark:text-white pt-4'>
-            My Bags
-          </h2>
-          <p className='text-base text-gray-600 dark:text-gray-400 pb-2'>
-            Organize and manage your bags for trips.
-          </p>
-
-          <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5'>
+          <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 pt-5'>
             <li 
-              className='flex flex-col items-center justify-center border-2 border-dashed border-gray-500 text-gray-500 dark:text-gray-300 rounded-lg p-4 cursor-pointer dark:hover-border-primary hover:border-primary transition-colors duration-300 ease-in-out' 
+              className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-accent text-accent rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white' 
               style={{ minHeight: "205px", height: 'calc(100% - 1rem)' }} 
               onClick={handleAddBag}>
-              <FaPlus className='text-xl' />
+              <FaPlus className='text-xl text-black dark:text-white' />
             </li>
             {dataTrip.trip.bags.map((trip: any) => (
               

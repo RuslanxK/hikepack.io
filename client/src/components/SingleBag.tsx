@@ -23,7 +23,7 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
 
   return (
     <div
-      className={`relative bg-white dark:bg-box shadow-lg rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group`}>
+      className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group`}>
       <div className="flex justify-center items-center h-40 bg-white dark:bg-box rounded-t-lg">
         <img 
           src="/images/backpack.png" 
@@ -32,21 +32,21 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
           onClick={handleViewDetails}
         />
       </div>
-      <div className='p-3 flex flex-col space-y-4 bg-secondary dark:bg-zinc-800 rounded-b-lg'>
+      <div className="p-3 flex flex-col space-y-4 border-t-2 dark:border-t-zinc-600 rounded-b-lg">
         <div className='flex items-center justify-between'>
-          <h3 className='text-sm text-gray-900 dark:text-white'>
+          <h3 className='text-sm text-black dark:text-white'>
           {bagData.name && bagData.name.length > 28 ? `${bagData.name.substring(0, 28)}...` : bagData.name}
           </h3>
           <div className='flex items-center space-x-2 transition-opacity duration-200'>
 
           <IoNavigate 
-              className='text-button cursor-pointer transform transition-transform duration-200 hover:scale-125'
+              className='text-black dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
               title='View Details'
               onClick={handleViewDetails}/>
 
              <MdDeleteForever 
               size={18}
-              className='text-red-400 cursor-pointer transform transition-transform duration-200 hover:scale-125'
+              className='text-black dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
               title='View Details'
               onClick={handleDeleteBag}
             />

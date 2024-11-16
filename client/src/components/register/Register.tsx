@@ -154,7 +154,7 @@ const Register: React.FC = () => {
         value={formData[name] as string}
         onChange={handleInputChange}
         className={`w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 ${
-          errors[name] ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+          errors[name] ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-primary'
         }`}
         placeholder={placeholder}
       />
@@ -177,7 +177,7 @@ const Register: React.FC = () => {
         name={name}
         value={formData[name] as string}
         onChange={handleInputChange}
-        className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -206,7 +206,7 @@ const Register: React.FC = () => {
           </div>
 
           <div className="w-full bg-gray-200 h-2 mb-6 rounded-full">
-            <div className="bg-blue-500 h-full rounded-full" style={{ width: `${(step / 4) * 100}%` }}></div>
+            <div className="bg-primary h-full rounded-full" style={{ width: `${(step / 4) * 100}%` }}></div>
           </div>
 
           {step === 1 && (
@@ -216,7 +216,7 @@ const Register: React.FC = () => {
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
+                className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
               >
                 Next
               </button>
@@ -238,7 +238,7 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
                 >
                   Next
                 </button>
@@ -272,7 +272,7 @@ const Register: React.FC = () => {
                   accept=".png, .jpeg, .jpg"
                   name="file-input"
                   id="file-input"
-                  className="block w-full text-sm border border-gray-300 shadow-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500
+                  className="block w-full text-sm border border-gray-300 shadow-sm rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary
                   file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400"
                   onChange={handleFileChange}
                 />
@@ -291,7 +291,7 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
                 >
                   Next
                 </button>
@@ -351,7 +351,7 @@ const Register: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading || userLoading}
-                  className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors"
                 >
                  Register  {loading || userLoading ?  <Spinner w={4} h={4} /> : null}
                 </button>
@@ -366,7 +366,7 @@ const Register: React.FC = () => {
           <div className="mt-4">
             <span className="text-sm text-gray-600">
               Already have an account?{' '}
-              <Link to="/login" className="text-blue-500 hover:underline">
+              <Link to="/login" className="text-primary hover:underline">
                 Login
               </Link>
             </span>

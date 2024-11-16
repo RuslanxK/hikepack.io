@@ -163,7 +163,7 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
         </div>
       </div>
       <button
-        className="text-sm bg-orange-400 font-medium w-full text-white p-2 sm:p-3 mt-4 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
+        className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mt-4 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
         onClick={handleSavePicture}
         disabled={loading}
       >

@@ -86,7 +86,7 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
 </div>
 <div>
   <button
-    className="text-sm bg-orange-400 font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
+    className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
     disabled={loading || selectedCategory === ''}
     onClick={handleAddItemSubmit}
   >

@@ -96,7 +96,7 @@ const ResetPassword: React.FC = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Enter your new password"
               required
             />
@@ -110,7 +110,7 @@ const ResetPassword: React.FC = () => {
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleInputChange}
-              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Confirm your new password"
               required
             />
@@ -119,7 +119,7 @@ const ResetPassword: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
+            className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors flex items-center justify-center"
             disabled={loading}
           >
             {loading ? <Spinner w={4} h={4} /> : "Reset Password"}
@@ -128,12 +128,12 @@ const ResetPassword: React.FC = () => {
           <div className="mt-4 mb-4 flex flex-col sm:flex-row justify-between">
             <span className="text-sm text-gray-600 mb-2 sm:mb-0">
               Don't have an account?{' '}
-              <Link to="/register" className="text-blue-500 hover:underline">
+              <Link to="/register" className="text-primary hover:underline">
                 Register
               </Link>
             </span>
             <span className="text-sm text-gray-600">
-              <Link to="/login" className="text-blue-500 hover:underline">
+              <Link to="/login" className="text-primary hover:underline">
                 Back to Login
               </Link>
             </span>

@@ -46,7 +46,7 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, it
       
           <button
             type="submit"
-            className="mt-4 text-sm bg-orange-400 font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-orange-500 flex items-center justify-center"
+            className="mt-4 text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
             disabled={loading}
           >
             SAVE

@@ -196,7 +196,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   </div>
 </div>
 
-        <button type="submit" className="text-sm bg-button font-medium w-full text-white p-2 sm:p-3  mb-1 rounded hover:bg-button-hover flex items-center justify-center" disabled={loading}>
+        <button type="submit" className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3  mb-1 rounded hover:bg-button-hover flex items-center justify-center" disabled={loading}>
           CREATE
           {loading && <Spinner w={4} h={4}/>}
         </button>

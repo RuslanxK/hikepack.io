@@ -28,7 +28,7 @@ const BagDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-full p-1.5 dark:focus:ring-orange-800 dark:hover:bg-button-hover';
+  const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white focus:outline-none rounded p-1.5 dark:hover:bg-button-hover';
 
   const { data: dataBag, loading: loadingBag, error: errorBag } = useQuery(GET_BAG, { variables: { id } });
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
@@ -196,17 +196,17 @@ const BagDetails: React.FC = () => {
       <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataBag.bag.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
-            <div className='w-full sm:pl-6 sm:pr-6 sm:pt-6 pr-2 pt-2 pl-2'>
+            <div className='w-full p-5 bg-white dark:bg-box rounded-lg'>
               <div className='flex flex-row sm:flex-row items-start'>
                 <div className='w-full w-8/12'>
                   <div className="flex items-center w-full sm:w-11/12">
                     <button 
                       type="button" 
-                      className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm"  
+                      className="mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm"  
                       onClick={() => navigate(-1)}>
                       <FaArrowLeft size={17} />
                     </button>
-                    <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
+                    <h1 className='text-xl font-semibold text-black dark:text-white'>
                       {bag.name}
                     </h1>
                   </div>
@@ -230,14 +230,19 @@ const BagDetails: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <p className="text-base text-gray-700 dark:text-gray-200 p-5 dark:bg-theme-bgDark">
-                {bag?.description}
-              </p>
+        
             </div>
           </div>
+
+         <div className="p-5 bg-white dark:bg-box rounded-lg my-5">
+          <p className="text-base text-accent dark:text-gray-200">
+                {bag?.description}
+          </p>
+         </div>
+          
           
           {categoriesData.length > 0 && hasCategoriesWithWeight && (
-            <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
+            <div className="w-full bg-white dark:bg-box rounded-lg flex flex-col sm:flex-row items-center my-5 py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
               <div className="flex justify-center items-center">
                 <div className="flex items-center space-x-2 p-3 rounded-full">
                   <FaHeart size={20} className="text-red-500 animate-pulse" />
@@ -261,8 +266,8 @@ const BagDetails: React.FC = () => {
             </div>
           )}
         
-            <button onClick={handleAddCategory} className="mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-primary transition-colors duration-300 ease-in-out">
-              <FaPlus size={13} /> { addingCategory ? <Spinner w={4} h={4}/> : null }
+            <button onClick={handleAddCategory} className="rounded-lg bg-white dark:bg-box mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-white">
+              <FaPlus className="text-xl text-primary dark:text-white" size={13} /> { addingCategory ? <Spinner w={4} h={4}/> : null }
             </button>
             <div className="w-full pb-14">
               {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }

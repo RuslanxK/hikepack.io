@@ -38,7 +38,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } });
   const sensors = useSensors(mouseSensor, touchSensor);
 
-  const buttonClass ='text-red-300 hover:text-red-400 rounded-full p-1 transform transition-transform duration-200 hover:scale-125';
+  const buttonClass ='text-button-red hover:text-accent rounded-full p-1 transform transition-transform duration-200 hover:scale-125';
 
   useEffect(() => {
     if (categoryData.items) {
@@ -155,10 +155,10 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
 
   return (
     <div className={`mb-2`} ref={setNodeRef} style={style}>
-      <div className="cursor-pointer bg-white dark:bg-box shadow-md w-full">
+      <div className="cursor-pointer bg-white dark:bg-box  w-full rounded-t-lg">
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">
-            <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={19} {...attributes} {...listeners} />
+            <GrDrag className="mr-2 text-accent no-outline cursor-grabbing" size={19} {...attributes} {...listeners} />
             <input
               type="text"
               defaultValue={categoryData.name}
@@ -179,7 +179,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
         </div>
       </div>
       {expanded && (
-          <div className="px-5 text-sm shadow-md bg-white dark:bg-box">
+          <div className="px-5 text-sm  bg-white dark:bg-box rounded-b-lg">
               <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
                 <SortableContext items={itemsData.map((item) => item.id) || []} strategy={verticalListSortingStrategy}>
                   {itemsData.map((item, index) => (
@@ -188,11 +188,11 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
                 </SortableContext>
               </DndContext>
            
-           {checkedItems.length ? <button className="flex items-center pt-3 pb-3 text-red-400 hover:text-red-500 focus:outline-none" onClick={removeAllSelectedItems}>
+           {checkedItems.length ? <button className="flex items-center pt-3 pb-3 text-button-red hover:text-accent focus:outline-none" onClick={removeAllSelectedItems}>
               <TiDelete className="mr-1" size={19} />
               Delete items { deletingItem ? <Spinner h={4} w={4}/> : null }
             </button> :
-            <button className="flex items-center pt-3 pb-3 text-blue-400 hover:text-blue-300 focus:outline-none" onClick={handleAddItemSubmit}>
+            <button className="flex items-center pt-3 pb-3 text-primary hover:text-accent dark:hover:text-primary dark:text-button-lightGreen focus:outline-none" onClick={handleAddItemSubmit}>
               <FaPlus className="mr-1" size={14} />
               Add item {addingItem ? <Spinner h={4} w={4}/> : null }
             </button> }

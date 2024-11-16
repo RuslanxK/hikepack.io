@@ -115,7 +115,7 @@ const Login: React.FC = () => {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Enter your email"
           />
         </div>
@@ -127,14 +127,14 @@ const Login: React.FC = () => {
             name="password"
             value={formData.password}
             onChange={handleInputChange}
-            className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Enter your password"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white text-sm p-2 sm:p-3 rounded hover:bg-blue-600 transition-colors flex items-center justify-center"
+          className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-lightGreen transition-colors flex items-center justify-center"
           disabled={loading}
         >
           Login {loading && <Spinner w={4} h={4} />}
@@ -142,7 +142,7 @@ const Login: React.FC = () => {
 
         <button
           onClick={handleGoogleLoginClick}
-          className="w-full bg-transparent text-gray-800 text-sm p-2 sm:p-3 mt-3 rounded flex items-center hover:outline-none border border-gray-300 justify-center hover:ring-2 hover:ring-blue-500"
+          className="w-full bg-transparent text-gray-800 text-sm p-2 sm:p-3 mt-3 rounded flex items-center hover:outline-none border border-gray-300 justify-center hover:ring-2 hover:ring-primary"
         >
           <FaGoogle className='mr-2 sm:mr-3'/>
           Sign in with Google 
@@ -151,12 +151,12 @@ const Login: React.FC = () => {
         <div className="mt-4 mb-4 flex flex-col sm:flex-row justify-between">
           <span className="text-sm text-gray-600 mb-2 sm:mb-0">
             Don't have an account?{' '}
-            <Link to="/register" className="text-blue-500 hover:underline">
+            <Link to="/register" className="text-primary hover:underline">
               Register
             </Link>
           </span>
           <span className="text-sm text-gray-600">
-            <Link to="/reset-password" className="text-blue-500 hover:underline">
+            <Link to="/reset-password" className="text-primary hover:underline">
               Forgot your password?
             </Link>
           </span>

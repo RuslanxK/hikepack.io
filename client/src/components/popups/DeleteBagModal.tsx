@@ -41,7 +41,7 @@ const DeleteBagModal: React.FC<DeleteBagModalProps> = ({ isOpen, onClose, bag })
         </p>
         <button
           onClick={handleDeleteTrip}
-          className="text-sm bg-red-500 font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-red-600 flex items-center justify-center"
+          className="text-sm bg-button-red font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-orange flex items-center justify-center"
           disabled={loading}
         >
           DELETE

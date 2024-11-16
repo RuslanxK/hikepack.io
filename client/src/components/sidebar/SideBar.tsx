@@ -54,6 +54,7 @@ const SideBar: React.FC = () => {
 
   const handleBagClick = (bagId: string) => {
     navigate(`/bag/${bagId}`);
+    setShowLatestBags(false)
   };
 
 
@@ -133,7 +134,7 @@ const SideBar: React.FC = () => {
                   setIsSidebarOpen={setIsSidebarOpen} 
                 />
                 {item.label === "Recent bags" && showLatestBags && (
-                  <ul className="mt-1 mb-2">
+                  <ul className="shadow-airbnb rounded-lg absolute p-3 z-50 bg-white dark:bg-theme-bgDark w-full sm:w-48">
                     {loading && (
                       <li className="p-1 pl-2 pr-2 text-sm">
                         <Spinner w={4} h={4} />
@@ -155,14 +156,14 @@ const SideBar: React.FC = () => {
                     {!loading && !error && data?.latestBags?.map((bag: { id: string, name: string }) => (
                       <li
                         key={bag.id}
-                        className="p-2 pl-2 pr-2 flex items-center cursor-pointer dark:hover:bg-button-dark hover:bg-button-light rounded text-sm"
+                         className="p-2 pl-2 pr-2 flex items-center cursor-pointer dark:hover:bg-button hover:bg-button hover:text-white rounded text-sm group"
                         onClick={() => {
                           handleBagClick(bag.id);
                           setIsSidebarOpen(false); 
                         }}
                       >
-                        <GiSchoolBag style={{ marginRight: "10px" }} />
-                        {bag.name && bag.name.length > 18 ? `${bag.name.substring(0, 18)}...` : bag.name}
+                        <GiSchoolBag className="mr-2 text-black dark:text-white group-hover:text-white" style={{ marginRight: "10px" }} />
+                        <span className='group-hover:text-white'>{bag.name && bag.name.length > 18 ? `${bag.name.substring(0, 18)}...` : bag.name}</span>
                       </li>
                     ))}
                   </ul>

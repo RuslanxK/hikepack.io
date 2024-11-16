@@ -17,11 +17,14 @@ const SideItem: React.FC<SideItemProps> = ({ item, categories }) => {
 
   return (
     <li className="mb-2 flex items-center">
+
+      <button className=" mr-2 w-8 h-8 bg-white flex rounded justify-center items-center" onClick={() => setIsModalOpen(true)}>
       <IoMdAddCircle
-        className='mr-2 cursor-pointer text-white transform transition-transform duration-200 hover:scale-125'
-        size={28}
-        onClick={() => setIsModalOpen(true)}
+        className='cursor-pointer text-primary transform transition-transform duration-200 hover:scale-125'
+        size={24}
       /> 
+      </button>
+      
       {truncatedName}
       <AddItemToCategoryModal
         isOpen={isModalOpen}

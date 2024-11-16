@@ -1,44 +1,50 @@
-
 module.exports = {
   darkMode: "class",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       screens: {
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
-        'xl': '1280px',
-        '2xl': '1536px',
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
         "3xl": "1600px",
         "4xl": "1920px",
-       
+      },
+
+
+      boxShadow: {
+        airbnb: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
       },
 
       colors: {
-        primary: "#fb923c",
-        secondary: "#eef2ff",
-        accent: "#FFC300",
+        primary: "#058373",
+        secondary: "#FAFAFA",
+        accent: "#878787",
         green: "#04ba32",
+        black: "#000000",
 
         info: {
-
-            headline: "#2563EB",
-            body: "#EFF6FF"
+          headline: "#2563EB",
+          body: "#EFF6FF",
         },
 
         button: {
-          light: "#eef2ff",
-          DEFAULT: "#fb923c",
-          hover: "#f97316",
+          light: "#F2F3F7",
+          DEFAULT: "#058373",
+          hover: "#017565",
           dark: "#292929",
+          orange: "#FF8F78",
+          yellow: "#CBB64D",
+          lightGreen: "#02ccb2",
+          red: "#C13C3C",
+          purple: "#7963CD"
         },
 
-
         box: {
-
-            DEFAULT: "#2F2F2F",
-        
+          DEFAULT: "#2F2F2F",
+          light: "#F2F3F7",
         },
 
         theme: {
@@ -47,12 +53,10 @@ module.exports = {
           black: "#000000",
           dark: "#161616",
           bgDark: "#202020",
-          bgGray: "#fafafa"
-          
+          bgGray: "#F2F3F7",
         },
       },
     },
   },
   plugins: [],
 };
-

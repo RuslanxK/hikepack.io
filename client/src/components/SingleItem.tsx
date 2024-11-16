@@ -12,7 +12,7 @@ import { GET_BAG } from '../queries/bagQueries';
 import Spinner from './loading/Spinner';
 import { useParams } from 'react-router-dom';
 
-const inputClasses = "py-1 px-2 border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-primary dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
+const inputClasses = "py-1 px-2 rounded border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-button-lightGreen dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
 const iconClasses = "transform transition-transform duration-200 hover:scale-125";
 
 const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUnit }) => {
@@ -32,9 +32,9 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const { id } = useParams<{ id: string }>();
 
 
-  const priorityClass = priority === 'low' ? 'bg-emerald-100 dark:bg-emerald-600' : 
-  priority === 'med' ? 'bg-yellow-100 dark:bg-yellow-600' : 
-  'bg-red-100 dark:bg-red-600';
+  const priorityClass = priority === 'low' ? 'bg-emerald-100 dark:bg-primary' : 
+  priority === 'med' ? 'bg-yellow-100 dark:bg-button-yellow' : 
+  'bg-red-100 dark:bg-button-orange';
 
   useEffect(() => {
     if (itemData.weightOption) {
@@ -132,7 +132,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     <div id='scroll' className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible relative" ref={setNodeRef} style={style}>
       <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
-        <GrDrag className="mr-2 text-gray-400 dark:text-gray-200 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
+        <GrDrag className="mr-2 text-accent no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
         <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300 cursor-pointer"/>
       </div>
 
@@ -194,7 +194,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     id="priority-select"
     value={priority}
     onChange={(e) => handlePriorityChange(e.target.value)} 
-    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer rounded-none`} // Add `rounded-none`
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer`} // Add `rounded-none`
   >
     <option value="low" className="bg-emerald-100 dark:bg-emerald-600 dark:text-white">Low Priority</option>
     <option value="med" className="bg-yellow-100 dark:bg-yellow-600 dark:text-white">Med Priority</option>
@@ -206,28 +206,28 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
       <div className="flex space-x-3 pl-2 relative">
         <FaImage 
           size={14} 
-          className={`text-gray-500 dark:text-gray-300 cursor-pointer ${iconClasses} ${itemData.imageUrl ? 'text-indigo-400 dark:text-indigo-300' : 'text-gray-500 dark:text-neutral-300'}`} 
+          className={`text-accent cursor-pointer ${iconClasses} ${itemData.imageUrl ? 'text-indigo-400 dark:text-indigo-300' : 'text-accent'}`} 
           onClick={handlePicModal} 
           onMouseEnter={() => showTooltip('image')}
           onMouseLeave={hideTooltip}
         />
        <FaWalking 
           size={14} 
-          className={`cursor-pointer ${iconClasses} ${itemData.worn ? 'text-green dark:text-green' : 'text-gray-500 dark:text-neutral-300'}`} 
+          className={`cursor-pointer ${iconClasses} ${itemData.worn ? 'text-green dark:text-green' : 'text-accent'}`} 
           onClick={handleToggleWorn} 
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
         /> 
        { addingItem ? <Spinner w={3} h={3} /> : <FaCopy 
           size={14} 
-          className={`cursor-pointer text-gray-500 dark:text-neutral-400 ${iconClasses}`} 
+          className={`cursor-pointer text-accent ${iconClasses}`} 
           onClick={handleCopyItem} 
           onMouseEnter={() => showTooltip('duplicate')}
           onMouseLeave={hideTooltip}
         /> }
         <FaLink 
           size={14} 
-          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-cyan-500 dark:text-cyan-400' : 'text-gray-500 dark:text-neutral-300'}`} 
+          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-cyan-500 dark:text-cyan-400' : 'text-accent'}`} 
           onClick={() => setIsModalLinkOpen(true)} 
           onMouseEnter={() => showTooltip('link')}
           onMouseLeave={hideTooltip}
@@ -237,7 +237,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   <div
     id="tooltip-default"
     role="tooltip"
-    className="w-fit absolute bottom-5 right-5 z-10 px-1.5 py-0.5 text-sm text-white rounded-md bg-orange-300 shadow-sm dark:bg-zinc-500 hidden sm:block"
+    className="w-fit absolute bottom-5 right-5 z-10 px-1.5 py-0.5 text-sm text-white rounded-md bg-button-orange shadow-sm hidden sm:block"
   >
     {tooltipContent}
     <div className="tooltip-arrow" data-popper-arrow></div>

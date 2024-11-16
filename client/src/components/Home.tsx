@@ -79,11 +79,11 @@ const Home: React.FC = () => {
       <div className='w-full flex-grow'>
         <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5'>
           <li
-            className='flex flex-col items-center justify-center border-2 border-dashed border-gray-500 text-gray-500 dark:text-gray-300 rounded-lg p-4 cursor-pointer dark:hover-border-primary hover:border-primary transition-colors duration-300 ease-in-out'
+            className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-gray-500 text-gray-500 rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white'
             style={{ minHeight: '205px', height: 'calc(100% - 1rem)' }}
             onClick={handleAddTrip}
           >
-            <FaPlus className='text-xl' />
+            <FaPlus className='text-xl text-black dark:text-white' />
           </li>
 
           {data?.trips.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="sm:w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a trip." type="info" /> : null }
@@ -99,7 +99,7 @@ const Home: React.FC = () => {
         <div className='text-center justify-center w-full pt-10 pb-5'>
           <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
             My last bag status{' '}
-            <Link className="text-button hover:text-button-hover hover:underline" to={`bag/${latestBagData.latestBagWithDetails.id}`}>
+            <Link className="text-button dark:text-button-lightGreen hover:text-button-hover hover:underline" to={`bag/${latestBagData.latestBagWithDetails.id}`}>
               {latestBagData.latestBagWithDetails.name.length > 10
                 ? `${latestBagData.latestBagWithDetails.name.substring(0, 10)}...` 
                 : latestBagData.latestBagWithDetails.name}

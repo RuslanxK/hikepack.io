@@ -35,13 +35,13 @@ const SingleTrip: React.FC<SingleTripProps> = ({ tripData }) => {
           </h3>
           <div className='flex items-center space-x-2 transition-opacity duration-200'>
             <IoNavigate 
-              className='text-black dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
+              className='text-primary dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
               title='View Details'
               onClick={handleViewDetails}/>
 
               <MdDeleteForever 
               size={18}
-              className='text-black dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
+              className='text-accent dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
               title='View Details'
               onClick={handleDeleteTrip}/>
           </div>

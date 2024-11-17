@@ -39,19 +39,24 @@ const Articles: React.FC = () => {
   return (
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
       <div className='p-4 sm:p-10'>
-      <div className="flex items-center mb-4">
+
+      <div className='bg-white dark:bg-box  p-5 rounded-lg mb-8'>
+      <div className="flex items-center mb-4 ">
         <button 
           type="button" 
-          className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm" 
+          className="mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm" 
           onClick={() => navigate(-1)}>
           <FaArrowLeft size={17} />
         </button>
-        <h1 className="text-xl font-semibold text-left dark:text-white">Articles</h1>
+        <h1 className="text-xl text-black font-semibold text-left dark:text-white">Articles</h1>
       </div>
-      
-      <p className="text-base text-left text-gray-600 dark:text-gray-300 mb-8">
+
+      <p className="text-base text-left text-accent dark:text-gray-300">
         Discover the latest tips, guides, and adventures from our blog.
       </p>
+
+      </div>
+     
       
       {articles.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5">

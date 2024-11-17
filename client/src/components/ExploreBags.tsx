@@ -143,23 +143,25 @@ const ExploreBags: React.FC = () => {
   return (
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
     <div className="p-4 sm:p-10">
+      <div className="bg-white dark:bg-box p-5 rounded-lg mb-8">
       <div className="flex items-center mb-6">
         <button 
           type="button" 
-          className={`mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm`} 
+          className={`mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm`} 
           onClick={() => navigate(-1)}>
           <FaArrowLeft size={17} />
         </button>
         <h1 className="text-xl font-semibold dark:text-white">Explore Bags</h1>
       </div>
-      <p className="mb-8 text-gray-600 dark:text-gray-400">
+      <p className="text-base text-accent dark:text-gray-400">
         Discover top-rated bags for every journey. Whether you're conquering remote peaks or exploring dense forests, find your perfect companion.
       </p>
-  
+      </div>
+     
      
         
           <div className="inline-block min-w-full align-middle">
-            <div className="border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700 bg-white dark:bg-box mb-3">
+            <div className="rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700 bg-white dark:bg-box mb-3">
               <div className="py-4 px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="relative">
@@ -196,7 +198,7 @@ const ExploreBags: React.FC = () => {
                       return (
                         <tr 
                           key={bag.id} 
-                          className="hover:bg-gray-50 dark:hover:bg-neutral-800 cursor-pointer"
+                          className="cursor-pointer"
                           onClick={() => window.location.href = `/share/${bag.id}`}
                         >
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200 flex items-center">

@@ -101,15 +101,14 @@ const Login: React.FC = () => {
         <img src="/images/logo-black.png" alt="Logo" className="h-6 sm:h-8" />
       </div>
 
-    {/* Form Section */}
     <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
       <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleLogin}>
         <div className="flex justify-between items-center mb-10 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Login</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-black">Login</h2>
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-600 text-sm mb-2">Email</label>
+          <label className="block text-accent text-sm mb-2">Email</label>
           <input
             type="email"
             name="email"
@@ -121,7 +120,7 @@ const Login: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-600 text-sm mb-2">Password</label>
+          <label className="block text-accent text-sm mb-2">Password</label>
           <input
             type="password"
             name="password"

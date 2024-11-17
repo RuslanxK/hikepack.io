@@ -52,33 +52,35 @@ const Changelog: React.FC = () => {
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
       <div className='p-4 sm:p-10'>
       <div className="min-h-screen">
+        <div className="bg-white dark:bg-box p-5 rounded-lg mb-8">
         <div className="flex items-center mb-4">
           <button
             type="button"
-            className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm"
+            className="mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm"
             onClick={() => navigate(-1)}>
             <FaArrowLeft size={17} />
           </button>
           <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Changelog</h1>
         </div>
-        <p className="text-base text-left text-gray-600 dark:text-gray-300 mb-8">
+        <p className="text-base text-left text-accent dark:text-gray-300">
           Latest updates and improvements to the app.
         </p>
+        </div>
 
         {changelogData.length === 0 ? (
           <Message width='w-full' title="No Changelogs Available" padding="sm:p-5 p-3" titleMarginBottom="mb-2" message="There are no changelogs available at the moment." type="info" />
         ) : (
           <ul className="space-y-6">
             {changelogData.map((log, index) => (
-              <li key={index} className="p-6 bg-white dark:bg-box rounded-lg shadow">
+              <li key={index} className="p-6 bg-white dark:bg-box rounded-lg">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-md font-semibold text-gray-800 dark:text-white">Version {log.version}</h2>
-                  <span className="text-gray-600 dark:text-gray-400 text-sm">{log.date}</span>
+                  <h2 className="text-md font-semibold text-black dark:text-white">Version {log.version}</h2>
+                  <span className="text-accent dark:text-gray-400 text-sm">{log.date}</span>
                 </div>
-                <ul className="mt-3 space-y-2 text-gray-700 dark:text-gray-300">
+                <ul className="mt-3 space-y-2 text-accent dark:text-gray-300">
                   {log.changes.map((change, idx) => (
                     <li key={idx} className="flex items-start text-sm mt-5">
-                      <span className="mr-2 text-green-500">•</span>
+                      <span className="mr-2 text-primary">•</span>
                       <p>{change}</p>
                     </li>
                   ))}

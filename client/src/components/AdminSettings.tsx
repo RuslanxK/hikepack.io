@@ -67,26 +67,28 @@ const AdminSettings: React.FC = () => {
   return (
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
       <div className='p-4 sm:p-10'>
+      <div className="bg-white dark:bg-box p-5 rounded-lg mb-8">
       <div className="mb-4 flex items-center">
         <button
           type="button"
-          className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm"
+          className="mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm"
           onClick={() => window.history.back()}
         >
           <FaArrowLeft size={17} />
         </button>
-        <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Admin Settings</h1>
+        <h1 className="text-xl font-semibold text-black dark:text-white">Admin Settings</h1>
       </div>
-      <p className="text-left text-gray-600 dark:text-gray-300 mb-8">
+      <p className="text-left text-accent dark:text-gray-300">
         Manage the app's content by adding changelogs.
       </p>
+      </div>
 
-      <div className="bg-white dark:bg-box p-8 rounded-lg shadow-lg">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Add a Changelog</h2>
+      <div className="bg-white dark:bg-box p-8 rounded-lg">
+        <h2 className="text-lg font-semibold text-black dark:text-white mb-6">Add a Changelog</h2>
         <form onSubmit={handleSubmitChangelog}>
           {changelogFields.map(({ label, id, placeholder, type = 'text', rows }) => (
             <div key={id} className="mb-4">
-              <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor={id}>
+              <label className="block text-accent dark:text-gray-300 text-sm mb-2" htmlFor={id}>
                 {label}
               </label>
               {type === 'textarea' ? (
@@ -96,7 +98,7 @@ const AdminSettings: React.FC = () => {
                   name={id}
                   value={(formValues[id] as string) || ''}
                   onChange={handleChange}
-                  className="w-full text-sm p-2 sm:p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-white"
+                  className="w-full text-sm p-2 sm:p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-theme-bgDark dark:text-white"
                   placeholder={placeholder}
                   rows={rows}
                 ></textarea>
@@ -108,7 +110,7 @@ const AdminSettings: React.FC = () => {
                   name={id}
                   value={type === 'file' ? undefined : (formValues[id] as string) || ''}
                   onChange={handleChange}
-                  className="w-full text-sm p-2 sm:p-3 border border-gray-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-white"
+                  className="w-full text-sm p-2 sm:p-3 border border-gray-300 dark:border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-theme-bgDark dark:text-white"
                   placeholder={type === 'file' ? undefined : placeholder}
                 />
               )}
@@ -116,7 +118,7 @@ const AdminSettings: React.FC = () => {
           ))}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-sm text-white p-2 sm:p-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-center items-center mb-4"
+            className="w-full bg-primary text-sm text-white p-2 sm:p-3 rounded-lg hover:bg-button-hover focus:outline-none focus:ring-2 focus:ring-primary flex justify-center items-center mb-4"
             disabled={loadingChangelog}
           >
             Submit {loadingChangelog && <Spinner w={4} h={4} />}

@@ -147,7 +147,7 @@ const Register: React.FC = () => {
     required?: boolean
   ) => (
     <div className="mb-4">
-      <label className="block text-gray-600 text-sm mb-2">{label}</label>
+      <label className="block text-accent text-sm mb-2">{label}</label>
       <input
         type={type}
         name={name}
@@ -172,7 +172,7 @@ const Register: React.FC = () => {
     options: { value: string; label: string }[]
   ) => (
     <div className="mb-4">
-      <label className="block text-gray-600 text-sm mb-2">{label}</label>
+      <label className="block text-accent text-sm mb-2">{label}</label>
       <select
         name={name}
         value={formData[name] as string}
@@ -199,8 +199,8 @@ const Register: React.FC = () => {
       <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
         <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleRegister}>
           <div className="flex justify-between items-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Register</h2>
-            <h3 className="text-sm text-gray-500">{`Step ${step}: ${
+            <h2 className="text-2xl sm:text-3xl font-bold text-black">Register</h2>
+            <h3 className="text-sm text-accent">{`Step ${step}: ${
               ['Basic Information', 'Set Your Password', 'Upload Profile Picture', 'Additional Information'][step - 1]
             }`}</h3>
           </div>
@@ -231,7 +231,7 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
+                  className="bg-gray-200 text-accent text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
                 >
                   Previous
                 </button>
@@ -249,7 +249,7 @@ const Register: React.FC = () => {
           {step === 3 && (
             <>
               <div className="mb-4">
-                <label className="block text-gray-600 text-sm mb-2">Profile Picture</label>
+                <label className="block text-accent text-sm mb-2">Profile Picture</label>
                 {profilePicturePreview ? (
                   <div className="mb-4">
                     <img
@@ -364,7 +364,7 @@ const Register: React.FC = () => {
           )}
 
           <div className="mt-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-accent">
               Already have an account?{' '}
               <Link to="/login" className="text-primary hover:underline">
                 Login

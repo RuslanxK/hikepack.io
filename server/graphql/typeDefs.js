@@ -120,6 +120,7 @@ const typeDefs = gql`
     title: String!
     description: String!
     imageUrl: String!
+    createdAt: String
   }
 
 

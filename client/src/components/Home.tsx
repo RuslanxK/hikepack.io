@@ -83,7 +83,7 @@ const Home: React.FC = () => {
             style={{ minHeight: '205px', height: 'calc(100% - 1rem)' }}
             onClick={handleAddTrip}
           >
-            <FaPlus className='text-xl text-black dark:text-white' />
+            <FaPlus className='text-xl text-accent dark:text-white' />
           </li>
 
           {data?.trips.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="sm:w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a trip." type="info" /> : null }

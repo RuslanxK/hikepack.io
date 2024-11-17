@@ -91,7 +91,7 @@ const TripDetails: React.FC = () => {
             <div className="flex items-center">
               <button 
                 type="button" 
-                className="mr-4 text-white dark:text-gray-100 bg-primary dark:bg-button hover:bg-button-hover dark:hover:bg-button-hover p-2 rounded hover:shadow-sm" 
+                className="mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm" 
                 onClick={() => navigate(-1)}>
                 <FaArrowLeft size={17} />
               </button>
@@ -102,12 +102,12 @@ const TripDetails: React.FC = () => {
             </div>
 
             <div className="flex justify-between w-72 pl-5">
-            <p className="text-black dark:text-white flex items-center">
-              <FaMapMarkerAlt className="mr-1 text-black dark:text-white" />
+            <p className="text-accent dark:text-white flex items-center">
+              <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
               {trip.distance} {userData?.user?.distance}
             </p>
-            <p className={`flex items-center ${daysLeft === 'Traveled' ? 'text-black' : 'text-primary'} dark:text-white`}>
-              <FaClock className="mr-1 text-black dark:text-white" />
+            <p className={`flex items-center ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
+              <FaClock className="mr-1 text-accent dark:text-white" />
               {daysLeft === 'Traveled' ? 'Traveled' : daysLeft}
             </p>
 
@@ -135,12 +135,12 @@ const TripDetails: React.FC = () => {
 
           </div>
 
-          <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 pt-5'>
+          <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 '>
             <li 
               className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-accent text-accent rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white' 
               style={{ minHeight: "205px", height: 'calc(100% - 1rem)' }} 
               onClick={handleAddBag}>
-              <FaPlus className='text-xl text-black dark:text-white' />
+              <FaPlus className='text-xl text-accent dark:text-white' />
             </li>
             {dataTrip.trip.bags.map((trip: any) => (
               

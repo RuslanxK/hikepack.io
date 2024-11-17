@@ -14,9 +14,9 @@ const BugReport: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [addBugReport] = useMutation(ADD_BUG_REPORT);
 
-  const commonButtonStyles = "w-full text-sm p-2 sm:p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
-  const commonInputStyles = "w-full text-sm p-2 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500";
-  const commonLabelStyles = "block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2";
+  const commonButtonStyles = "w-full text-sm p-2 sm:p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary";
+  const commonInputStyles = "w-full text-sm p-2 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary";
+  const commonLabelStyles = "block text-accent dark:text-gray-300 text-sm  mb-2";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,22 +43,24 @@ const BugReport: React.FC = () => {
   return (
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
       <div className='p-4 sm:p-10'>
+      <div className='bg-white dark:bg-box p-5 rounded-lg mb-8'>
       <div className="mb-4 flex items-center">
         <button 
           type="button" 
-          className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm" 
+          className="mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm" 
           onClick={() => window.history.back()}>
           <FaArrowLeft size={17} />
         </button>
-        <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Report a Bug</h1>
+        <h1 className="text-xl font-semibold text-black dark:text-white">Report a Bug</h1>
       </div>
-      <p className="text-base text-left text-gray-600 dark:text-gray-300 mb-8">
+      <p className="text-base text-left text-accent dark:text-gray-300">
         Please provide details about the issue you're experiencing.
       </p>
-      <div className="bg-white dark:bg-box p-8 rounded-lg shadow-lg w-full">
+      </div>
+      <div className="bg-white dark:bg-box p-8 rounded-lg w-full">
         <form onSubmit={handleSubmit} className='mb-5'>
 
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">Send Message</h2>
+        <h2 className="text-lg font-semibold text-black dark:text-white mb-6">Send Message</h2>
           <div className="mb-4">
             <label className={commonLabelStyles} htmlFor="title">
               Title
@@ -67,7 +69,7 @@ const BugReport: React.FC = () => {
               type="text"
               id="title"
               required
-              className={`${commonInputStyles} border-gray-300 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white`}
+              className={`${commonInputStyles} border-gray-300 dark:border-zinc-600 dark:bg-theme-bgDark dark:text-white`}
               placeholder="Enter bug title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -79,7 +81,7 @@ const BugReport: React.FC = () => {
             </label>
             <textarea
               id="description"
-              className={`${commonInputStyles} border-zinc-300 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white`}
+              className={`${commonInputStyles} border-zinc-300 dark:border-zinc-600 dark:bg-theme-bgDark dark:text-white`}
               placeholder="Describe the bug in detail"
               rows={10}
               required
@@ -89,7 +91,7 @@ const BugReport: React.FC = () => {
           </div>
           <button
             type="submit"
-            className={`${commonButtonStyles} bg-blue-500 text-white hover:bg-blue-600 flex justify-center items-center`}
+            className={`${commonButtonStyles} bg-primary text-white hover:bg-button-hover flex justify-center items-center`}
             disabled={loading} 
           >
             Submit {loading ? <Spinner w={4} h={4} /> : null}

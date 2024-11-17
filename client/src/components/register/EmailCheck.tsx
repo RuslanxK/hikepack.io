@@ -48,11 +48,11 @@ const EmailCheck: React.FC = () => {
       <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
         <form className="w-full max-w-sm md:max-w-lg" onSubmit={handleEmailCheck}>
           <div className="flex justify-between items-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Reset Password</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-black">Reset Password</h2>
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">Email</label>
+            <label className="block text-accent text-sm mb-2">Email</label>
             <input
               type="email"
               name="email"
@@ -73,13 +73,13 @@ const EmailCheck: React.FC = () => {
           </button>
 
           <div className="mt-4 mb-4 flex flex-col sm:flex-row justify-between">
-            <span className="text-sm text-gray-600 mb-2 sm:mb-0">
+            <span className="text-sm text-accent mb-2 sm:mb-0">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary hover:underline">
                 Register
               </Link>
             </span>
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-accent">
               <Link to="/login" className="text-primary hover:underline">
                 Back to Login
               </Link>

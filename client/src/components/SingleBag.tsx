@@ -32,7 +32,7 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
           onClick={handleViewDetails}
         />
       </div>
-      <div className="p-3 flex flex-col space-y-4 border-t-2 dark:border-t-zinc-600 rounded-b-lg">
+      <div className="p-3 flex flex-col space-y-4 bg-gray-100 dark:bg-black rounded-b-lg">
         <div className='flex items-center justify-between'>
           <h3 className='text-sm text-black dark:text-white'>
           {bagData.name && bagData.name.length > 28 ? `${bagData.name.substring(0, 28)}...` : bagData.name}
@@ -40,13 +40,13 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
           <div className='flex items-center space-x-2 transition-opacity duration-200'>
 
           <IoNavigate 
-              className='text-black dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
+              className='text-primary dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
               title='View Details'
               onClick={handleViewDetails}/>
 
              <MdDeleteForever 
               size={18}
-              className='text-black dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
+              className='text-accent dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125'
               title='View Details'
               onClick={handleDeleteBag}
             />

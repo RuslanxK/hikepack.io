@@ -42,26 +42,42 @@ const SingleArticle: React.FC = () => {
     return <p>Article not found</p>;
   }
 
+  const formattedDate = !isNaN(Number(article.createdAt))
+  ? new Date(Number(article.createdAt)).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    })
+  : 'Invalid Date';
+
   return (
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
-       <div className='p-4 sm:p-10'>
-      <div className="flex items-center mb-6">
-        <button 
-          type="button" 
-          className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm" 
-          onClick={() => navigate(-1)}>
-          <FaArrowLeft size={17} />
-        </button>
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{article.title}</h1>
-      </div>
-      <img 
-        src={article.imageUrl} 
-        alt={article.title} 
-        className="w-full h-72 object-cover rounded-lg mt-6 mb-6" 
-      />
-      <div className="prose prose-lg text-gray-700 dark:text-gray-300 max-w-none mb-5">
-        <p>{article.description}</p>
-      </div>
+      <div className="p-4 sm:p-10">
+        <div className="flex items-center mb-6 bg-white dark:bg-box p-5 rounded-lg">
+          <button 
+            type="button" 
+            className="mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm" 
+            onClick={() => navigate(-1)}>
+            <FaArrowLeft size={17} />
+          </button>
+          <h1 className="text-xl font-semibold text-black dark:text-white">{article.title}</h1>
+          
+        </div>
+
+        
+
+        <img 
+          src={article.imageUrl} 
+          alt={article.title} 
+          className="w-full h-72 object-cover rounded-lg mt-6 mb-6" 
+        />
+        <div className="prose prose-lg text-accent dark:text-gray-300 max-w-none mb-5 bg-white dark:bg-box p-5 rounded-lg">
+
+        <p className="text-sm text-black dark:text-white mb-4">
+          Posted on: {formattedDate}
+        </p>
+          <p>{article.description}</p>
+        </div>
       </div>
     </div>
   );

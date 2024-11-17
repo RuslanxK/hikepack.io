@@ -7,6 +7,7 @@ export const GET_ARTICLES = gql`
       title
       description
       imageUrl
+      createdAt
     }
   }
 `;
@@ -19,6 +20,8 @@ export const GET_ARTICLE = gql`
       title
       description
       imageUrl
+      createdAt
+
     }
   }
 `;

@@ -227,7 +227,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         /> }
         <FaLink 
           size={14} 
-          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-blue dark:text-cyan-400' : 'text-accent dark:text-gray-400'}`} 
+          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-blue' : 'text-accent dark:text-gray-400'}`} 
           onClick={() => setIsModalLinkOpen(true)} 
           onMouseEnter={() => showTooltip('link')}
           onMouseLeave={hideTooltip}

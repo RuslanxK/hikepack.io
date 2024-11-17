@@ -42,18 +42,18 @@ const VerifyAccount = () => {
         {isVerified ? (
           <>
             <Spinner w={10} h={10} /> 
-            <p className="mt-4 text-lg font-semibold">Your account has been verified!</p>
-            <p className="text-sm text-gray-600">Redirecting to login...</p>
+            <p className="mt-4 text-lg text-black font-semibold">Your account has been verified!</p>
+            <p className="text-sm text-accent">Redirecting to login...</p>
           </>
         ) : error ? (
           <>
-            <p className="mt-4 text-lg font-semibold text-red-600">{error}</p>
-            <p className="text-sm text-gray-600">Please contact support for assistance.</p>
+            <p className="mt-4 text-lg font-semibold text-red">{error}</p>
+            <p className="text-sm text-accent">Please contact support for assistance.</p>
           </>
         ) : (
           <>
             <Spinner w={10} h={10} /> 
-            <p className="mt-4 text-lg font-semibold">Verifying your account...</p>
+            <p className="mt-4 text-lg font-semibold text-accent">Verifying your account...</p>
           </>
         )}
       </div>

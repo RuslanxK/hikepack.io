@@ -75,22 +75,22 @@ const ResetPassword: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row bg-white">
-      {/* Image Section */}
+     
       <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto" style={{ backgroundImage: `url('/images/new-password-img.jpg')` }}>
         <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
           <img src="/images/logo-black.png" alt="Logo" className="h-6 sm:h-8" />
         </div>
       </div>
 
-      {/* Form Section */}
+     
       <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">
         <form className="w-full max-w-sm md:max-w-lg" onSubmit={handlePasswordReset}>
           <div className="flex justify-between items-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">New Password</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-black">New Password</h2>
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">New Password</label>
+            <label className="block text-accent text-sm mb-2">New Password</label>
             <input
               type="password"
               name="password"
@@ -100,11 +100,11 @@ const ResetPassword: React.FC = () => {
               placeholder="Enter your new password"
               required
             />
-            {validationErrors.password && <p className="text-red-500 text-xs mt-1">{validationErrors.password}</p>}
+            {validationErrors.password && <p className="text-red text-xs mt-1">{validationErrors.password}</p>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">Confirm New Password</label>
+            <label className="block text-accent text-sm mb-2">Confirm New Password</label>
             <input
               type="password"
               name="confirmPassword"
@@ -114,7 +114,7 @@ const ResetPassword: React.FC = () => {
               placeholder="Confirm your new password"
               required
             />
-            {validationErrors.confirmPassword && <p className="text-red-500 text-xs mt-1">{validationErrors.confirmPassword}</p>}
+            {validationErrors.confirmPassword && <p className="text-red text-xs mt-1">{validationErrors.confirmPassword}</p>}
           </div>
 
           <button
@@ -126,13 +126,13 @@ const ResetPassword: React.FC = () => {
           </button>
 
           <div className="mt-4 mb-4 flex flex-col sm:flex-row justify-between">
-            <span className="text-sm text-gray-600 mb-2 sm:mb-0">
+            <span className="text-sm text-accent mb-2 sm:mb-0">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary hover:underline">
                 Register
               </Link>
             </span>
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-accent">
               <Link to="/login" className="text-primary hover:underline">
                 Back to Login
               </Link>

@@ -119,7 +119,7 @@ const Settings: React.FC = () => {
 
 
   
-  const commonInputStyles = "w-full text-sm p-2 sm:p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const commonInputStyles = "w-full text-sm p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary";
 
   if (loadingUser || errorUser || updateError || error) {
     return (
@@ -143,17 +143,17 @@ const Settings: React.FC = () => {
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
       <div className='p-4 sm:p-10'>
       <div className="w-full min-h-screen flex flex-col items-center justify-right">
-        <div className="w-full">
+        <div className="w-full bg-white dark:bg-box p-5 rounded-lg">
           <div className="flex items-center mb-4">
             <button 
               type="button" 
-              className="mr-4 text-gray-500 dark:text-gray-100 bg-gray-200 dark:bg-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-500 p-2 rounded-full hover:shadow-sm" 
+              className={`mr-4 text-white bg-primary hover:bg-button-hover p-2 rounded hover:shadow-sm`} 
               onClick={() => navigate(-1)}>
               <FaArrowLeft size={17} />
             </button>
             <h1 className="text-xl font-semibold text-left dark:text-white">Settings</h1>
           </div>
-          <p className="text-base text-left text-gray-600 dark:text-gray-300 mb-8">
+          <p className="text-base text-left text-accent dark:text-gray-300 mb-8">
             Manage your account settings and personal preferences.
           </p>
 
@@ -162,9 +162,9 @@ const Settings: React.FC = () => {
               <img 
                 src={preview || profileImage || '/images/default.jpg'} 
                 alt="Profile" 
-                className="w-28 h-28 object-cover rounded-full border-4 border-gray-300 dark:border-gray-700"
+                className="w-28 h-28 object-cover rounded-full border-4 border-gray-200 dark:border-accent"
               />
-              <label className="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full cursor-pointer">
+              <label className="absolute bottom-0 right-0 bg-button-orange hover:bg-button-hover text-white p-2 rounded-full cursor-pointer">
                 <FaEdit />
                 <input 
                   type="file" 
@@ -176,20 +176,20 @@ const Settings: React.FC = () => {
             </div>
           </div>
 
-          <form className="flex flex-wrap justify-center" onSubmit={handleSubmit}>
+          <form className="flex flex-wrap" onSubmit={handleSubmit}>
             {[
               { label: 'Email', type: 'email', name: 'email', value: formData.email },
               { label: 'Username', type: 'text', name: 'username', value: formData.username },
               { label: 'Birthdate', type: 'date', name: 'birthdate', value: formData.birthdate },
             ].map(({ label, type, name, value }, idx) => (
               <div key={idx} className=" px-0 sm:px-3 w-full md:w-1/2">
-                <label className="block text-gray-600 dark:text-gray-300 mb-2 text-sm">{label}</label>
+                <label className="block text-accent dark:text-gray-300 mb-2 text-sm">{label}</label>
                 <input 
                   type={type} 
                   name={name}
                   value={value}
                   onChange={handleInputChange}
-                  className={`${commonInputStyles} mb-5 bg-white dark:bg-box border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100`} 
+                  className={`${commonInputStyles} mb-5 bg-white dark:bg-black border-zinc-300 dark:border-accent text-zinc-900 dark:text-zinc-100`} 
                 />
               </div>
             ))}
@@ -218,12 +218,12 @@ const Settings: React.FC = () => {
                 )), value: formData.country },
             ].map(({ label, name, options, value }, idx) => (
               <div key={idx} className="sm:px-3 px-0 w-full md:w-1/2">
-                <label className="block text-gray-600 dark:text-gray-300 mb-2 text-sm">{label}</label>
+                <label className="block text-accent dark:text-gray-300 mb-2 text-sm">{label}</label>
                 <select 
                   name={name}
                   value={value}
                   onChange={handleInputChange}
-                  className={`${commonInputStyles} mb-5 bg-white dark:bg-box border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100`}
+                  className={`${commonInputStyles} mb-5 bg-white dark:bg-black border-zinc-300 dark:border-accent text-zinc-900 dark:text-zinc-100`}
                 >
                   <option value="" disabled>Select {label}</option>
                   {options.map(option => (
@@ -242,7 +242,7 @@ const Settings: React.FC = () => {
               <button 
                 type="submit" 
                 disabled={updatingUser}
-                className="w-full sm:w-fit px-6 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                className=" mt-5 px-6 py-2 bg-primary text-white rounded-md text-sm hover:bg-button-hover">
                 Save Changes {updatingUser ?  <Spinner w={4} h={4} /> : null}
               </button>
             

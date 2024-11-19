@@ -32,7 +32,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
   const baseWeight = totalWeight - totalWornWeight;
 
   return (
-    <div className="w-full sm:p-0 p-5">
+    <div className="w-full sm:p-0 p-2">
       <table className="w-full text-sm text-left text-black dark:text-gray-200">
         <thead className="text-xs text-black uppercase dark:text-gray-400">
           <tr>

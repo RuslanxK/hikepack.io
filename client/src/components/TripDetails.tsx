@@ -101,35 +101,41 @@ const TripDetails: React.FC = () => {
               </h1>
             </div>
 
-            <div className="flex justify-between w-72 pl-5">
-            <p className="text-accent dark:text-white flex items-center">
-              <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
-              {trip.distance} {userData?.user?.distance}
-            </p>
-            <p className={`flex items-center ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
-              <FaClock className="mr-1 text-accent dark:text-white" />
-              {daysLeft === 'Traveled' ? 'Traveled' : daysLeft}
-            </p>
-
+          
             <button type="button" className={buttonClass} onClick={handleUpdateTrip}>
               <AiFillEdit size={19} />
             </button>
-            </div>
           </div>
 
           <div className="bg-white rounded-lg p-5 w-full dark:bg-box">
-
+          <div className='flex items-center justify-between sm:flex-row flex-col text-center sm:text-left'>
+          <div>
           <h2 className='text-xl font-semibold text-black dark:text-white pb-3'>
             My Bags
           </h2>
           <p className='text-base text-black dark:text-white mb-5'>
             Organize and manage your bags for trips.
-    
           </p>
+          </div>
 
-          <hr className="border-t-2 border-gray-300 dark:border-zinc-600 my-4" />
+          <div className="flex p-3 sm:p-0">
+            <p className="text-accent dark:text-white flex items-center dark:border-accent border border-2 pt-3 pb-3 pl-5 pr-5 rounded-lg mr-3">
+              <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
+              {trip.distance} {userData?.user?.distance}
+            </p>
+            <p className={`flex items-center rounded-lg border border-2 dark:border-accent pt-3 pb-3 pl-5 pr-5 ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
+              <FaClock className="mr-1 text-accent dark:text-white" />
+              {daysLeft === 'Traveled' ? 'Traveled' : daysLeft}
+            </p>
+            </div>
 
-          <p className="text-accent dark:text-white">
+          </div>
+
+      
+
+          <hr className="border-t-1 border dark:border-zinc-600 my-4" />
+
+          <p className="text-accent dark:text-white text-center sm:text-left">
             {trip.about}
           </p>
 

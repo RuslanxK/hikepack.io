@@ -96,7 +96,7 @@ const ResetPassword: React.FC = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Enter your new password"
               required
             />
@@ -110,7 +110,7 @@ const ResetPassword: React.FC = () => {
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleInputChange}
-              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Confirm your new password"
               required
             />
@@ -119,7 +119,7 @@ const ResetPassword: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors flex items-center justify-center"
+            className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded-lg hover:bg-button-hover transition-colors flex items-center justify-center"
             disabled={loading}
           >
             {loading ? <Spinner w={4} h={4} /> : "Reset Password"}

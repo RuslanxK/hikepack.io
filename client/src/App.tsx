@@ -9,7 +9,6 @@ import Changelog from "./components/Changelog";
 import AdminSettings from "./components/AdminSettings";
 import TripDetails from "./components/TripDetails";
 import BagDetails from "./components/BagDetails";
-import Shop from "./components/Shop";
 import MainShare from "./components/share/MainShare";
 import NotFoundPage from "./components/404/NotFoundPage";
 import SingleArticle from "./components/articles/SingleArticle";
@@ -50,7 +49,6 @@ const App: React.FC = () => {
             <Route path="/article/:id" element={<SingleArticle />} />
             <Route path="/recent-bags" element={<Home />} />
             <Route path="/articles" element={<Articles />} />
-            <Route path="/shop" element={<Shop />} />
             <Route path="/explore-bags" element={<ExploreBags />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/changelog" element={<Changelog />} />

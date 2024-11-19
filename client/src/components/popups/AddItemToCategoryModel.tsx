@@ -68,9 +68,9 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add Item to Category">
-    <div className="mb-4">
+    <div className="mb-4 my-2">
     <select
-  className="block w-full p-2 sm:p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
+  className="block mb-5 w-full p-2 sm:p-3 text-accent border border-gray-300 rounded-lg dark:bg-black dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
   value={selectedCategory}
   onChange={handleSelectChange}
 >
@@ -78,7 +78,7 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
   {categories
     .filter(category => category.name.trim() !== '')
     .map((category) => (
-      <option key={category.id} value={category.id} className='text-base dark:text-zinc-900'>
+      <option key={category.id} value={category.id} className='text-black dark:text-zinc-900'>
         {category.name}
       </option>
     ))}
@@ -86,7 +86,7 @@ const AddItemToCategoryModal: React.FC<AddItemToCategoryModalProps> = ({ isOpen,
 </div>
 <div>
   <button
-    className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
+    className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center"
     disabled={loading || selectedCategory === ''}
     onClick={handleAddItemSubmit}
   >

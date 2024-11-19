@@ -3,7 +3,7 @@ import { SingleItemShareProps } from '../../types/item';
 import { FaWalking, FaEye } from 'react-icons/fa';
 import SharedItemPictureModal from '../../components/popups/SharedItemPictureModal'; 
 
-const inputClasses = "border px-2 py-1 bg-white dark:bg-zinc-800 dark:border-zinc-600 dark:text-gray-300 focus:outline-none";
+const inputClasses = " rounded border px-2 py-1 bg-white dark:bg-zinc-800 dark:border-zinc-600 dark:text-gray-300 focus:outline-none";
 const iconClasses = "text-gray-500 dark:text-gray-400";
 
 const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => {

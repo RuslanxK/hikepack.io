@@ -153,7 +153,7 @@ const Register: React.FC = () => {
         name={name}
         value={formData[name] as string}
         onChange={handleInputChange}
-        className={`w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 ${
+        className={`w-full text-sm p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 ${
           errors[name] ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-primary'
         }`}
         placeholder={placeholder}
@@ -177,7 +177,7 @@ const Register: React.FC = () => {
         name={name}
         value={formData[name] as string}
         onChange={handleInputChange}
-        className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -216,7 +216,7 @@ const Register: React.FC = () => {
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
+                className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded-lg hover:bg-button-hover transition-colors"
               >
                 Next
               </button>
@@ -231,14 +231,14 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="bg-gray-200 text-accent text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
+                  className="bg-gray-200 text-accent text-sm p-2 sm:p-3 rounded-lg hover:bg-gray-300 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded-lg hover:bg-button-hover transition-colors"
                 >
                   Next
                 </button>
@@ -284,14 +284,14 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
+                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded-lg hover:bg-gray-300 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded-lg hover:bg-button-hover transition-colors"
                 >
                   Next
                 </button>
@@ -344,14 +344,14 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded hover:bg-gray-300 transition-colors"
+                  className="bg-gray-200 text-gray-700 text-sm p-2 sm:p-3 rounded-lg hover:bg-gray-300 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   type="submit"
                   disabled={loading || userLoading}
-                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors"
+                  className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded-lg hover:bg-button-hover transition-colors"
                 >
                  Register  {loading || userLoading ?  <Spinner w={4} h={4} /> : null}
                 </button>

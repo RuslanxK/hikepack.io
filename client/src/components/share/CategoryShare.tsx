@@ -21,8 +21,8 @@ const CategoryShare: React.FC<CategoryProps> = ({ categoryData, weightUnit }) =>
 
   
   return (
-    <div className="mb-2" >
-      <div className="cursor-pointer bg-white dark:bg-zinc-800 w-full">
+    <div className="mb-2">
+      <div className="cursor-pointer bg-white dark:bg-zinc-800 w-full rounded-t-lg">
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">
             <input
@@ -41,7 +41,7 @@ const CategoryShare: React.FC<CategoryProps> = ({ categoryData, weightUnit }) =>
       </div>
       {expanded && (
         <div className="w-full">
-          <div className="px-5 pb-5 text-sm w-full bg-white dark:bg-zinc-800">
+          <div className="px-5 pb-5 text-sm w-full bg-white dark:bg-zinc-800 rounded-b-lg">
             <div className="w-full">
                   {itemsData.map((item) => (
                     <ItemShare key={item.id} itemData={item} weightUnit={weightUnit}  />

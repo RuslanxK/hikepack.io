@@ -122,18 +122,18 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
         )}
         <div
           className={`mt-1 flex justify-center w-full items-center px-6 pt-5 pb-6 border-2 ${
-            isDragging ? 'border-blue-500' : 'border-gray-300'
+            isDragging ? 'border-primary' : 'border-gray-300'
           } border-dashed rounded-md dark:border-zinc-500`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
           <div className="space-y-1 text-center">
-            <FaCloudUploadAlt className="mx-auto h-12 w-12 text-gray-400" />
-            <div className="flex justify-center text-sm text-gray-600 dark:text-gray-300">
+            <FaCloudUploadAlt className="mx-auto h-12 w-12 text-accent" />
+            <div className="flex justify-center text-sm text-accent dark:text-gray-300">
               <label
                 htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                className="relative cursor-pointer rounded-md font-medium text-primary hover:text-button-hover"
               >
                 <span>{isFileUploaded ? 'Upload a new file' : 'Upload a file'}</span>
                 <input
@@ -147,12 +147,12 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-accent dark:text-gray-400">
               PNG, JPG up to 2MB
             </p>
             
             {selectedFile && (
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 flex items-center">
+              <p className="mt-2 text-sm text-accent dark:text-gray-400 flex items-center">
                 {isFileUploaded && (
                   <FaCheckCircle className="mr-2 text-green-500" size={24} />
                 )}
@@ -163,7 +163,7 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
         </div>
       </div>
       <button
-        className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mt-4 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
+        className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mt-4 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center"
         onClick={handleSavePicture}
         disabled={loading}
       >

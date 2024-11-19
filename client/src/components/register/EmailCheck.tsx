@@ -58,7 +58,7 @@ const EmailCheck: React.FC = () => {
               name="email"
               value={email}
               onChange={handleInputChange}
-              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Enter your email"
               required
             />
@@ -66,7 +66,7 @@ const EmailCheck: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded hover:bg-button-hover transition-colors flex items-center justify-center"
+            className="w-full bg-primary text-white text-sm p-2 sm:p-3 rounded-lg hover:bg-button-hover transition-colors flex items-center justify-center"
             disabled={loading}
           >
             Send Reset Link {loading ? <Spinner w={4} h={4} /> : null}

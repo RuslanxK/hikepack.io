@@ -42,7 +42,6 @@ const SideBar: React.FC = () => {
     { to: "/", icon: FaHome, label: "Home" },
     { to: "#", icon: GiHiking, label: "Recent bags", onClick: () => setShowLatestBags(!showLatestBags) },
     { to: "/articles", icon: FaBook, label: "Articles" },
-    { to: "/shop", icon: FaBasketShopping, label: "Shop hiking gear" },
     { to: "/explore-bags", icon: FaSearch, label: "Explore bags" },
     { to: "/settings", icon: FaCog, label: "Settings" },
     { to: "/changelog", icon: FaHistory, label: "Changelog" },
@@ -134,7 +133,7 @@ const SideBar: React.FC = () => {
                   setIsSidebarOpen={setIsSidebarOpen} 
                 />
                 {item.label === "Recent bags" && showLatestBags && (
-                  <ul className="shadow-airbnb rounded-lg absolute p-3 z-50 bg-white dark:bg-theme-bgDark w-full sm:w-48">
+                  <ul className="shadow-airbnb rounded-lg absolute sm:left-4 left-0 p-3 z-50 bg-white dark:bg-theme-bgDark w-full sm:w-48">
                     {loading && (
                       <li className="p-1 pl-2 pr-2 text-sm">
                         <Spinner w={4} h={4} />
@@ -156,7 +155,7 @@ const SideBar: React.FC = () => {
                     {!loading && !error && data?.latestBags?.map((bag: { id: string, name: string }) => (
                       <li
                         key={bag.id}
-                         className="p-2 pl-2 pr-2 flex items-center cursor-pointer dark:hover:bg-button hover:bg-button hover:text-white rounded text-sm group"
+                         className="p-2 pl-2 pr-2 flex items-center cursor-pointer dark:hover:bg-button hover:bg-button hover:text-white rounded-lg text-sm group"
                         onClick={() => {
                           handleBagClick(bag.id);
                           setIsSidebarOpen(false); 

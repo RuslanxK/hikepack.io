@@ -242,7 +242,7 @@ const Settings: React.FC = () => {
               <button 
                 type="submit" 
                 disabled={updatingUser}
-                className=" mt-5 px-6 py-2 bg-primary text-white rounded-md text-sm hover:bg-button-hover">
+                className=" mt-5 px-6 py-2 bg-primary text-white rounded-lg text-sm hover:bg-button-hover">
                 Save Changes {updatingUser ?  <Spinner w={4} h={4} /> : null}
               </button>
             

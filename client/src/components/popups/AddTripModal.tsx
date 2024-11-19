@@ -114,11 +114,11 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
     max = ''
   ) => (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{label}</label>
+      <label className="block text-sm font-medium text-accent dark:text-gray-300 mb-1">{label}</label>
       <input
         type={type}
         onChange={(e) => setValue(e.target.value)}
-        className="block w-full p-2 sm:p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
+        className="block w-full p-2 sm:p-3 text-black border border-zinc-300 rounded-lg bg-transparent dark:bg-black dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
         required
         min={min}
         max={max}
@@ -151,7 +151,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
 </div>
 
         <div className="mb-4">
-  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 mt-1">
+  <label className="block text-sm font-medium text-accent dark:text-gray-300 mb-2 mt-1">
     Upload Image
   </label>
   <div
@@ -167,7 +167,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
       <div className="flex justify-center text-sm text-gray-600 dark:text-gray-300">
         <label
           htmlFor="file-upload"
-          className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+          className="relative cursor-pointer rounded-md font-medium text-primary hover:text-button-hover"
         >
          <span>{isFileUploaded ? 'Upload a new file' : 'Upload a file'}</span>
           <input
@@ -181,12 +181,12 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
         </label>
         <p className="pl-1">or drag and drop</p>
       </div>
-      <p className="text-xs text-gray-500 dark:text-gray-400">
+      <p className="text-xs text-accent dark:text-gray-400">
         PNG, JPG up to 2MB
       </p>
       
       {selectedFileName && (
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 flex items-center">
+        <p className="mt-2 text-sm text-accent dark:text-gray-400 flex items-center">
           {isFileUploaded && (
         <FaCheckCircle className="mr-2 text-green-500" size={24} />
       )}Selected file: {selectedFileName}
@@ -196,7 +196,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   </div>
 </div>
 
-        <button type="submit" className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3  mb-1 rounded hover:bg-button-hover flex items-center justify-center" disabled={loading}>
+        <button type="submit" className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center" disabled={loading}>
           CREATE
           {loading && <Spinner w={4} h={4}/>}
         </button>

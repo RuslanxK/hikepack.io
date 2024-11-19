@@ -32,13 +32,13 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
   const baseWeight = totalWeight - totalWornWeight;
 
   return (
-    <div className="w-full">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-200">
-        <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
+    <div className="w-full sm:p-0 p-5">
+      <table className="w-full text-sm text-left text-black dark:text-gray-200">
+        <thead className="text-xs text-black uppercase dark:text-gray-400">
           <tr>
-            <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Color</th>
-            <th className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">Category</th>
-            <th className="px-3 sm:px-6 py-2 border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">
+            <th className="px-4 sm:px-6 py-2 border-r border-b border-black dark:border-gray-500 dark:text-gray-200">Color</th>
+            <th className="px-4 sm:px-6 py-2 border-r border-b border-black dark:border-gray-500 dark:text-gray-200">Category</th>
+            <th className="px-3 sm:px-6 py-2 border-b border-black dark:border-gray-500 dark:text-gray-200">
               Weight
               <div className="relative inline-block text-left ml-1">
             <select
@@ -60,17 +60,17 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
           {convertedCategories.map((category) => (
             <tr key={category.id} className="border-b border-neutral-400 dark:border-gray-500">
               <td className="px-4 sm:px-6 py-2"><div style={{ backgroundColor: category.color }} className="w-4 h-4 rounded-full"></div></td>
-              <td className="px-4 sm:px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white border-l border-r border-neutral-400 dark:border-gray-500"> {category.name.length > 10 ? `${category.name.substring(0, 10)}...` : category.name}</td>
-              <td className="px-4 sm:px-6 py-2">{category.totalWeight.toFixed(3)} {weightUnit}</td>
+              <td className="px-4 sm:px-6 py-2 font-medium text-accent whitespace-nowrap dark:text-white border-l border-r border-neutral-400 dark:border-gray-500"> {category.name.length > 10 ? `${category.name.substring(0, 10)}...` : category.name}</td>
+              <td className="px-4 sm:px-6 py-2 text-accent dark:text-secondary">{category.totalWeight.toFixed(3)} {weightUnit}</td>
             </tr>
           ))}
           {['Total', 'Worn', 'Base'].map((label, index) => {
             const value = index === 0 ? totalWeight : index === 1 ? totalWornWeight : baseWeight;
             return (
-              <tr key={label} className="text-gray-900 font-semibold border-b border-neutral-400 dark:border-gray-500">
+              <tr key={label} className="text-black font-semibold border-b border-neutral-400 dark:border-gray-500">
                 <td className="px-4 sm:px-6 py-2 border-r border-b border-neutral-400 dark:border-gray-500 dark:text-gray-200">{label}</td>
                 <td className="px-4 sm:px-6 py-2"></td>
-                <td className="px-4 sm:px-6 py-2 border-l border-neutral-400 dark:border-gray-500 dark:text-gray-200">{value.toFixed(3)} {weightUnit}</td>
+                <td className="px-4 sm:px-6 py-2 border-l  border-neutral-400 dark:border-gray-500 dark:text-gray-200">{value.toFixed(3)} {weightUnit}</td>
               </tr>
             );
           })}

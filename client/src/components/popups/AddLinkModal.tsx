@@ -40,13 +40,13 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ isOpen, onClose, itemId, it
             type="url"
             value={link}
             onChange={(e) => setLink(e.target.value)}
-            className="block w-full p-2 sm:p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-opacity-10 dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
+            className="block w-full p-2 sm:p-3 text-black border border-zinc-300 rounded-lg bg-transparent dark:bg-black dark:border-zinc-600 dark:text-white focus:outline-none focus:outline-primary focus:outline-2"
             placeholder="e.g., https://example.com"
           />
       
           <button
             type="submit"
-            className="mt-4 text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-hover flex items-center justify-center"
+            className="mt-4 text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center"
             disabled={loading}
           >
             SAVE

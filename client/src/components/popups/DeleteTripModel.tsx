@@ -34,12 +34,12 @@ const DeleteTripModal: React.FC<DeleteTripModalProps> = ({ isOpen, onClose, trip
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Delete Trip">
       <div className="">
-        <p className="mb-5 text-base text-gray-700 dark:text-gray-300">
+        <p className="mb-5 text-base text-accent dark:text-gray-300">
           Are you sure that you want to delete <strong>{trip.name}</strong> ? 
         </p>
         <button
           onClick={handleDeleteTrip}
-          className="text-sm bg-button-red font-medium w-full text-white p-2 sm:p-3 mb-1 rounded hover:bg-button-orange flex items-center justify-center"
+          className="text-sm bg-button-red font-medium w-full text-white p-2 sm:p-3 mb-1 rounded-lg hover:bg-button-orange flex items-center justify-center"
           disabled={loading}
         >
           DELETE

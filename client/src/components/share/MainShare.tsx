@@ -95,14 +95,14 @@ const MainShare: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 w-full sm:w-10/12">
-      <div className="flex flex-row items-center justify-between space-y-2 w-full">
+      <div className="flex flex-row items-center justify-between space-y-2 w-full bg-white dark:bg-box p-5 rounded-lg">
         <div className="w-full">
           <div className="dark:bg-zinc-800 flex flex-row items-start">
             <div className="w-full flex flex-row items-center justify-between mb-14">
               <img src={'/images/logo-black.png'} width="90px" className="sm:p-0 p-2" alt="logo" onClick={() => navigate('/')} />
               <button 
                 onClick={handleLikeToggle} 
-                className={`flex items-center space-x-1 p-1.5 rounded-full ${hasLiked ? 'bg-blue-500 text-white' : 'bg-zinc-400 text-zinc-100'} dark:${hasLiked ? 'bg-blue-600 text-white' : 'bg-zinc-600 text-gray-400'}`}
+                className={`flex items-center space-x-1 p-1.5 rounded-full ${hasLiked ? 'bg-blue text-white' : 'bg-zinc-400 text-zinc-100'} dark:${hasLiked ? 'bg-blue text-white' : 'bg-zinc-600 text-gray-400'}`}
               >
                 {hasLiked ? <FaThumbsDown size={15} /> : <FaThumbsUp size={15} />}
                 <span className="text-sm w-10">{hasLiked ? 'Unlike' : 'Like'}</span>
@@ -112,10 +112,10 @@ const MainShare: React.FC = () => {
 
           
           <div className='pl-5 pr-5 pb-5'>
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-5">
+            <h1 className="text-xl font-semibold text-black dark:text-white mb-5">
               {bag?.name}
             </h1>
-            <p className="text-base text-gray-700 dark:text-gray-200">
+            <p className="text-base text-accent dark:text-gray-200">
               {bag?.description}
             </p>
             </div>
@@ -123,7 +123,7 @@ const MainShare: React.FC = () => {
       </div>
 
       {categoriesData.length > 0 && hasCategoriesWithWeight && (
-        <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
+        <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0 bg-white dark:bg-box rounded-lg my-5">
           <div className="flex justify-center items-center">
             <div className="flex items-center space-x-2 p-3 rounded-full">
               <FaHeart size={20} className="text-red-500 animate-pulse" />
@@ -159,7 +159,7 @@ const MainShare: React.FC = () => {
       <footer className="mt-10 p-4 text-center text-gray-700 dark:text-gray-200 flex items-center w-full justify-center">
         <p className="text-sm">Shared by</p>
         <img src={userData.userShared.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-2 ml-2' /> 
-        <span className="font-semibold text-blue-600 text-sm">{userData?.userShared?.username}</span>
+        <span className="font-semibold text-primary text-sm">{userData?.userShared?.username}</span>
       </footer>
     </div>
   );

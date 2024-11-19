@@ -158,7 +158,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       <div className="cursor-pointer bg-white dark:bg-box  w-full rounded-t-lg">
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">
-            <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing" size={16} {...attributes} {...listeners} />
+            <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing" size={18} {...attributes} {...listeners} />
             <input
               type="text"
               defaultValue={categoryData.name}

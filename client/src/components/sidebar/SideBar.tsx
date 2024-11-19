@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FaHome, FaBook, FaSearch, FaCog, FaHistory, FaBug, FaUserShield, FaSignOutAlt, FaSun, FaMoon  } from 'react-icons/fa';
 import { PiEmptyBold } from "react-icons/pi";
 import { GiHiking, GiSchoolBag } from 'react-icons/gi';
-import { FaBasketShopping } from "react-icons/fa6";
 import SideBarItem from './SideBarItem';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GET_LATEST_BAGS } from '../../queries/bagQueries';

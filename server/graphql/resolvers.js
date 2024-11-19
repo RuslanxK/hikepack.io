@@ -231,7 +231,7 @@ const resolvers = {
 
     latestBags: async (_, __, { user }) => {
       try {
-        return await Bag.find(ensureOwner(user)).sort({ updatedAt: -1 }).limit(3);
+        return await Bag.find(ensureOwner(user)).sort({ updatedAt: -1 }).limit(8);
       } catch (error) {
         console.error('Error fetching latest bags:', error);
         throw new Error('Failed to fetch latest bags');

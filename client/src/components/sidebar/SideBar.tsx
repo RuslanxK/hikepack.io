@@ -41,7 +41,7 @@ const SideBar: React.FC = () => {
     { to: "/", icon: FaHome, label: "Home" },
     { to: "#", icon: GiHiking, label: "Recent bags", onClick: () => setShowLatestBags(!showLatestBags) },
     { to: "/articles", icon: FaBook, label: "Articles" },
-    { to: "/explore-bags", icon: FaSearch, label: "Explore bags" },
+    { to: "/community-bags", icon: FaSearch, label: "Community Bags" },
     { to: "/settings", icon: FaCog, label: "Settings" },
     { to: "/changelog", icon: FaHistory, label: "Changelog" },
     { to: "/bug-report", icon: FaBug, label: "Report a Bug" },

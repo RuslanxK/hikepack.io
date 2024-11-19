@@ -24,12 +24,11 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
   return (
     <div
       className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group`}>
-      <div className="flex justify-center items-center h-40 bg-white dark:bg-box rounded-t-lg">
+      <div className="flex justify-center items-center h-40 bg-white dark:bg-box rounded-t-lg" onClick={handleViewDetails}>
         <img 
           src="/images/backpack.png" 
           alt={bagData.name} 
           className='w-16 h-16 object-contain cursor-pointer'
-          onClick={handleViewDetails}
         />
       </div>
       <div className="p-3 flex flex-col space-y-4 bg-gray-100 dark:bg-black rounded-b-lg">

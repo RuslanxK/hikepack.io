@@ -124,19 +124,21 @@ const MainShare: React.FC = () => {
 
       {categoriesData.length > 0 && hasCategoriesWithWeight && (
         <div className="w-full flex flex-col sm:flex-row items-center py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0 bg-white dark:bg-box rounded-lg my-5">
-          <div className="flex justify-center items-center">
-            <div className="flex items-center space-x-2 p-3 rounded-full">
-              <FaHeart size={20} className="text-red-500 animate-pulse" />
-              <div className="flex flex-col items-center">
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {bag?.likes || 0}
-                </span>
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  {bag?.likes === 1 ? 'Like' : 'Likes'}
-                </span>
-              </div>
-            </div>
+           {bag?.likes > 0 && (
+      <div className="flex justify-center items-center">
+        <div className="flex items-center space-x-2 p-3 rounded-full">
+          <FaHeart size={20} className="text-red-500 animate-pulse" />
+          <div className="flex flex-col items-center">
+            <span className="font-semibold text-gray-900 dark:text-white">
+              {bag?.likes}
+            </span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              {bag?.likes === 1 ? 'Like' : 'Likes'}
+            </span>
           </div>
+        </div>
+      </div>
+    )}
 
           <div className="sm:w-64 h-64">
             <CategoryChart categories={dataBag.sharedBag.categories} weightUnit={userData?.userShared?.weightOption} />

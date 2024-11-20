@@ -243,30 +243,32 @@ const BagDetails: React.FC = () => {
          </div>
           
           
-          {categoriesData.length > 0 && hasCategoriesWithWeight && (
-            <div className="w-full bg-white dark:bg-box rounded-lg flex flex-col sm:flex-row items-center my-5 py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
-              <div className="flex justify-center items-center">
-                <div className="flex items-center space-x-2 p-3 rounded-full">
-                  <FaHeart size={20} className="text-red-500 animate-pulse" />
-                  <div className="flex flex-col items-center">
-                    <span className="font-semibold text-gray-900 dark:text-white">
-                      {bag?.likes || 0}
-                    </span>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {bag?.likes === 1 ? 'Like' : 'Likes'}
-                    </span>
-                  </div>
-                </div>
-              </div>
+         {categoriesData.length > 0 && hasCategoriesWithWeight && (
+      <div className="w-full bg-white dark:bg-box rounded-lg flex flex-col sm:flex-row items-center my-5 py-10 justify-center sm:space-x-12 space-y-8 sm:space-y-0">
+    {bag?.likes > 0 && (
+      <div className="flex justify-center items-center">
+        <div className="flex items-center space-x-2 p-3 rounded-full">
+          <FaHeart size={20} className="text-red-500 animate-pulse" />
+          <div className="flex flex-col items-center">
+            <span className="font-semibold text-gray-900 dark:text-white">
+              {bag?.likes}
+            </span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              {bag?.likes === 1 ? 'Like' : 'Likes'}
+            </span>
+          </div>
+        </div>
+      </div>
+    )}
 
-              <div className="sm:w-64 h-64">
-                <CategoryChart categories={dataBag?.bag?.categories} weightUnit={userData?.user?.weightOption} />
-              </div>
-              <div className='w-full sm:w-fit'>
-                <CategoryTable categories={dataBag?.bag?.categories} weightUnit={userData?.user?.weightOption} />
-              </div>
-            </div>
-          )}
+    <div className="sm:w-64 h-64">
+      <CategoryChart categories={dataBag?.bag?.categories} weightUnit={userData?.user?.weightOption} />
+    </div>
+    <div className="w-full sm:w-fit">
+      <CategoryTable categories={dataBag?.bag?.categories} weightUnit={userData?.user?.weightOption} />
+    </div>
+  </div>
+)}
         
             <button onClick={handleAddCategory} className="rounded-lg bg-white dark:bg-box mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-white">
               <FaPlus className="text-xl text-accent dark:text-white" size={13} /> { addingCategory ? <Spinner w={4} h={4}/> : null }

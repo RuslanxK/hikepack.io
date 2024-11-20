@@ -56,7 +56,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
     max = ''
   ) => (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-accent dark:text-gray-300 mb-1">{label}</label>
+      <label className="block text-sm font-medium text-accent dark:text-gray-300 mb-1">{label} *</label>
       <input
         type={type}
         onChange={(e) => setValue(type === 'number' ? (e.target.value as unknown as T) : e.target.value as T)}

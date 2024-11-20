@@ -55,6 +55,7 @@ query GetSharedUser($bagId: ID!) {
     username
     weightOption
     imageUrl
+    distance
   }
 }
 `;

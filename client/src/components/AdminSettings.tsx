@@ -89,7 +89,7 @@ const AdminSettings: React.FC = () => {
           {changelogFields.map(({ label, id, placeholder, type = 'text', rows }) => (
             <div key={id} className="mb-4">
               <label className="block text-accent dark:text-gray-300 text-sm mb-2" htmlFor={id}>
-                {label}
+                {label} *
               </label>
               {type === 'textarea' ? (
                 <textarea

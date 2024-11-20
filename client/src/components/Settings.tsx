@@ -178,8 +178,8 @@ const Settings: React.FC = () => {
 
           <form className="flex flex-wrap" onSubmit={handleSubmit}>
             {[
-              { label: 'Email', type: 'email', name: 'email', value: formData.email },
-              { label: 'Username', type: 'text', name: 'username', value: formData.username },
+              { label: 'Email *', type: 'email', name: 'email', value: formData.email },
+              { label: 'Username *', type: 'text', name: 'username', value: formData.username },
               { label: 'Birthdate', type: 'date', name: 'birthdate', value: formData.birthdate },
             ].map(({ label, type, name, value }, idx) => (
               <div key={idx} className=" px-0 sm:px-3 w-full md:w-1/2">
@@ -190,6 +190,8 @@ const Settings: React.FC = () => {
                   value={value}
                   onChange={handleInputChange}
                   className={`${commonInputStyles} mb-5 bg-white dark:bg-black border-zinc-300 dark:border-accent text-zinc-900 dark:text-zinc-100`} 
+                  required={name === 'username'} 
+                  disabled={name === 'email'}
                 />
               </div>
             ))}

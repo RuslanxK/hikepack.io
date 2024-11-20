@@ -53,7 +53,7 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
     max = ''
   ) => (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-accent dark:text-gray-300 mb-1">{label}</label>
+      <label className="block text-sm font-medium text-accent dark:text-gray-300 mb-1">{label} *</label>
       <input
         type={type}
         value={value}

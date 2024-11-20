@@ -63,7 +63,7 @@ const BugReport: React.FC = () => {
         <h2 className="text-lg font-semibold text-black dark:text-white mb-6">Send Message</h2>
           <div className="mb-4">
             <label className={commonLabelStyles} htmlFor="title">
-              Title
+              Title *
             </label>
             <input
               type="text"
@@ -77,7 +77,7 @@ const BugReport: React.FC = () => {
           </div>
           <div className="mb-6">
             <label className={commonLabelStyles} htmlFor="description">
-              Description
+              Description *
             </label>
             <textarea
               id="description"

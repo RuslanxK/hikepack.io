@@ -18,9 +18,14 @@ interface SideBarItemProps {
   icon: React.ComponentType;
   label: string;
   onClick?: () => void;
+  
 }
 
 const SideBar: React.FC = () => {
+
+  const recentBagsRef = React.useRef<HTMLDivElement | null>(null);
+  const dropdownRef = React.useRef<HTMLUListElement | null>(null);
+  
   const initialTheme = localStorage.getItem('theme') === 'dark';
   const [isDarkTheme, setIsDarkTheme] = useState(initialTheme);
   const [showLatestBags, setShowLatestBags] = useState(false);
@@ -54,6 +59,29 @@ const SideBar: React.FC = () => {
     navigate(`/bag/${bagId}`);
     setShowLatestBags(false)
   };
+
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const dropdown = dropdownRef.current;
+      const toggleButton = recentBagsRef.current;
+  
+      if (
+        dropdown &&
+        !dropdown.contains(event.target as Node) &&
+        toggleButton &&
+        !toggleButton.contains(event.target as Node)
+      ) {
+        setShowLatestBags(false);
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+  
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
 
   const toggleTheme = () => {
@@ -105,8 +133,8 @@ const SideBar: React.FC = () => {
         <div className="flex sm:flex-col justify-between items-center p-4">
           <img
             src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
-            width="90px"
-            className='pb-2 pl-2 pr-2 sm:p-0 cursor-pointer'
+             width="90px"
+            className="pb-2 pl-2 pr-2 sm:p-0 cursor-pointer"
             alt="logo"
             onClick={() => navigate('/')}
           />
@@ -118,7 +146,7 @@ const SideBar: React.FC = () => {
           </button>
         </div>
 
-        <nav className="flex-grow p-4">
+        <nav className="flex-grow p-4" ref={recentBagsRef}>
           <ul>
             {items.map(item => (
               <React.Fragment key={item.to}>
@@ -132,7 +160,7 @@ const SideBar: React.FC = () => {
                   setIsSidebarOpen={setIsSidebarOpen} 
                 />
                 {item.label === "Recent bags" && showLatestBags && (
-                  <ul className="shadow-airbnb rounded-lg absolute sm:left-4 left-0 p-3 z-50 bg-white dark:bg-theme-bgDark w-full sm:w-48">
+                  <ul className="shadow-airbnb rounded-lg absolute sm:left-4 left-0 p-3 z-50 bg-white dark:bg-theme-bgDark w-full sm:w-48" ref={dropdownRef}>
                     {loading && (
                       <li className="p-1 pl-2 pr-2 text-sm">
                         <Spinner w={4} h={4} />

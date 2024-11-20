@@ -75,7 +75,7 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
           defaultValue={itemData.weight} 
         />
 
-        <span className="border px-2 py-1 dark:border-zinc-600 dark:text-gray-300">
+        <span className="border px-2 py-1 dark:border-zinc-600 dark:text-gray-300 rounded">
           {displayedWeightUnit}
         </span>
         
@@ -83,7 +83,7 @@ const ItemShare: React.FC<SingleItemShareProps> = ({ itemData, weightUnit }) => 
           type="text"
           value={`${priority.charAt(0).toUpperCase() + priority.slice(1)} priority`}
           readOnly
-          className={`w-28 text-sm border ring-gray-300 py-1 dark:text-gray-300 dark:border-gray-500 dark:bg-gray-800 focus:outline-none ${priorityClass} cursor-default text-center`}
+          className={`w-28 text-sm border ring-gray-300 py-1 dark:text-gray-300 dark:border-gray-500 dark:bg-gray-800 focus:outline-none ${priorityClass} cursor-default text-center rounded`}
         />
         <div className="flex space-x-3 pl-2">
           <FaWalking size={14} className={`${iconClasses} ${itemData.worn ? 'text-green' : ''}`} />

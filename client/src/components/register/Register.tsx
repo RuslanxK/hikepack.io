@@ -211,8 +211,8 @@ const Register: React.FC = () => {
 
           {step === 1 && (
             <>
-              {renderInput('fullName', 'Full Name', 'text', 'Enter your full name', true)}
-              {renderInput('email', 'Email', 'email', 'Enter your email', true)}
+              {renderInput('fullName', 'Full Name *', 'text', 'Enter your full name', true)}
+              {renderInput('email', 'Email *', 'email', 'Enter your email', true)}
               <button
                 type="button"
                 onClick={handleNextStep}
@@ -225,8 +225,8 @@ const Register: React.FC = () => {
 
           {step === 2 && (
             <>
-              {renderInput('password', 'Password', 'password', 'Enter your password', true)}
-              {renderInput('confirmPassword', 'Confirm Password', 'password', 'Confirm your password', true)}
+              {renderInput('password', 'Password * (at least 8 characters long numbers and letters)', 'password', 'Enter your password', true)}
+              {renderInput('confirmPassword', 'Confirm Password *', 'password', 'Confirm your password', true)}
               <div className="flex flex-col space-y-4 justify-between">
                 <button
                   type="button"

@@ -111,6 +111,19 @@ export const GET_LATEST_BAGS = gql`
 `;
 
 
+export const GET_ALL_USER_BAGS = gql`
+  query GetUserBags {
+    allUserBags {
+      id
+      name
+      description
+    }
+  }
+`;
+
+
+
+
 export const GET_LATEST_BAG_WITH_DETAILS = gql`
   query GetLatestBagWithDetails {
     latestBagWithDetails {

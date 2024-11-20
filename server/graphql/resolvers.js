@@ -238,6 +238,17 @@ const resolvers = {
       }
     },
 
+
+    allUserBags: async (_, __, { user }) => {
+      try {
+        return await Bag.find(ensureOwner(user));
+      } catch (error) {
+        console.error('Error fetching bags:', error);
+        throw new Error('Failed to fetch bags');
+      }
+    },
+
+
     latestBagWithDetails: async (_, __, { user }) => {
       try {
         const bag = await Bag.findOne(ensureOwner(user)).sort({ updatedAt: -1 });

@@ -118,7 +118,7 @@ const SideBar: React.FC = () => {
 
         <img
           src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
-          width="90px"
+          width={90}
           className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3 cursor-pointer'
           alt="logo"
           onClick={() => navigate('/')}
@@ -168,13 +168,13 @@ const SideBar: React.FC = () => {
                     )}
                     
                    {error && (
-    <span className="text-sm flex items-center p-2 bg-gray-100 rounded dark:bg-gray-800">
+    <span className="text-sm flex items-center p-2 bg-gray-100 rounded dark:bg-black">
       <PiEmptyBold className="mr-2" size={18}/>
       Error occurs.
     </span>
   )}
   {!data?.latestBags.length && (
-    <span className="text-sm flex items-center p-2 bg-gray-100 rounded dark:bg-gray-800">
+    <span className="text-sm flex items-center p-2 bg-gray-100 rounded dark:bg-black">
       <PiEmptyBold className="mr-2" size={18}/>
       No bags yet.
     </span>

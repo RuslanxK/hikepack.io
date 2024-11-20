@@ -193,7 +193,7 @@ const Register: React.FC = () => {
       <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto transform scale-x-[-1] sm:scale-x-100" style={{ backgroundImage: `url('/images/hiking.jpg')` }}>
       </div>
       <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
-          <img src="/images/logo-black.png" alt="Logo" className="h-6 sm:h-8" />
+      <img src="/images/logo-black.png" alt="Logo" width={90} />
       </div>
 
       <div className="flex-1 flex flex-col justify-center items-center p-5 sm:p-10">

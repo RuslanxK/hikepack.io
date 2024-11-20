@@ -30,14 +30,14 @@ const Message: React.FC<MessageProps> = ({
         return {
           bgColor: 'bg-green bg-opacity-10 border border-green dark:bg-green-50',
           titleColor: 'text-green dark:text-green',
-          messageColor: 'text-green dark:text-gray-300',
+          messageColor: 'text-emerald-800 dark:text-gray-300',
           iconPath: 'M9 12L11 14L15 10M21 12A9 9 0 1 1 12 3A9 9 0 0 1 21 12Z'
         };
       case 'error':
         return {
           bgColor: 'bg-red-50 dark:bg-red-950 border border-red-500',
           titleColor: 'text-red',
-          messageColor: 'text-black dark:text-red',
+          messageColor: 'text-button-red dark:text-red',
           iconPath: 'M12 9V12M12 15H12.01M21 12A9 9 0 1 1 12 3A9 9 0 0 1 21 12Z'
         };
       case 'warning':

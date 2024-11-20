@@ -25,8 +25,6 @@ export const GET_TRIP = gql`
       bags {
         id
         name
-        description
-        exploreBags
       }
     }
   }

@@ -11,7 +11,7 @@ import CategoryShare from './CategoryShare';
 import Message from '../message/Message';
 import { GET_USER_SHARED } from '../../queries/userQueries';
 import Spinner from '../loading/Spinner';
-import { GET_SHARED_BAG } from '../../queries/bagQueries';
+import { GET_SHARED_BAG, GET_ALL_USER_BAGS } from '../../queries/bagQueries';
 import { GET_TRIP } from '../../queries/tripQueries';
 import { FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { Bag } from '../../types/bag';
@@ -26,6 +26,7 @@ const MainShare: React.FC = () => {
 
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER_SHARED, { variables: { bagId: id }});
   const { data: dataBag, loading: loadingBag, error: errorBag, refetch } = useQuery(GET_SHARED_BAG, { variables: { id } });
+  const { data: allBags, loading: loadingAllBags, error: errorAllBags } = useQuery(GET_ALL_USER_BAGS);
 
   const { data: dataTrip, loading: loadingTrip, error: errorTrip } = useQuery(GET_TRIP, {
     variables: { id: dataBag?.sharedBag?.tripId }, 
@@ -77,10 +78,10 @@ const MainShare: React.FC = () => {
 
   const bag = dataBag?.sharedBag;
   const trip = dataTrip?.trip;
-  const exploreBags = trip?.bags.filter((bag: Bag) => bag.id !== id);
+  const userBags = allBags?.allUserBags?.filter((bag: Bag) => bag.id !== id);
 
 
-  if (loadingBag || loadingUser || loadingTrip) {
+  if (loadingBag || loadingUser || loadingTrip || loadingAllBags) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Spinner w={10} h={10} />
@@ -88,7 +89,7 @@ const MainShare: React.FC = () => {
     );
   }
 
-  if (errorUser || errorBag || errorTrip) {
+  if (errorUser || errorBag || errorTrip || errorAllBags) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Message 
@@ -108,7 +109,7 @@ const MainShare: React.FC = () => {
   return (
     <div className="container mx-auto p-4 w-full sm:w-10/12">
       <div className="flex flex-row items-center justify-between space-y-2 w-full bg-white dark:bg-box p-5 rounded-lg">
-              <img src={'/images/logo-black.png'} width="90px" className="sm:p-0 p-2" alt="logo" onClick={() => navigate('/')} />
+              <img src={'/images/logo-black.png'} width={90} className="sm:p-0 p-2" alt="logo" onClick={() => navigate('/')} />
               <button 
                 onClick={handleLikeToggle} 
                 className={`flex items-center space-x-1 pt-1.5 pb-1.5 pl-2 pr-2 rounded-lg ${hasLiked ? 'bg-primary text-white' : 'bg-zinc-400 text-zinc-100'} dark:${hasLiked ? 'bg-primary text-white' : 'bg-zinc-600 text-gray-400'}`}
@@ -202,7 +203,7 @@ const MainShare: React.FC = () => {
 
 
 
-      {exploreBags.length > 0 && (
+      {userBags.length > 0 && (
       <div className="my-10">
         <h2 className="text-center text-xl font-normal text-black">
           Discover More Hiking Bags of  <span className="font-semibold text-primary">{userData?.userShared?.username}</span>
@@ -211,7 +212,7 @@ const MainShare: React.FC = () => {
     )}
 
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 my-5'>
-      {exploreBags.map((bag: Bag) => {
+      {userBags.map((bag: Bag) => {
   return (
     <div
       key={bag.id} className="bg-white dark:bg-box rounded-lg p-5 relative shadow-airbnb transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer group hover:opacity-80"

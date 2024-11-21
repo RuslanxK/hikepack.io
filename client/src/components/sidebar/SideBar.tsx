@@ -111,15 +111,14 @@ const SideBar: React.FC = () => {
       <div>
         <button
           className="sm:hidden p-2 absolute right-0 top-2 right-3 text-black dark:text-white"
-          onClick={() => setIsSidebarOpen(true)}
-        >
+          onClick={() => setIsSidebarOpen(true)}>
           <CgMenuLeftAlt className="text-xl" />
         </button>
 
         <img
-          src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
+          src={isDarkTheme ? '/images/logo-black.png' : '/images/logo-black.png'}
           width={90}
-          className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3 cursor-pointer'
+          className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3 cursor-pointer dark:invert'
           alt="logo"
           onClick={() => navigate('/')}
         />
@@ -132,9 +131,9 @@ const SideBar: React.FC = () => {
       >
         <div className="flex sm:flex-col justify-between items-center p-4">
           <img
-            src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
-             width="90px"
-            className="pb-2 pl-2 pr-2 sm:p-0 cursor-pointer"
+            src={isDarkTheme ? '/images/logo-black.png' : '/images/logo-black.png'}
+            width={90}
+            className="pb-2 pl-2 pr-2 sm:p-0 cursor-pointer dark:invert"
             alt="logo"
             onClick={() => navigate('/')}
           />
@@ -189,7 +188,7 @@ const SideBar: React.FC = () => {
                         }}
                       >
                         <GiSchoolBag className="mr-2 text-black dark:text-white group-hover:text-white" style={{ marginRight: "10px" }} />
-                        <span className='text-black group-hover:text-white dark:text-white'>{bag.name && bag.name.length > 18 ? `${bag.name.substring(0, 18)}...` : bag.name}</span>
+                        <span className='text-black group-hover:text-white dark:text-white'>{bag.name && bag.name.length > 15 ? `${bag.name.substring(0, 15)}...` : bag.name}</span>
                       </li>
                     ))}
                   </ul>

@@ -138,8 +138,8 @@ const MainShare: React.FC = () => {
               {trip.about}
             </p>
 
-            <div className="flex-row mt-5">
-            <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg mb-5">
+            <div className="flex flex-col sm:flex-row mt-5">
+            <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg sm:mb-0 mb-5 mr-0 sm:mr-3">
               <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
               Distance {trip.distance} {userData?.userShared?.distance}
             </p>

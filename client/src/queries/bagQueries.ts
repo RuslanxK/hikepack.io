@@ -117,6 +117,7 @@ export const GET_ALL_USER_BAGS = gql`
       id
       name
       description
+      exploreBags
     }
   }
 `;

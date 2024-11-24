@@ -78,7 +78,7 @@ const MainShare: React.FC = () => {
 
   const bag = dataBag?.sharedBag;
   const trip = dataTrip?.trip;
-  const userBags = allBags?.allUserBags?.filter((bag: Bag) => bag.id !== id);
+  const userBags = allBags?.allUserBags?.filter((bag: Bag) => bag.id !== id && bag.exploreBags === true);
 
 
   if (loadingBag || loadingUser || loadingTrip || loadingAllBags) {

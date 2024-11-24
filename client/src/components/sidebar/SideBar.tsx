@@ -96,20 +96,7 @@ const SideBar: React.FC = () => {
   }, [isDarkTheme]);
 
 
-  useEffect(() => {
-    // Disable body scroll when sidebar is open
-    if (isSidebarOpen) {
-      document.body.style.overflowY = 'hidden';
-    } else {
-      document.body.style.overflowY = 'auto';
-    }
-
-    // Cleanup to reset the overflow style when the component unmounts
-    return () => {
-      document.body.style.overflowY = 'auto';
-    };
-  }, [isSidebarOpen]);
-
+  
 
   const handleLogout = () => {
     if (userData?.user?.googleId) {

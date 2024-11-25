@@ -5,6 +5,10 @@ export const GET_TRIPS = gql`
     trips {
       id
       name
+      about
+      distance
+      startDate
+      endDate
       imageUrl
       
     }
@@ -25,6 +29,8 @@ export const GET_TRIP = gql`
       bags {
         id
         name
+        description
+        goal
       }
     }
   }

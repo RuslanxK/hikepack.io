@@ -168,7 +168,7 @@ const typeDefs = gql`
     updateCategoryOrder(id: ID!, order: Int!): Category
 
     updateItem(id: ID!, name: String, qty: Int, description: String, weight: Float, priority: String, link: String, worn: Boolean, imageUrl: String, weightOption: String, order: Int): Item
-    addItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String): Item
+    addItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String, link: String): Item
     deleteItem(id: ID!): Item
 
     createUser(email: String!, username: String, birthdate: String, password: String!, weightOption: String, verifiedCredentials: Boolean, distance: String, gender: String, activityLevel: String, country: String, isAdmin: Boolean, imageUrl: String): User

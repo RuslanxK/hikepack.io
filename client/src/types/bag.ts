@@ -46,9 +46,21 @@ export interface Bag {
     id: string;
   }
 
+  export interface DuplicateBagVars {
+    tripId: string;
+    name: string;
+    description: string;
+    goal: string;
+    exploreBags: boolean;
+  }
+
 
   export interface DeleteBagData {
     deleteBag: { id: string };
+  }
+
+  export interface DuplicateBagData {
+    duplicateBag: { id: string};
   }
 
 
@@ -82,6 +94,14 @@ export interface Bag {
   }
 
   export interface DeleteBagModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    bag: Bag
+   
+  
+  }
+
+  export interface DuplicateBagModalProps {
     isOpen: boolean;
     onClose: () => void;
     bag: Bag

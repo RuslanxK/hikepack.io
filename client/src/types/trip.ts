@@ -27,6 +27,16 @@ export interface AddTripVars {
   imageUrl: string
 }
 
+export interface DuplicateTripVars {
+  name: string;
+  about: string;
+  distance: string;
+  startDate: string;
+  endDate: string;
+  imageUrl: string
+
+}
+
 export interface UpdateTripData {
   updateTrip: Trip;
 }
@@ -61,6 +71,14 @@ export interface AddTripModalProps {
   isOpen: boolean;
   onClose: () => void;
   distanceUnit: string
+ 
+}
+
+
+export interface DuplicateTripModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  trip: Trip
  
 }
 

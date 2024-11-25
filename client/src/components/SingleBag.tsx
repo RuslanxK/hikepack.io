@@ -4,9 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { IoNavigate } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 import DeleteBagModal from './popups/DeleteBagModal';
+import DuplicateBag from './popups/DuplicateBag';
+import { HiDocumentDuplicate } from "react-icons/hi2";
+
 
 const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isModalDuplicateOpen, setIsModalDuplicateOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,9 +25,15 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
 }
 
 
+const handleDuplicateBag = () => {
+  setIsModalDuplicateOpen(true)
+}
+
+
   return (
     <div
       className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group`}>
+        <HiDocumentDuplicate className='absolute top-2 right-2 transform transition-transform duration-200 hover:scale-125 text-accent' onClick={handleDuplicateBag} />
       <div className="flex justify-center items-center h-40 bg-white dark:bg-box rounded-t-lg" onClick={handleViewDetails}>
         <img 
           src="/images/backpack.png" 
@@ -55,6 +65,7 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
       </div>
 
       <DeleteBagModal isOpen={isModalDeleteOpen} onClose={() => setIsModalDeleteOpen(false)} bag={bagData}  />
+      <DuplicateBag isOpen={isModalDuplicateOpen} onClose={() => setIsModalDuplicateOpen(false)} bag={bagData}  />
 
     </div>
   );

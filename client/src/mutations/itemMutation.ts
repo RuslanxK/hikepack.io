@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 
 
 export const ADD_ITEM = gql`
-  mutation AddItem($tripId: String!, $bagId: String!, $categoryId: String!, $name: String!, $qty: Int!, $description: String, $weight: Float!, $priority: String, $worn: Boolean, $order: Int, $weightOption: String) {
-    addItem(tripId: $tripId, bagId: $bagId, categoryId: $categoryId, name: $name, qty: $qty, description: $description, weight: $weight, priority: $priority, worn: $worn, order: $order, weightOption: $weightOption) {
+  mutation AddItem($tripId: String!, $bagId: String!, $categoryId: String!, $name: String!, $qty: Int!, $description: String, $weight: Float!, $priority: String, $worn: Boolean, $order: Int, $weightOption: String, $link: String) {
+    addItem(tripId: $tripId, bagId: $bagId, categoryId: $categoryId, name: $name, qty: $qty, description: $description, weight: $weight, priority: $priority, worn: $worn, order: $order, weightOption: $weightOption, link: $link) {
       tripId
     }
   }

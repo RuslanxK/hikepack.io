@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { IoNavigate } from "react-icons/io5";
 import DeleteTripModal from './popups/DeleteTripModel';
 import { MdDeleteForever } from "react-icons/md";
+import { HiDocumentDuplicate } from "react-icons/hi2";
+import DuplicateTrip from './popups/DuplicateTrip';
 
 const SingleTrip: React.FC<SingleTripProps> = ({ tripData }) => {
 
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isModalDuplicateOpen, setIsModalDuplicateOpen] = useState(false);
 
   const navigate = useNavigate()
   
@@ -19,11 +22,18 @@ const SingleTrip: React.FC<SingleTripProps> = ({ tripData }) => {
     setIsModalDeleteOpen(true)
 }
 
+const handleDuplicateTrip = () => {
+  setIsModalDuplicateOpen(true)
+}
+
   return (
     <li
       className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group cursor-pointer`}>
+      <button className='bg-white p-1 rounded-full absolute top-2 right-2 transform transition-transform duration-200 hover:scale-125'>
+      <HiDocumentDuplicate size={14} className='text-accent' onClick={handleDuplicateTrip} />
+      </button>
       <img 
-        src={tripData.imageUrl || "/images/placeholder.jpg"} 
+        src={tripData.imageUrl || "/images/placeholder.webp"} 
         alt={tripData.name} 
         onClick={handleViewDetails}
         className='w-full h-40 object-cover rounded-t-lg'
@@ -49,7 +59,7 @@ const SingleTrip: React.FC<SingleTripProps> = ({ tripData }) => {
       </div>
 
       <DeleteTripModal isOpen={isModalDeleteOpen} onClose={() => setIsModalDeleteOpen(false)} trip={tripData} />
-
+      <DuplicateTrip isOpen={isModalDuplicateOpen} onClose={() => setIsModalDuplicateOpen(false)} trip={tripData}/>
     </li>
   );
 };

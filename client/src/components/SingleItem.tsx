@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SingleItemProps } from '../types/item';
-import { FaImage, FaWalking, FaCopy, FaLink } from 'react-icons/fa';
+import { FaImage, FaWalking, FaLink } from 'react-icons/fa';
 import { GrDrag } from 'react-icons/gr';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -11,6 +11,8 @@ import AddLinkModal from './popups/AddLinkModal';
 import { GET_BAG } from '../queries/bagQueries';
 import Spinner from './loading/Spinner';
 import { useParams } from 'react-router-dom';
+import { HiDocumentDuplicate } from "react-icons/hi2";
+
 
 const inputClasses = "py-1 px-2 rounded border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-button-lightGreen dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
 const iconClasses = "transform transition-transform duration-200 hover:scale-125";
@@ -103,6 +105,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           weight: itemData.weight,
           priority: itemData.priority,
           worn: itemData.worn,
+          link: itemData.link
         },
         refetchQueries: [{ query: GET_BAG, variables: { id: id } },
          
@@ -218,7 +221,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
         /> 
-       { addingItem ? <Spinner w={3} h={3} /> : <FaCopy 
+       { addingItem ? <Spinner w={3} h={3} /> : <HiDocumentDuplicate 
           size={14} 
           className={`cursor-pointer text-accent dark:text-gray-400 ${iconClasses}`} 
           onClick={handleCopyItem} 

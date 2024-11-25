@@ -120,6 +120,7 @@ const Home: React.FC = () => {
       )}
 
       <AddTripModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} distanceUnit={userData?.user?.distance}/>
+  
 
     </div>
     </div>

@@ -11,8 +11,6 @@ router.post('/upload-image', upload.single('file'), (req, res) => {
   const { imageUrl } = req.body; 
 
 
-
-  
   const getCurrentTimestamp = () => {
     const now = new Date();
     return now.toISOString().replace(/[-:.]/g, '');

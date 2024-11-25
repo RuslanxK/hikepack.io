@@ -198,7 +198,7 @@ const BagDetails: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
             <div className='w-full p-5 bg-white dark:bg-box rounded-lg'>
               <div className='flex flex-row sm:flex-row items-start'>
-                <div className='w-full w-8/12'>
+                <div className='w-full sm:w-8/12'>
                   <div className="flex items-center w-full sm:w-11/12">
                     <button 
                       type="button" 
@@ -211,19 +211,24 @@ const BagDetails: React.FC = () => {
                     </h1>
                   </div>
                 </div>
-                <div className='w-fit sm:w-4/12 flex flex-row items-center justify-end'>
                 
-             { bag.categories.some((category: Category) => category.items.length > 0) ? <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:mr-5 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-40 w-full sm:w-48 sm:static bg-gray-100 sm:bg-transparent sm:dark:bg-transparent dark:bg-theme-dark">
+              <div className='w-fit sm:w-4/12 flex justify-end items-center'>
 
+             
+             { bag.categories.some((category: Category) => category.items.length > 0) ? <label className="inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-40 sm:static bg-gray-100 sm:bg-transparent sm:dark:bg-transparent dark:bg-theme-dark">
+              <label className="dark:text-white text-sm text-accent mr-3">Share with Community</label>
               <input
                 type="checkbox"
                 checked={bag?.exploreBags}
                 onChange={handleToggleShareToExplore}
-                className="sr-only peer"
-                  />
-                   <span className="dark:text-white text-sm text-accent mr-3">Share Community</span>
+                className="sr-only peer"/>
+
             <div className="relative w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-sky-300 dark:peer-focus:ring-cyan-300 rounded-full peer dark:bg-gray-400 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue"></div>
+              
+
             </label> : null }
+
+
                   <button type="button" className={buttonClass} onClick={() => window.open(`/share/${bag.id}`, '_blank')}>
                     <IoMdShare size={19} />
                   </button>

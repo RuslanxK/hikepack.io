@@ -33,15 +33,17 @@ const handleDuplicateBag = () => {
   return (
     <div
       className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group`}>
-        <HiDocumentDuplicate className='absolute top-2 right-2 transform transition-transform duration-200 hover:scale-125 text-accent' onClick={handleDuplicateBag} />
-      <div className="flex justify-center items-center h-40 bg-white dark:bg-box rounded-t-lg" onClick={handleViewDetails}>
+        <button className='bg-white p-1 rounded-full absolute top-2 right-2 transform transition-transform duration-200 hover:scale-125'>
+        <HiDocumentDuplicate size={14} className='text-accent cursor-pointer' onClick={handleDuplicateBag} />
+        </button>
+      <div className="flex justify-center items-center h-40 bg-white dark:bg-box rounded-t-lg cursor-pointer" onClick={handleViewDetails}>
         <img 
-          src="/images/backpack.png" 
+          src={bagData.imageUrl} 
           alt={bagData.name} 
-          className='w-16 h-16 object-contain cursor-pointer'
+          className='w-full h-40 object-cover rounded-t-lg'
         />
       </div>
-      <div className="p-3 flex flex-col space-y-4 bg-gray-100 dark:bg-black rounded-b-lg">
+      <div className="p-3 flex flex-col space-y-4 bg-white dark:bg-black rounded-b-lg">
         <div className='flex items-center justify-between'>
           <h3 className='text-sm text-black dark:text-white'>
           {bagData.name && bagData.name.length > 28 ? `${bagData.name.substring(0, 28)}...` : bagData.name}

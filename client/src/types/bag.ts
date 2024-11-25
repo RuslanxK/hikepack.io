@@ -6,6 +6,7 @@ export interface Bag {
     goal: string;
     passed: boolean;
     likes: number;
+    imageUrl: string;
     exploreBags: boolean;
     createdAt: string;
     updatedAt: string;
@@ -26,6 +27,7 @@ export interface Bag {
     name: string;
     description: string;
     goal: string;
+    imageUrl: string
     exploreBags: boolean
     
   }
@@ -51,6 +53,7 @@ export interface Bag {
     name: string;
     description: string;
     goal: string;
+    imageUrl: string
     exploreBags: boolean;
   }
 

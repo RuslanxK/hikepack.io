@@ -53,6 +53,7 @@ const typeDefs = gql`
     passed: Boolean
     likes: Int
     exploreBags: Boolean
+    imageUrl: String
     createdAt: String
     updatedAt: String
     totalCategories: Int
@@ -158,7 +159,7 @@ const typeDefs = gql`
     addTrip(name: String!, about: String!, distance: String!, startDate: String!, endDate: String!, imageUrl: String): Trip
     deleteTrip(id: ID!): Trip
     updateTrip(id: ID!, name: String, about: String, distance: String, startDate: String, endDate: String, imageUrl: String): Trip
-    addBag(tripId: String!, name: String!, description: String!, goal: String!, exploreBags: Boolean!): Bag
+    addBag(tripId: String!, name: String!, description: String!, goal: String!, exploreBags: Boolean!, imageUrl: String): Bag
     deleteBag(id: ID!): Bag
     updateBag(bagId: ID!, name: String, description: String, goal: String, exploreBags: Boolean): Bag
     updateLikesBag(bagId: ID!, increment: Int!): Bag

@@ -31,6 +31,7 @@ export const GET_TRIP = gql`
         name
         description
         goal
+        imageUrl
       }
     }
   }

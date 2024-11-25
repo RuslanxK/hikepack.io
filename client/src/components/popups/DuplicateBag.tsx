@@ -21,7 +21,7 @@ const DuplicateBag: React.FC<DuplicateBagModalProps> = ({ isOpen, onClose, bag }
 
     try {
       await addBag({
-        variables: { tripId, name: bag.name, description: bag.description, goal: bag.goal, exploreBags: false },
+        variables: { tripId, name: bag.name, description: bag.description, goal: bag.goal, imageUrl: bag.imageUrl, exploreBags: false },
         refetchQueries: [{ query: GET_TRIP, variables: { id: id } }],
       });
       onClose();

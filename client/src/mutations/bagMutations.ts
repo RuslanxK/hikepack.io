@@ -3,8 +3,8 @@ import { gql } from '@apollo/client';
 
 
 export const ADD_BAG = gql`
-  mutation AddBag($tripId: String!, $name: String!, $description: String!, $goal: String!, $exploreBags: Boolean!) {
-    addBag(tripId: $tripId, name: $name, description: $description, goal: $goal, exploreBags: $exploreBags) {
+  mutation AddBag($tripId: String!, $name: String!, $description: String!, $goal: String!, $exploreBags: Boolean!, $imageUrl: String) {
+    addBag(tripId: $tripId, name: $name, description: $description, goal: $goal, exploreBags: $exploreBags, imageUrl: $imageUrl) {
       tripId
     }
   }

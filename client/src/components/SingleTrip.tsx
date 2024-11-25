@@ -28,15 +28,15 @@ const handleDuplicateTrip = () => {
 
   return (
     <li
-      className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group cursor-pointer`}>
+      className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group`}>
       <button className='bg-white p-1 rounded-full absolute top-2 right-2 transform transition-transform duration-200 hover:scale-125'>
       <HiDocumentDuplicate size={14} className='text-accent' onClick={handleDuplicateTrip} />
       </button>
       <img 
-        src={tripData.imageUrl || "/images/placeholder.webp"} 
+        src={tripData.imageUrl || './images/placeholder.webp'} 
         alt={tripData.name} 
         onClick={handleViewDetails}
-        className='w-full h-40 object-cover rounded-t-lg'
+        className='w-full h-40 object-cover rounded-t-lg cursor-pointer'
       />
       <div className='p-3 flex flex-col space-y-4'>
         <div className='flex items-center justify-between'>

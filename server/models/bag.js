@@ -9,6 +9,7 @@ const bagSchema = new mongoose.Schema({
     passed: { type: Boolean, default: false },
     likes: { type: Number, default: 0 },
     exploreBags: {type: Boolean, default: false},
+    imageUrl: String,
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

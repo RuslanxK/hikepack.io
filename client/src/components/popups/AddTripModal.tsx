@@ -33,8 +33,27 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
 
     e.preventDefault();
     setLoading(true);
+    let imageUrl = null;
 
-      let imageUrl = '';
+    if (!file) {
+      try {
+        const getPicture = await fetch(
+          `https://api.unsplash.com/search/photos?query=${name}&${process.env.REACT_APP_UNSPLASH_CLIENT}`
+        );
+        const pictureData = await getPicture.json();
+  
+        if (pictureData.results && pictureData.results.length > 0) {
+          const randomIndex = Math.floor(Math.random() * pictureData.results.length);
+          imageUrl = pictureData.results[randomIndex].urls.regular;
+        }
+      } catch (error) {
+        console.error('Error fetching Unsplash image:', error);
+        setLoading(false);
+        setError('Unable to fetch hiking image. Please try again.');
+        return;
+      }
+    }
+    
       if (file) {
         try {
           const formData = new FormData();

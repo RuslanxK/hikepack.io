@@ -11,7 +11,9 @@ import Message from '../message/Message';
 import Cookies from 'js-cookie';
 import { GET_USER } from '../../queries/userQueries';
 import { googleLogout } from '@react-oauth/google';
-import { CgMenuLeftAlt, CgClose } from 'react-icons/cg';
+import { CgMenuLeftAlt } from 'react-icons/cg';
+import { MdCancel } from "react-icons/md";
+
 
 interface SideBarItemProps {
   to: string;
@@ -144,7 +146,7 @@ const SideBar: React.FC = () => {
             className="sm:hidden"
             onClick={() => setIsSidebarOpen(false)}
           >
-            <CgClose className="text-xl" />
+            <MdCancel size={20} className="text-black hover:text-accent" />
           </button>
         </div>
 

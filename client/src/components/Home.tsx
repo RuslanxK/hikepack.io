@@ -94,7 +94,7 @@ const Home: React.FC = () => {
               </p>
             </div>
 
-            {isFiltersOpen && data?.trips.length ? (
+            {isFiltersOpen && data?.trips.length === 0 ? (
              null
             ) : (
 

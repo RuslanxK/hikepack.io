@@ -122,7 +122,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
           </div>
           <div className="w-1/2">
             {renderInputField(
-              `Weight Goal (${weightUnit})`,
+              `Goal (${weightUnit})`,
               'number',
               setGoal,
               'e.g., 12.5',

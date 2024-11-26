@@ -108,7 +108,7 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
             {renderInputField('Name', 'text', setName, name, 'e.g., Hiking Bag')}
           </div>
           <div className="w-1/2">
-            {renderInputField(`Weight Goal (${weightUnit})`, 'number', setGoal, goal, 'e.g., 12.5', '0', '100')}
+            {renderInputField(`Goal (${weightUnit})`, 'number', setGoal, goal, 'e.g., 12.5', '0', '100')}
           </div>
         </div>
         <div className="w-full">

@@ -99,8 +99,8 @@ const Home: React.FC = () => {
             ) : (
 
               <button
-              className="fixed z-30 rounded bg-white p-2 cursor-pointer shadow-airbnb sm:shadow-none hover:text-primary 
-                         bottom-7 sm:bottom-auto sm:top-7 sm:right-7 right-7"
+              className="fixed z-30 rounded bg-white dark:bg-box dark:text-white p-2 cursor-pointer shadow-airbnb sm:shadow-none hover:text-primary 
+                         bottom-4 sm:bottom-auto sm:top-7 sm:right-7 right-4"
               onClick={toggleFilters}
             >
               <TbAdjustmentsSearch size={20} />

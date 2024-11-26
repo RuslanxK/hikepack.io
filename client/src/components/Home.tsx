@@ -21,10 +21,12 @@ const Home: React.FC = () => {
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const today = new Date().toISOString().split('T')[0];
 
   const [searchName, setSearchName] = useState('');
   const [searchDistance, setSearchDistance] = useState('');
-  const [searchDate, setSearchDate] = useState('');
+  const [searchDate, setSearchDate] = useState(today);
+
 
   const handleAddTrip = () => {
     setIsModalOpen(true);
@@ -110,7 +112,7 @@ const Home: React.FC = () => {
 {isFiltersOpen && (
   <div
     className="fixed bottom-0 left-0 w-full flex flex-col sm:top-5 sm:right-5 sm:bottom-auto sm:left-auto sm:w-auto sm:flex-col
-               bg-white rounded-t-lg sm:rounded-lg p-7 dark:bg-box shadow-lg z-50"
+               bg-white rounded-t-lg sm:rounded-lg p-7 dark:bg-box shadow-lg z-30"
   >
     <MdCancel
       className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 dark:text-white"
@@ -164,15 +166,12 @@ const Home: React.FC = () => {
         Search by Date
       </label>
       <input
-  id="search-date"
-  type="text"
-  value={searchDate}
-  onChange={(e) => setSearchDate(e.target.value)}
-  placeholder="Select a date"
-  onFocus={(e) => (e.target.type = 'date')} // Change type to date on focus
-  onBlur={(e) => (e.target.type = 'text')} // Revert to text on blur
-  className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent dark:text-white"
-/>
+        id="search-date"
+        type="date"
+        value={searchDate}
+        onChange={(e) => setSearchDate(e.target.value)}
+        className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent dark:text-white"
+      />
     </div>
 
     <div>

@@ -164,12 +164,15 @@ const Home: React.FC = () => {
         Search by Date
       </label>
       <input
-        id="search-date"
-        type="date"
-        value={searchDate}
-        onChange={(e) => setSearchDate(e.target.value)}
-        className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent dark:text-white"
-      />
+  id="search-date"
+  type="text"
+  value={searchDate}
+  onChange={(e) => setSearchDate(e.target.value)}
+  placeholder="Select a date"
+  onFocus={(e) => (e.target.type = 'date')} // Change type to date on focus
+  onBlur={(e) => (e.target.type = 'text')} // Revert to text on blur
+  className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent dark:text-white"
+/>
     </div>
 
     <div>

@@ -107,7 +107,7 @@ const ExploreBags: React.FC = () => {
     setCurrentPage(page);
   };
 
-  const baseInputClass = "py-2 px-3 block w-full shadow-sm rounded-lg text-sm focus:z-10 focus:outline-none";
+  const baseInputClass = "py-2 px-3 block w-full bg-white rounded-lg text-sm focus:z-10 focus:outline-none";
   const baseDarkInputClass = "dark:bg-neutral-800 dark:placeholder-neutral-400 dark:text-gray-200 bg-gray-50 border dark:border-zinc-700";
   const baseButtonClass = "p-2 min-w-[32px] inline-flex justify-center items-center gap-x-2 text-xs rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700";
 

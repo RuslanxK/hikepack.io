@@ -113,7 +113,7 @@ const SideBar: React.FC = () => {
     <>
       <div>
         <button
-          className="sm:hidden p-2 absolute right-0 top-2 right-3 text-black dark:text-white bg-white rounded"
+          className="sm:hidden p-1.5 absolute right-0 top-4 right-4 text-black dark:text-white bg-white rounded"
           onClick={() => setIsSidebarOpen(true)}>
           <CgMenuLeftAlt className="text-xl" />
         </button>

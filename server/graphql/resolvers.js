@@ -17,6 +17,7 @@ const ensureOwner = (user, query = {}) => {
   return { ...query, owner: user.userId };
 };
 
+
 const weightConversionRates = {
   lb: { lb: 1, kg: 0.453592, g: 453.592, oz: 16 },
   kg: { lb: 2.20462, kg: 1, g: 1000, oz: 35.274 },
@@ -581,26 +582,32 @@ const resolvers = {
 
     deleteTrip: async (_, { id }, { user }) => {
       try {
-
         const trip = await Trip.findById(id);
         if (!trip) {
           throw new Error('Trip not found');
         }
-        const items = await Item.find({ tripId: id, owner: user.userId });
 
+        const items = await Item.find({ tripId: id, owner: user.userId });
         for (const item of items) {
           if (item.imageUrl) {
             await deleteFile(item.imageUrl); 
           }
         }
 
-        if (trip.imageUrl) {
+        const bags = await Bag.find({ tripId: id, owner: user.userId });
+        for (const bag of bags) {
+        if (bag.imageUrl.includes('amazon')) {
+        await deleteFile(bag.imageUrl);
+      }
+    }
+        if (trip.imageUrl.includes('amazon')) {
           await deleteFile(trip.imageUrl); 
         }
-
+    
         await Item.deleteMany({ tripId: id, owner: user.userId });
         await Category.deleteMany({ tripId: id, owner: user.userId });
         await Bag.deleteMany({ tripId: id, owner: user.userId });
+    
         return await Trip.findByIdAndDelete(ensureOwner(user, { _id: id }));
       } catch (error) {
         console.error('Error deleting trip:', error);
@@ -624,19 +631,27 @@ const resolvers = {
 
     deleteBag: async (_, { id }, { user }) => {
       try {
-
+        const bag = await Bag.findOne({ _id: id, owner: user.userId });
+        if (!bag) {
+          throw new Error('Bag not found');
+        }
+    
         const items = await Item.find({ bagId: id, owner: user.userId });
         for (const item of items) {
           if (item.imageUrl) {
             await deleteFile(item.imageUrl);
           }
         }
-
+    
+        if (bag.imageUrl.includes('amazon')) {
+          await deleteFile(bag.imageUrl);
+        }
+    
         await Item.deleteMany({ bagId: id, owner: user.userId });
         await Category.deleteMany({ bagId: id, owner: user.userId });
+    
         return await Bag.findByIdAndDelete(ensureOwner(user, { _id: id }));
       } catch (error) {
-        console.error(`Error deleting bag with id ${id}:`, error);
         throw new Error('Failed to delete bag');
       }
     },

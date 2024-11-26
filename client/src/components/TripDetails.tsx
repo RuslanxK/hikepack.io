@@ -91,8 +91,8 @@ const TripDetails: React.FC = () => {
     <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
       <div className='p-4 sm:p-10 space-y-6'>
         <div className='flex flex-col lg:flex-row'>
-          <div className="w-full flex flex-col space-y-8 ">
-            <div className='flex flex-row justify-between items-center bg-white dark:bg-box rounded-lg p-5'>
+          <div className="w-full flex flex-col">
+            <div className='flex flex-row justify-between items-center bg-white dark:bg-box rounded-lg p-5 mb-8'>
               <div className="flex items-center">
                 <button 
                   type="button" 
@@ -124,7 +124,7 @@ const TripDetails: React.FC = () => {
                 <div className="flex flex-row sm:p-0">
                   <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg mr-2.5">
                     <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
-                    <b className='ml-1.5'>{trip.distance} {userData?.user?.distance}</b>
+                    <b>{trip.distance} {userData?.user?.distance}</b>
                   </p>
                   <p className={`text-sm flex items-center rounded-lg border border-2 dark:border-accent p-3 ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
                     <FaClock className="mr-1 text-accent dark:text-white" />
@@ -135,47 +135,70 @@ const TripDetails: React.FC = () => {
 
               <hr className="border-t-1 border dark:border-zinc-600 my-4" />
 
-              <p className="text-accent dark:text-white text-center sm:text-left">
+              <div className='flex sm:flex-row flex-col justify-between items-start'>
+
+              <p className="text-accent dark:text-white text-center sm:text-left w-full">
                 {trip.about}
               </p>
-            </div>
+              
 
-   <div className="bg-white dark:bg-box dark:bg-box p-4 rounded-lg z-30 flex items-center justify-center">
-   <div className="flex flex-col mb-4 w-1/3">
-    <label htmlFor="search-name" className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-      Search by Name
-    </label>
-    <input
-      id="search-name"
-      type="text"
-      placeholder="Enter bag name"
-      value={searchName}
-      onChange={(e) => setSearchName(e.target.value)}
-      className="p-2 border rounded-lg focus:outline-none text-sm w-full"
-    />
   </div>
 
-  <div className="flex flex-col w-1/3">
-    <label htmlFor="search-goal" className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-      Search by Goal
-    </label>
-    <input
-      id="search-goal"
-      type="range"
-      min="0"
-      max="100"
-      step="1"
-      value={searchGoal}
-      onChange={(e) => setSearchGoal(e.target.value)}
-      className="w-full"
-    />
-    <span className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-      Goal: {searchGoal}
-    </span>
-  </div>
+  <hr className="border-t-1 border dark:border-zinc-600 my-4" />
+
+
+  {trip.bags.length > 0 ? <div className='sm:w-full flex sm:flex-row flex-col items-start bg-white dark:bg-box dark:box rounded-b-lg'>
+
+<div className="flex flex-col mb-4 sm:w-64 w-full sm:mr-5 mr-0">
+<label htmlFor="search-name" className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 w-full">
+  Search by Name
+</label>
+<input
+  id="search-name"
+  type="text"
+  placeholder="Enter bag name"
+  value={searchName}
+  onChange={(e) => setSearchName(e.target.value)}
+  className="p-2 border rounded-lg focus:outline-none text-sm w-full"
+/>
 </div>
 
-            <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 '>
+<div className="flex flex-col sm:w-64 w-full sm:mr-5 mr-0">
+<label htmlFor="search-goal" className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+  Search by Goal
+</label>
+<input
+  id="search-goal"
+  type="range"
+  min="0"
+  max="100"
+  step="1"
+  value={searchGoal}
+  onChange={(e) => setSearchGoal(e.target.value)}
+  className="w-full"
+/>
+<span className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+  Goal: {searchGoal}
+</span>
+</div>
+
+<button
+onClick={() => {
+  setSearchName('');
+  setSearchGoal('');
+}}
+className="py-2 px-4 bg-accent hover:bg-gray-500 text-white rounded-lg text-sm focus:outline-none mt-2"
+>
+Clear Filters
+</button>
+
+</div> : null }
+
+</div>
+
+
+
+            <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 mt-8 '>
               <li 
                 className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-accent text-accent rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white' 
                 style={{ minHeight: "205px", height: 'calc(100% - 1rem)' }} 

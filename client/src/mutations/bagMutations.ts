@@ -12,8 +12,8 @@ export const ADD_BAG = gql`
 
 
 export const UPDATE_BAG = gql`
-  mutation UpdateBag($bagId: ID!, $name: String, $description: String, $goal: String, $exploreBags: Boolean) {
-    updateBag(bagId: $bagId, name: $name, description: $description, goal: $goal, exploreBags: $exploreBags) {
+  mutation UpdateBag($bagId: ID!, $name: String, $description: String, $goal: String, $exploreBags: Boolean, $imageUrl: String) {
+    updateBag(bagId: $bagId, name: $name, description: $description, goal: $goal, exploreBags: $exploreBags, imageUrl: $imageUrl) {
       id
     }
   }

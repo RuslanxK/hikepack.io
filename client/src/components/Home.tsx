@@ -12,24 +12,33 @@ import { Link } from 'react-router-dom';
 import Message from './message/Message';
 import { GET_USER } from '../queries/userQueries';
 import Spinner from './loading/Spinner';
+import { TbAdjustmentsSearch } from "react-icons/tb";
+import { MdCancel } from "react-icons/md";
 
 const Home: React.FC = () => {
   const { loading, error, data } = useQuery<GetTripData>(GET_TRIPS);
   const { loading: latestBagLoading, error: latestBagError, data: latestBagData, refetch: refetchLatestBag } = useQuery<GetLatestBagWithDetailsData>(GET_LATEST_BAG_WITH_DETAILS);
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  const [searchName, setSearchName] = useState('');
+  const [searchDistance, setSearchDistance] = useState('');
+  const [searchDate, setSearchDate] = useState('');
 
   const handleAddTrip = () => {
     setIsModalOpen(true);
+  };
+
+  const toggleFilters = () => {
+    setIsFiltersOpen(!isFiltersOpen);
   };
 
   useEffect(() => {
     refetchLatestBag();
   }, [refetchLatestBag]);
 
-
-
-  if (loading  || latestBagLoading || loadingUser) {
+  if (loading || latestBagLoading || loadingUser) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center">
         <Spinner w={10} h={10} />
@@ -52,77 +61,186 @@ const Home: React.FC = () => {
     );
   }
 
+  const filteredTrips = data?.trips.filter((trip) => {
+    const matchesName = trip.name.toLowerCase().includes(searchName.toLowerCase());
+    const matchesDistance = searchDistance
+      ? parseFloat(trip.distance || "0") <= parseFloat(searchDistance || "0")
+      : true;
+    const matchesDate = searchDate ? trip.startDate.startsWith(searchDate) : true;
+    return matchesName && matchesDistance && matchesDate;
+  });
+
+
+
   return (
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
+      <div className="p-4 sm:p-10 flex flex-col items-between justify-start space-y-2">
+        <div className="mb-5">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <div>
+              <div className="flex flex-row items-center">
+                <h1 className="text-xl font-semibold text-black dark:text-white">Welcome,</h1>
+                <span className="text-lg text-black font-semibold ml-1.5 dark:text-white">{userData?.user?.username}</span>
+              </div>
+              <p className="text-base text-black dark:text-gray-300 mt-1">
+                The journey of a thousand miles begins with a single step.
+              </p>
 
-    <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
-    <div className='p-4 sm:p-10 flex flex-col items-start justify-start space-y-2'>
-      <div className='mb-5'>
-        <div className='flex flex-row items-center'>
-        <h1 className='text-xl font-semibold text-black dark:text-white'>
-          Welcome, 
-        </h1>
-        <span className='text-lg text-black font-semibold ml-1.5 dark:text-white'>{userData?.user?.username}</span>
-        </div>
-        <p className='text-base text-black dark:text-gray-300 mt-1'>
-          The journey of a thousand miles begins with a single step.
-        </p>
+              <h2 className="text-xl font-semibold text-black dark:text-white mt-4">
+                My last planned trips
+              </h2>
+              <p className="text-base text-black dark:text-gray-300 mt-1">
+                Seamless Trip Planning and Bag Organization Made Simple.
+              </p>
+            </div>
 
-        <h2 className='text-xl font-semibold text-black dark:text-white mt-4'>
-          My last planned trips
-        </h2>
-        <p className='text-base text-black dark:text-gray-300 mt-1'>
-          Seamless Trip Planning and Bag Organization Made Simple.
-        </p>
-      </div>
+            {isFiltersOpen ? (
+              <MdCancel 
+                className="fixed cursor-pointer right-7 top-7 z-50 transform transition-transform duration-200 hover:scale-125" 
+                size={20} 
+                onClick={toggleFilters} 
+              />
+            ) : (
 
+              <button className='rounded bg-white p-2 rounded fixed cursor-pointer hover:text-primary right-7 top-7 z-50' onClick={toggleFilters} >
+              <TbAdjustmentsSearch 
+                size={20} 
+                
+              />
+              </button>
+            )}
 
-      <div className='w-full flex-grow'>
-        <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5'>
-          <li
-            className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-gray-500 text-gray-500 rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white'
-            style={{ minHeight: '205px', height: 'calc(100% - 1rem)' }}
-            onClick={handleAddTrip}
-          >
-            <FaPlus className='text-xl text-accent dark:text-white' />
-          </li>
-
-          {data?.trips.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="sm:w-80" titleMarginBottom="mb-2" message="click on the plus icon to add a trip." type="info" /> : null }
-
-          {data?.trips.map((trip: any) => (
-            <SingleTrip key={trip.id} tripData={trip} />
-          ))}
-        </ul>
-        
-      </div>
-
-      {latestBagData?.latestBagWithDetails && (
-        <div className='text-center justify-center w-full pt-10 pb-5'>
-          <h1 className='text-xl font-semibold text-gray-900 dark:text-white'>
-            My last bag status{' '}
-            <Link className="text-button dark:text-button-lightGreen hover:text-button-hover hover:underline" to={`bag/${latestBagData.latestBagWithDetails.id}`}>
-              {latestBagData.latestBagWithDetails.name.length > 10
-                ? `${latestBagData.latestBagWithDetails.name.substring(0, 10)}...` 
-                : latestBagData.latestBagWithDetails.name}
-            </Link>
-          </h1>
-          <p className='text-base text-gray-600 dark:text-gray-400 mt-1'>
-            Streamline Your Gear, Simplify Your Adventure.
-          </p>
-    
-          <div className='flex justify-center mt-5'>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-auto'>
-        <GridBox title="Total Weight" goal={' / ' + latestBagData.latestBagWithDetails.goal.toString() + ' ' + userData?.user?.weightOption } details={latestBagData.latestBagWithDetails.totalWeight.toFixed(2).toString()} icon={FaWeight} />
-        <GridBox title="Total Categories" goal={""} details={latestBagData.latestBagWithDetails.totalCategories.toString()} icon={FaListAlt} />
-        <GridBox title="Total Items" goal={""} details={latestBagData.latestBagWithDetails.totalItems.toString()} icon={FaBox} />
-  </div>
-</div>
-        </div>
-      )}
-
-      <AddTripModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} distanceUnit={userData?.user?.distance}/>
-  
-
+{isFiltersOpen && (
+  <div className="flex flex-col justify-center mt-4 sm:mt-0 bg-white rounded-lg p-5 dark:bg-box fixed right-0 top-5 right-5">
+    <div className="flex flex-col space-y-2">
+      <label htmlFor="search-name" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Search by Name
+      </label>
+      <input
+        id="search-name"
+        type="text"
+        value={searchName}
+        onChange={(e) => setSearchName(e.target.value)}
+        placeholder="Enter trip name"
+        className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+      />
     </div>
+
+    <div className="flex flex-col space-y-2 mt-3">
+      <label htmlFor="search-distance" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Search by Distance (0 - 100,000)
+      </label>
+      <input
+        id="search-distance"
+        type="range"
+        min="0"
+        max="100000"
+        value={searchDistance}
+        onChange={(e) => setSearchDistance(e.target.value)}
+        className="w-full"
+      />
+      <span className="text-xs text-gray-500 dark:text-gray-400">{searchDistance} {userData?.user?.distance}</span>
+    </div>
+
+    <div className="flex flex-col space-y-2 mt-3">
+      <label htmlFor="search-date" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Search by Date
+      </label>
+      <input
+        id="search-date"
+        type="date"
+        value={searchDate}
+        onChange={(e) => setSearchDate(e.target.value)}
+        className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+      />
+    </div>
+
+    <button
+      onClick={() => {
+        setSearchName('');
+        setSearchDistance('');
+        setSearchDate('');
+      }}
+      className="mt-4 py-2 px-4 bg-primary text-white rounded-lg text-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+    >
+      Clear Filters
+    </button>
+  </div>
+)}
+          </div>
+        </div>
+
+        <div className="w-full flex-grow">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5">
+            <li
+              className="bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-gray-500 text-gray-500 rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white"
+              style={{ minHeight: "205px", height: "calc(100% - 1rem)" }}
+              onClick={handleAddTrip}
+            >
+              <FaPlus className="text-xl text-accent dark:text-white" />
+            </li>
+
+            {filteredTrips?.length === 0 ? (
+              <Message
+                title="Attention Needed"
+                padding="sm:p-5 p-3"
+                width="sm:w-80"
+                titleMarginBottom="mb-2"
+                message="No trips match your search criteria."
+                type="info"
+              />
+            ) : (
+              filteredTrips?.map((trip: any) => (
+                <SingleTrip key={trip.id} tripData={trip} />
+              ))
+            )}
+          </ul>
+        </div>
+
+        {latestBagData?.latestBagWithDetails && (
+          <div className="text-center justify-center w-full pt-10 pb-5">
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              My last bag status{" "}
+              <Link
+                className="text-button dark:text-button-lightGreen hover:text-button-hover hover:underline"
+                to={`bag/${latestBagData.latestBagWithDetails.id}`}
+              >
+                {latestBagData.latestBagWithDetails.name.length > 10
+                  ? `${latestBagData.latestBagWithDetails.name.substring(0, 10)}...`
+                  : latestBagData.latestBagWithDetails.name}
+              </Link>
+            </h1>
+            <p className="text-base text-gray-600 dark:text-gray-400 mt-1">
+              Streamline Your Gear, Simplify Your Adventure.
+            </p>
+
+            <div className="flex justify-center mt-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-auto">
+                <GridBox
+                  title="Total Weight"
+                  goal={` / ${latestBagData.latestBagWithDetails.goal} ${userData?.user?.weightOption}`}
+                  details={latestBagData.latestBagWithDetails.totalWeight.toFixed(2)}
+                  icon={FaWeight}
+                />
+                <GridBox
+                  title="Total Categories"
+                  goal=""
+                  details={latestBagData.latestBagWithDetails.totalCategories.toString()}
+                  icon={FaListAlt}
+                />
+                <GridBox
+                  title="Total Items"
+                  goal=""
+                  details={latestBagData.latestBagWithDetails.totalItems.toString()}
+                  icon={FaBox}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <AddTripModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} distanceUnit={userData?.user?.distance} />
+      </div>
     </div>
   );
 };

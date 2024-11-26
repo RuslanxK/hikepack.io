@@ -161,7 +161,7 @@ const typeDefs = gql`
     updateTrip(id: ID!, name: String, about: String, distance: String, startDate: String, endDate: String, imageUrl: String): Trip
     addBag(tripId: String!, name: String!, description: String!, goal: String!, exploreBags: Boolean!, imageUrl: String): Bag
     deleteBag(id: ID!): Bag
-    updateBag(bagId: ID!, name: String, description: String, goal: String, exploreBags: Boolean): Bag
+    updateBag(bagId: ID!, name: String, description: String, goal: String, exploreBags: Boolean, imageUrl: String): Bag
     updateLikesBag(bagId: ID!, increment: Int!): Bag
     addCategory(tripId: String!, bagId: String!, name: String!, order: Int, color: String): Category
     deleteCategory(id: ID!): Category

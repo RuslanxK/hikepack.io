@@ -10,6 +10,7 @@ export const GET_BAG = gql`
       description
       goal
       likes
+      imageUrl
       exploreBags
       
       categories {

@@ -40,6 +40,7 @@ export interface Bag {
     bagId: string;
     name?: string;
     description?: string;
+    imageUrl: string
     goal?: string;
   }
   

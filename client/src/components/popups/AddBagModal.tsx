@@ -141,12 +141,12 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
         </div>
 
         <div className="my-4">
-          <p className="text-center text-sm font-medium mb-2 text-black dark:text-gray-300">Select an Image</p>
+          <p className="text-center text-sm font-medium mb-2 text-accent dark:text-gray-300">Select an Image</p>
           <div className="relative flex items-center">
             <button
               type="button"
               onClick={handlePrevImage}
-              className="absolute left-0 z-10 bg-gray-200 p-2 rounded-full hover:bg-gray-300 dark:bg-white dark:hover:bg-gray-600"
+              className="absolute left-0 z-10 bg-gray-200 p-2 rounded hover:bg-gray-300 dark:bg-white dark:hover:bg-gray-600"
             >
               <FaArrowLeft size={14} />
             </button>
@@ -173,7 +173,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
             <button
               type="button"
               onClick={handleNextImage}
-              className="absolute right-0 z-10 bg-gray-200 p-2 rounded-full hover:bg-gray-300 dark:bg-white dark:hover:bg-gray-600"
+              className="absolute right-0 z-10 bg-gray-200 p-2 rounded hover:bg-gray-300 dark:bg-white dark:hover:bg-gray-600"
             >
               <FaArrowRight size={14} />
             </button>

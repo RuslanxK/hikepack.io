@@ -121,11 +121,11 @@ const TripDetails: React.FC = () => {
           <div className="flex col p-3 sm:p-0">
             <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg mr-2.5">
               <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
-              {trip.distance} {userData?.user?.distance}
+              Distance: <b className='ml-1.5'>{trip.distance} {userData?.user?.distance}</b>
             </p>
             <p className={` text-sm flex items-center rounded-lg border border-2 dark:border-accent p-3 ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
               <FaClock className="mr-1 text-accent dark:text-white" />
-              {daysLeft === 'Traveled' ? 'Traveled' : daysLeft}
+              <b>{daysLeft === 'Traveled' ? 'Traveled' : daysLeft}</b>
             </p>
             </div>
 

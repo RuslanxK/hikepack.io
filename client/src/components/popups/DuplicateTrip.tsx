@@ -30,7 +30,7 @@ const DuplicateTrip: React.FC<DuplicateTripModalProps> = ({ isOpen, onClose, tri
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Duplicate Bag">
+    <Modal isOpen={isOpen} onClose={onClose} title="Duplicate Trip">
       <div className="">
         <p className="mb-5 text-base text-accent dark:text-gray-300">
           Are you sure that you want to duplicate <strong>{trip.name}</strong> ? 

@@ -21,11 +21,10 @@ const Home: React.FC = () => {
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const today = new Date().toISOString().split('T')[0];
 
   const [searchName, setSearchName] = useState('');
   const [searchDistance, setSearchDistance] = useState('');
-  const [searchDate, setSearchDate] = useState(today);
+  const [searchDate, setSearchDate] = useState('');
 
 
   const handleAddTrip = () => {

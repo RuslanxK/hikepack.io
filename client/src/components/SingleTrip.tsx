@@ -33,7 +33,7 @@ const handleDuplicateTrip = () => {
       <HiDocumentDuplicate size={14} className='text-accent' onClick={handleDuplicateTrip} />
       </button>
       <img 
-        src={tripData.imageUrl || './images/placeholder.webp'} 
+        src={tripData.imageUrl} 
         alt={tripData.name} 
         onClick={handleViewDetails}
         className='w-full h-40 object-cover rounded-t-lg cursor-pointer'

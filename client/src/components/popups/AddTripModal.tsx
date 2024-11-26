@@ -38,13 +38,15 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
     if (!file) {
       try {
         const getPicture = await fetch(
-          `https://api.unsplash.com/search/photos?query=${name}&${process.env.REACT_APP_UNSPLASH_CLIENT}`
+          `https://api.unsplash.com/search/photos?query=hiking&per_page=20&${process.env.REACT_APP_UNSPLASH_CLIENT}`
         );
         const pictureData = await getPicture.json();
   
         if (pictureData.results && pictureData.results.length > 0) {
           const randomIndex = Math.floor(Math.random() * pictureData.results.length);
           imageUrl = pictureData.results[randomIndex].urls.regular;
+        } else {
+          throw new Error("No images found in the Unsplash response.");
         }
       } catch (error) {
         console.error('Error fetching Unsplash image:', error);

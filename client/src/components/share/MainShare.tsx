@@ -135,7 +135,7 @@ const MainShare: React.FC = () => {
             </div>
             <div className='flex items-start my-4'>
             <span className='text-sm text-accent mr-2 font-semibold'>Description:</span>
-            <p className="text-base text-accent dark:text-gray-200">
+            <p className="text-sm text-accent dark:text-gray-200">
               {trip.about}
             </p>
             </div>
@@ -163,7 +163,7 @@ const MainShare: React.FC = () => {
             </div>
             <div className='flex items-start'>
             <span className='text-sm text-accent mr-2 font-semibold'>Description:</span>
-            <p className="text-base text-accent dark:text-gray-200">
+            <p className="text-sm text-accent dark:text-gray-200">
               {bag.description}
             </p>
             </div>

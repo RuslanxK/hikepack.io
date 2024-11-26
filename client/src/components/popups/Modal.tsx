@@ -2,6 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { FaTimes } from 'react-icons/fa';
 import { ModalProps } from '../../types/modal';
+import { MdCancel } from "react-icons/md";
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
@@ -16,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
               className="text-black dark:text-white hover:text-accent dark:hover:text-accent"
               onClick={onClose}
             >
-               <FaTimes size={20} className='mb-5'/>
+               <MdCancel size={20} className='mb-5'/>
             </button>
            
           </div>

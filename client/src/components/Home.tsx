@@ -99,7 +99,7 @@ const Home: React.FC = () => {
             ) : (
 
               <button
-              className="fixed z-50 rounded bg-white p-2 cursor-pointer shadow-airbnb sm:shadow-none hover:text-primary 
+              className="fixed z-30 rounded bg-white p-2 cursor-pointer shadow-airbnb sm:shadow-none hover:text-primary 
                          bottom-7 sm:bottom-auto sm:top-7 sm:right-7 right-7"
               onClick={toggleFilters}
             >
@@ -140,13 +140,13 @@ const Home: React.FC = () => {
         htmlFor="search-distance"
         className="text-sm font-medium text-gray-700 dark:text-gray-300"
       >
-        Search by Distance (0 - 100,000)
+        Search by Distance (0 - 10,000)
       </label>
       <input
         id="search-distance"
         type="range"
         min="0"
-        max="100000"
+        max="10000"
         value={searchDistance}
         onChange={(e) => setSearchDistance(e.target.value)}
         className="w-full"
@@ -172,16 +172,25 @@ const Home: React.FC = () => {
       />
     </div>
 
+    <div>
     <button
       onClick={() => {
         setSearchName('');
         setSearchDistance('');
         setSearchDate('');
       }}
-      className="mt-4 py-2 px-4 bg-primary text-white rounded-lg text-sm hover:bg-button-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      className="mt-4 py-2 px-4 bg-accent text-white rounded-lg text-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
     >
       Clear Filters
     </button>
+
+    <button
+      onClick={toggleFilters}
+      className="mt-4 py-2 px-4 bg-primary text-white rounded-lg text-sm hover:bg-button-hover focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:hidden ml-2"
+    >
+      Search
+    </button>
+    </div>
   </div>
 )}
           </div>

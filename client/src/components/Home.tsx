@@ -112,14 +112,12 @@ const Home: React.FC = () => {
     className="fixed bottom-0 left-0 w-full flex flex-col sm:top-5 sm:right-5 sm:bottom-auto sm:left-auto sm:w-auto sm:flex-col
                bg-white rounded-t-lg sm:rounded-lg p-7 dark:bg-box shadow-lg z-50"
   >
-    {/* Close Button */}
     <MdCancel
       className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-white"
       size={20}
       onClick={toggleFilters}
     />
 
-    {/* Search by Name */}
     <div className="flex flex-col space-y-2 w-full sm:w-auto">
       <label
         htmlFor="search-name"
@@ -137,7 +135,6 @@ const Home: React.FC = () => {
       />
     </div>
 
-    {/* Search by Distance */}
     <div className="flex flex-col space-y-2 mt-3 w-full sm:w-auto">
       <label
         htmlFor="search-distance"
@@ -159,7 +156,6 @@ const Home: React.FC = () => {
       </span>
     </div>
 
-    {/* Search by Date */}
     <div className="flex flex-col space-y-2 mt-3 w-full sm:w-auto">
       <label
         htmlFor="search-date"
@@ -176,14 +172,13 @@ const Home: React.FC = () => {
       />
     </div>
 
-    {/* Clear Filters Button */}
     <button
       onClick={() => {
         setSearchName('');
         setSearchDistance('');
         setSearchDate('');
       }}
-      className="mt-4 py-2 px-4 bg-primary text-white rounded-lg text-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      className="mt-4 py-2 px-4 bg-primary text-white rounded-lg text-sm hover:bg-button-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
     >
       Clear Filters
     </button>

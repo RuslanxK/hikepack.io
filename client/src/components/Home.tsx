@@ -95,25 +95,36 @@ const Home: React.FC = () => {
             </div>
 
             {isFiltersOpen ? (
-              <MdCancel 
-                className="fixed cursor-pointer right-7 top-7 z-50 transform transition-transform duration-200 hover:scale-125" 
-                size={20} 
-                onClick={toggleFilters} 
-              />
+             null
             ) : (
 
-              <button className='rounded bg-white p-2 rounded fixed cursor-pointer hover:text-primary right-7 top-7 z-50' onClick={toggleFilters} >
-              <TbAdjustmentsSearch 
-                size={20} 
-                
-              />
-              </button>
+              <button
+              className="fixed z-50 rounded bg-white p-2 cursor-pointer shadow-airbnb sm:shadow-none hover:text-primary 
+                         bottom-7 sm:bottom-auto sm:top-7 sm:right-7 right-7"
+              onClick={toggleFilters}
+            >
+              <TbAdjustmentsSearch size={20} />
+            </button>
             )}
 
 {isFiltersOpen && (
-  <div className="flex flex-col justify-center mt-4 sm:mt-0 bg-white rounded-lg p-5 dark:bg-box fixed right-0 top-5 right-5">
-    <div className="flex flex-col space-y-2">
-      <label htmlFor="search-name" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+  <div
+    className="fixed bottom-0 left-0 w-full flex flex-col sm:top-5 sm:right-5 sm:bottom-auto sm:left-auto sm:w-auto sm:flex-col
+               bg-white rounded-t-lg sm:rounded-lg p-7 dark:bg-box shadow-lg z-50"
+  >
+    {/* Close Button */}
+    <MdCancel
+      className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-white"
+      size={20}
+      onClick={toggleFilters}
+    />
+
+    {/* Search by Name */}
+    <div className="flex flex-col space-y-2 w-full sm:w-auto">
+      <label
+        htmlFor="search-name"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300"
+      >
         Search by Name
       </label>
       <input
@@ -126,8 +137,12 @@ const Home: React.FC = () => {
       />
     </div>
 
-    <div className="flex flex-col space-y-2 mt-3">
-      <label htmlFor="search-distance" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+    {/* Search by Distance */}
+    <div className="flex flex-col space-y-2 mt-3 w-full sm:w-auto">
+      <label
+        htmlFor="search-distance"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300"
+      >
         Search by Distance (0 - 100,000)
       </label>
       <input
@@ -139,11 +154,17 @@ const Home: React.FC = () => {
         onChange={(e) => setSearchDistance(e.target.value)}
         className="w-full"
       />
-      <span className="text-xs text-gray-500 dark:text-gray-400">{searchDistance} {userData?.user?.distance}</span>
+      <span className="text-xs text-gray-500 dark:text-gray-400">
+        {searchDistance} {userData?.user?.distance}
+      </span>
     </div>
 
-    <div className="flex flex-col space-y-2 mt-3">
-      <label htmlFor="search-date" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+    {/* Search by Date */}
+    <div className="flex flex-col space-y-2 mt-3 w-full sm:w-auto">
+      <label
+        htmlFor="search-date"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300"
+      >
         Search by Date
       </label>
       <input
@@ -155,6 +176,7 @@ const Home: React.FC = () => {
       />
     </div>
 
+    {/* Clear Filters Button */}
     <button
       onClick={() => {
         setSearchName('');

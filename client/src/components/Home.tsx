@@ -113,7 +113,7 @@ const Home: React.FC = () => {
                bg-white rounded-t-lg sm:rounded-lg p-7 dark:bg-box shadow-lg z-50"
   >
     <MdCancel
-      className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-white"
+      className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 dark:text-white"
       size={20}
       onClick={toggleFilters}
     />
@@ -131,7 +131,7 @@ const Home: React.FC = () => {
         value={searchName}
         onChange={(e) => setSearchName(e.target.value)}
         placeholder="Enter trip name"
-        className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+        className="p-2 border rounded-lg w-full text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent"
       />
     </div>
 
@@ -168,7 +168,7 @@ const Home: React.FC = () => {
         type="date"
         value={searchDate}
         onChange={(e) => setSearchDate(e.target.value)}
-        className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+        className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent dark:text-white"
       />
     </div>
 

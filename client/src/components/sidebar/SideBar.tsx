@@ -115,9 +115,9 @@ const SideBar: React.FC = () => {
     <>
       <div>
         <button
-          className="sm:hidden p-1.5 absolute right-0 top-4 right-4 text-black dark:text-white bg-white rounded"
+          className="sm:hidden p-1.5 absolute right-0 top-4 right-4 text-black dark:text-white bg-white dark:bg-box rounded"
           onClick={() => setIsSidebarOpen(true)}>
-          <CgMenuLeftAlt className="text-xl" />
+          <CgMenuLeftAlt className="dark:text-white text-xl" />
         </button>
 
         <img
@@ -146,7 +146,7 @@ const SideBar: React.FC = () => {
             className="sm:hidden"
             onClick={() => setIsSidebarOpen(false)}
           >
-            <MdCancel size={20} className="text-black hover:text-accent" />
+            <MdCancel size={20} className="text-black dark:text-white dark:hover:text-gray-300 hover:text-accent" />
           </button>
         </div>
 

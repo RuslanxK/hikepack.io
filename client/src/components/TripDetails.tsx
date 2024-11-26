@@ -83,7 +83,9 @@ const TripDetails: React.FC = () => {
 
   const filteredBags = trip.bags.filter((bag: any) => {
     const matchesName = bag.name.toLowerCase().includes(searchName.toLowerCase());
-    const matchesGoal = bag.goal?.toLowerCase().includes(searchGoal.toLowerCase());
+    const matchesGoal = searchGoal
+      ? parseFloat(bag.goal || "0") <= parseFloat(searchGoal || "0")
+      : true;
     return matchesName && matchesGoal;
   });
 
@@ -159,7 +161,7 @@ const TripDetails: React.FC = () => {
   placeholder="Enter bag name"
   value={searchName}
   onChange={(e) => setSearchName(e.target.value)}
-  className="p-2 border rounded-lg focus:outline-none text-sm w-full"
+  className="p-2 border rounded-lg focus:outline-none text-sm w-full  dark:bg-black dark:border-accent dark:text-white"
 />
 </div>
 
@@ -178,7 +180,7 @@ const TripDetails: React.FC = () => {
   className="w-full"
 />
 <span className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-  Goal: {searchGoal}
+  Goal until: {searchGoal || 0} {userData.user.weightOption}
 </span>
 </div>
 

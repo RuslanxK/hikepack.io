@@ -321,7 +321,7 @@ const Register: React.FC = () => {
                 <div className="w-1/2 px-2">
                   {renderSelect('distanceUnit', 'Distance Unit', [
                     { value: 'miles', label: 'Miles (mi)' },
-                    { value: 'kilometers', label: 'Kilometers (km)' },
+                    { value: 'km', label: 'Kilometers (km)' },
                   ])}
                 </div>
               </div>

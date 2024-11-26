@@ -202,7 +202,7 @@ const Settings: React.FC = () => {
                   { value: 'lb', label: 'Pounds (lb)' },
                 ], value: formData.weightOption },
               { label: 'Distance', name: 'distance', options: [
-                  { value: 'kilometers', label: 'Kilometers (km)' },
+                  { value: 'km', label: 'Kilometers (km)' },
                   { value: 'miles', label: 'Miles (mi)' },
                 ], value: formData.distance },
               { label: 'Gender', name: 'gender', options: [

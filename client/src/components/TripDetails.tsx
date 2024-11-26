@@ -118,8 +118,8 @@ const TripDetails: React.FC = () => {
           </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:p-0">
-            <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg sm:mr-2.5 mb-3 sm:mb-0">
+          <div className="flex flex-row sm:p-0">
+            <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg mr-2.5">
               <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
              <b className='ml-1.5'>{trip.distance} {userData?.user?.distance}</b>
             </p>

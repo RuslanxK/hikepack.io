@@ -9,8 +9,9 @@ import Spinner from '../loading/Spinner';
 import { AddBagModalProps } from '../../types/bag';
 import { useParams } from 'react-router-dom';
 import Message from '../message/Message';
-import { FaArrowRight } from "react-icons/fa";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft, FaCloudUploadAlt, FaCheckCircle } from 'react-icons/fa';
+import axios from 'axios';
+import { API_BASE_URL } from '../../utils/apiConfigs';
 
 const images = Array.from({ length: 8 }, (_, i) => `/images/backpack-${i + 1}.jpg`);
 
@@ -21,8 +22,12 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
   const [description, setDescription] = useState('');
   const [goal, setGoal] = useState('');
   const [selectedImage, setSelectedImage] = useState(images[0]); 
+  const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const [addBag] = useMutation<AddBagData, AddBagVars>(ADD_BAG);
@@ -35,6 +40,23 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
     }
 
     setLoading(true);
+    let imageUrl = selectedImage;
+
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const { data } = await axios.post(`${API_BASE_URL}/upload-image`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        imageUrl = data.data.Location;
+      } catch (error) {
+        console.error('File upload failed:', error);
+        setLoading(false);
+        setError('Error uploading image. Please try again.');
+        return;
+      }
+    }
 
     try {
       await addBag({
@@ -44,15 +66,18 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
           description,
           goal,
           exploreBags: false,
-          imageUrl: selectedImage, 
+          imageUrl,
         },
-        refetchQueries: [{ query: GET_TRIP, variables: { id: id } }],
+        refetchQueries: [{ query: GET_TRIP, variables: { id } }],
       });
 
       setName('');
       setDescription('');
       setGoal('');
-      setSelectedImage(images[0]); 
+      setFile(null);
+      setSelectedFileName('');
+      setIsFileUploaded(false);
+      setSelectedImage(images[0]);
       onClose();
     } catch (e) {
       setError('Error adding bag. Please try again.');
@@ -69,6 +94,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
     });
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -150, behavior: 'smooth' });
+      resetFileUpload();
     }
   };
 
@@ -80,6 +106,53 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
     });
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: 150, behavior: 'smooth' });
+      resetFileUpload();
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      if (selectedFile.size > 2 * 1024 * 1024) {
+        setError('File size should not exceed 2MB');
+        setFile(null);
+        setSelectedFileName('');
+        setIsFileUploaded(false);
+      } else {
+        setSelectedFileName(selectedFile.name);
+        setFile(selectedFile);
+        setIsFileUploaded(true);
+        setSelectedImage('');
+        setError('');
+      }
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+
+  const resetFileUpload = () => {
+    setFile(null);
+    setSelectedFileName('');
+    setIsFileUploaded(false);
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragging(false);
+
+    const droppedFile = event.dataTransfer.files[0];
+    if (droppedFile) {
+      setSelectedFileName(droppedFile.name);
+      setFile(droppedFile);
+      setSelectedImage(''); // Clear carousel image selection
     }
   };
 
@@ -140,6 +213,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
           )}
         </div>
 
+        {/* Carousel for predefined images */}
         <div className="my-4">
           <p className="text-center text-sm font-medium mb-2 text-accent dark:text-gray-300">Select an Image</p>
           <div className="relative flex items-center">
@@ -160,8 +234,10 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
                   key={index}
                   src={img}
                   alt={`Backpack ${index + 1}`}
-                  onClick={() => setSelectedImage(img)}
-                  className={`h-32 w-32 object-cover rounded-lg cursor-pointer transition-all duration-300 ${
+                  onClick={() => {
+                    setSelectedImage(img)
+                    resetFileUpload()}}
+                  className={`h-24 w-24 object-cover rounded-lg cursor-pointer transition-all duration-300 ${
                     selectedImage === img
                       ? 'border-4 border-primary transform scale-105'
                       : 'border border-gray-300'
@@ -177,6 +253,46 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
             >
               <FaArrowRight size={14} />
             </button>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <div
+            className={`mb-5 flex justify-center items-center px-6 pt-5 pb-6 border-2 ${
+              isDragging ? 'border-blue-500' : 'border-gray-300'
+            } border-dashed rounded-md dark:border-zinc-500`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <div className="space-y-2 text-center">
+              <FaCloudUploadAlt className="mx-auto h-12 w-12 text-gray-400" />
+              <div className="flex justify-center text-sm text-gray-600 dark:text-gray-300">
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer rounded-md font-medium text-primary hover:text-button-hover"
+                >
+                  <span>{isFileUploaded ? 'Upload a new file' : 'Upload a file'}</span>
+                  <input
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    className="sr-only"
+                    onChange={handleFileSelect}
+                  />
+                </label>
+                <p className="pl-1">or drag and drop</p>
+              </div>
+              <p className="text-xs text-accent dark:text-gray-400">PNG, JPG up to 2MB</p>
+
+              {selectedFileName && (
+                <p className="mt-2 text-sm text-accent dark:text-gray-400 flex items-center">
+                  {isFileUploaded && <FaCheckCircle className="mr-2 text-green-500" size={24} />}
+                  Selected file: {selectedFileName}
+                </p>
+              )}
+            </div>
           </div>
         </div>
 

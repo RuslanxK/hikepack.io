@@ -44,6 +44,17 @@ const Login: React.FC = () => {
     }
   }, []);
 
+
+  useEffect(() => {
+
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+    return () => {
+      const userPreferredTheme = localStorage.getItem('theme') === 'dark';
+      document.documentElement.classList.toggle('dark', userPreferredTheme);
+    };
+  }, []);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));

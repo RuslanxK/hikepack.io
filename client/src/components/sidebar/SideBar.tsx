@@ -219,7 +219,7 @@ const SideBar: React.FC = () => {
           ) : userData ? (
             <div className="flex items-center">
               <img
-                src={userData.user?.imageUrl ? userData.user.imageUrl : "/images/default.jpg"}
+                src={userData?.user?.imageUrl || "/images/default.jpg"}
                 alt="Profile"
                 className="w-9 h-9 rounded-full mr-3 object-cover"
               />

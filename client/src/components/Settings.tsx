@@ -13,7 +13,7 @@ import { API_BASE_URL } from '../utils/apiConfigs';
 
 const Settings: React.FC = () => {
   const [formData, setFormData] = useState({
-    email: '', username: '', birthdate: '', weightOption: '', distance: '',
+    email: '', username: '', birthdate: '01/01/1990', weightOption: '', distance: '',
     gender: '', activityLevel: '', country: '',
   });
   const [profileImage, setProfileImage] = useState<string | null>(null);

@@ -89,7 +89,7 @@ const Home: React.FC = () => {
               </p>
 
               {data?.trips.length === 0 ? null : (
-  <div className="w-full flex flex-col md:flex-row items-start bg-white dark:bg-box mt-5 bg-secondary p-4 rounded-lg">
+  <div className="w-full flex flex-col md:flex-row items-start bg-secondary dark:bg-box mt-5 bg-secondary p-4 rounded-lg">
     {/* Group 1: Search by Name */}
     <div className="flex flex-col w-full md:w-1/4 md:mr-10 mb-4 md:mb-0">
       <label

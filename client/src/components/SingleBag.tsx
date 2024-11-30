@@ -15,7 +15,6 @@ const SingleBag: React.FC<SingleBagProps> = ({ bagData }) => {
   const navigate = useNavigate();
 
   
-
   const handleViewDetails = () => {
     navigate(`/bag/${bagData.id}`);
   };

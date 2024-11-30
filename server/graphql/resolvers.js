@@ -579,6 +579,89 @@ const resolvers = {
     },
 
 
+    duplicateTrip: async (_, { id, ...tripData }, { user }) => {
+      try {
+        if (!user) throw new Error("Not authenticated");
+    
+       
+        const originalTrip = await Trip.findOne({ _id: id, owner: user.userId });
+        if (!originalTrip) throw new Error("Trip not found");
+    
+       
+        const newTrip = await Trip.create({
+          ...tripData,
+          owner: user.userId,
+        });
+    
+     
+        const originalBags = await Bag.find({ tripId: originalTrip._id, owner: user.userId });
+    
+        const bagPromises = originalBags.map(async (originalBag) => {
+          const newBag = await Bag.create({
+            name: originalBag.name,
+            goal: originalBag.goal,
+            imageUrl: originalBag.imageUrl,
+            tripId: newTrip._id, 
+            owner: user.userId,
+          });
+    
+         
+          const originalCategories = await Category.find({ bagId: originalBag._id });
+          const categoryMap = {};
+    
+         
+          const categoryPromises = originalCategories.map(async (originalCategory) => {
+            const newCategory = await Category.create({
+              name: originalCategory.name,
+              order: originalCategory.order,
+              color: originalCategory.color,
+              bagId: newBag._id, 
+              tripId: newTrip._id, 
+              owner: user.userId,
+            });
+            categoryMap[originalCategory._id] = newCategory._id;
+            return newCategory;
+          });
+    
+          await Promise.all(categoryPromises);
+    
+          const itemPromises = originalCategories.map(async (originalCategory) => {
+            const originalItems = await Item.find({ categoryId: originalCategory._id });
+    
+            return Promise.all(
+              originalItems.map((item) => {
+                return Item.create({
+                  name: item.name,
+                  description: item.description,
+                  weight: item.weight,
+                  link: item.link,
+                  qty: item.qty,
+                  worn: item.worn,
+                  categoryId: categoryMap[originalCategory._id], 
+                  bagId: newBag._id, 
+                  tripId: newTrip._id,
+                  owner: user.userId,
+                });
+              })
+            );
+          });
+    
+          await Promise.all(itemPromises);
+    
+          return newBag;
+        });
+    
+        await Promise.all(bagPromises);
+    
+        return newTrip; 
+      } catch (error) {
+        console.error("Error duplicating trip:", error);
+        throw new Error("Failed to duplicate trip");
+      }
+    },
+    
+
+
 
     deleteTrip: async (_, { id }, { user }) => {
       try {
@@ -628,6 +711,73 @@ const resolvers = {
       }
     },
 
+
+    duplicateBag: async (_, args, { user }) => {
+      try {
+
+        if (!user) throw new Error("Not authenticated");
+    
+        const { id, tripId, ...bagData } = args;
+    
+        const originalBag = await Bag.findOne({ _id: id, owner: user.userId });
+        if (!originalBag) throw new Error("Bag not found");
+    
+        const newBag = await Bag.create({
+          ...bagData,
+          tripId, 
+          owner: user.userId,
+        });
+    
+        const originalCategories = await Category.find({ bagId: originalBag._id });
+        const categoryMap = {};
+    
+        const categoryPromises = originalCategories.map(async (originalCategory) => {
+          const newCategory = await Category.create({
+            name: originalCategory.name,
+            order: originalCategory.order,
+            color: originalCategory.color, 
+            bagId: newBag._id, 
+            tripId, 
+            owner: user.userId,
+          });
+          categoryMap[originalCategory._id] = newCategory._id; 
+          return newCategory;
+        });
+    
+        const newCategories = await Promise.all(categoryPromises);
+    
+        const itemPromises = originalCategories.map(async (originalCategory) => {
+          const originalItems = await Item.find({ categoryId: originalCategory._id });
+    
+          return Promise.all(
+            originalItems.map(async (item) => {
+              await Item.create({
+                name: item.name,
+                description: item.description,
+                weight: item.weight,
+                link: item.link,
+                qty: item.qty,
+                worn: item.worn,
+                categoryId: categoryMap[originalCategory._id], 
+                bagId: newBag._id, 
+                tripId, 
+                owner: user.userId,
+              });
+            })
+          );
+        });
+    
+        await Promise.all(itemPromises);
+    
+        return newBag;
+      } catch (error) {
+        console.error("Error duplicating bag:", error);
+        throw new Error("Failed to duplicate bag");
+      }
+    },
+    
+    
+    
 
     deleteBag: async (_, { id }, { user }) => {
       try {

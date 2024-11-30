@@ -10,6 +10,15 @@ export const ADD_TRIP = gql`
   }
 `;
 
+export const DUPLICATE_TRIP = gql`
+  mutation DuplicateTrip($id: ID, $name: String!, $about: String!, $distance: String!, $startDate: String!, $endDate: String!, $imageUrl: String) {
+    duplicateTrip(id: $id, name: $name, about: $about, distance: $distance, startDate: $startDate, endDate: $endDate, imageUrl: $imageUrl ) {
+     id
+    }
+  }
+`;
+
+
 
 
 export const UPDATE_TRIP = gql`

@@ -50,6 +50,8 @@ export interface Bag {
   }
 
   export interface DuplicateBagVars {
+
+    id: string,
     tripId: string;
     name: string;
     description: string;

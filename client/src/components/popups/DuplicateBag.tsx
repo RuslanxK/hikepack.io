@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import Modal from './Modal';
 import Spinner from '../loading/Spinner';
-import { ADD_BAG } from '../../mutations/bagMutations';
+import { DUPLICATE_BAG } from '../../mutations/bagMutations';
 import { DuplicateBagModalProps, DuplicateBagVars, DuplicateBagData } from '../../types/bag';
 import { GET_TRIP } from '../../queries/tripQueries';
 import Message from '../message/Message';
@@ -14,14 +14,14 @@ const DuplicateBag: React.FC<DuplicateBagModalProps> = ({ isOpen, onClose, bag }
   const { id } = useParams<{ id: string }>();
 
   const tripId = id!;
-  const [addBag] = useMutation<DuplicateBagData, DuplicateBagVars>(ADD_BAG);
+  const [duplicateBag] = useMutation<DuplicateBagData, DuplicateBagVars>(DUPLICATE_BAG);
 
-  const handleDeleteTrip = async () => {
+  const handleDuplicateBag = async () => {
     setLoading(true);
 
     try {
-      await addBag({
-        variables: { tripId, name: bag.name, description: bag.description, goal: bag.goal, imageUrl: bag.imageUrl, exploreBags: false },
+      await duplicateBag({
+        variables: { id: bag.id, tripId, name: bag.name, description: bag.description, goal: bag.goal, imageUrl: bag.imageUrl, exploreBags: false },
         refetchQueries: [{ query: GET_TRIP, variables: { id: id } }],
       });
       onClose();
@@ -40,7 +40,7 @@ const DuplicateBag: React.FC<DuplicateBagModalProps> = ({ isOpen, onClose, bag }
           Are you sure that you want to duplicate <strong>{bag.name}</strong> ? 
         </p>
         <button
-          onClick={handleDeleteTrip}
+          onClick={handleDuplicateBag}
           className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center"
           disabled={loading}
         >

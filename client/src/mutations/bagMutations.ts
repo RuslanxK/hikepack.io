@@ -10,6 +10,14 @@ export const ADD_BAG = gql`
   }
 `;
 
+export const DUPLICATE_BAG = gql`
+  mutation DuplicateBag($id: ID, $tripId: String!, $name: String!, $description: String!, $goal: String!, $exploreBags: Boolean!, $imageUrl: String) {
+    duplicateBag(id: $id, tripId: $tripId, name: $name, description: $description, goal: $goal, exploreBags: $exploreBags, imageUrl: $imageUrl) {
+      tripId
+    }
+  }
+`;
+
 
 export const UPDATE_BAG = gql`
   mutation UpdateBag($bagId: ID!, $name: String, $description: String, $goal: String, $exploreBags: Boolean, $imageUrl: String) {

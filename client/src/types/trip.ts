@@ -28,6 +28,8 @@ export interface AddTripVars {
 }
 
 export interface DuplicateTripVars {
+
+  id: string;
   name: string;
   about: string;
   distance: string;

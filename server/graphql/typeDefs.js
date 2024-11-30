@@ -157,9 +157,11 @@ const typeDefs = gql`
   type Mutation {
 
     addTrip(name: String!, about: String!, distance: String!, startDate: String!, endDate: String!, imageUrl: String): Trip
+    duplicateTrip(id: ID, name: String!, about: String!, distance: String!, startDate: String!, endDate: String!, imageUrl: String): Trip
     deleteTrip(id: ID!): Trip
     updateTrip(id: ID!, name: String, about: String, distance: String, startDate: String, endDate: String, imageUrl: String): Trip
     addBag(tripId: String!, name: String!, description: String!, goal: String!, exploreBags: Boolean!, imageUrl: String): Bag
+    duplicateBag(id: ID, tripId: String!, name: String!, description: String!, goal: String!, exploreBags: Boolean!, imageUrl: String): Bag
     deleteBag(id: ID!): Bag
     updateBag(bagId: ID!, name: String, description: String, goal: String, exploreBags: Boolean, imageUrl: String): Bag
     updateLikesBag(bagId: ID!, increment: Int!): Bag

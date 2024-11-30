@@ -12,10 +12,9 @@ import Message from '../message/Message';
 import { GET_USER_SHARED } from '../../queries/userQueries';
 import Spinner from '../loading/Spinner';
 import { GET_SHARED_BAG, GET_ALL_USER_BAGS } from '../../queries/bagQueries';
-import { GET_TRIP } from '../../queries/tripQueries';
+import { GET_SHARED_TRIP } from '../../queries/tripQueries';
 import { FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { Bag } from '../../types/bag';
-import { IoArrowForwardCircle } from "react-icons/io5";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -28,10 +27,11 @@ const MainShare: React.FC = () => {
   const { data: dataBag, loading: loadingBag, error: errorBag, refetch } = useQuery(GET_SHARED_BAG, { variables: { id } });
   const { data: allBags, loading: loadingAllBags, error: errorAllBags } = useQuery(GET_ALL_USER_BAGS);
 
-  const { data: dataTrip, loading: loadingTrip, error: errorTrip } = useQuery(GET_TRIP, {
+  const { data: dataTrip, loading: loadingTrip, error: errorTrip } = useQuery(GET_SHARED_TRIP, {
     variables: { id: dataBag?.sharedBag?.tripId }, 
     skip: !dataBag || !dataBag.sharedBag?.tripId,  
   });
+
 
 
  
@@ -77,7 +77,7 @@ const MainShare: React.FC = () => {
   };
 
   const bag = dataBag?.sharedBag;
-  const trip = dataTrip?.trip;
+  const trip = dataTrip?.sharedTrip;
   const userBags = allBags?.allUserBags?.filter((bag: Bag) => bag.id !== id && bag.exploreBags === true);
 
 
@@ -143,7 +143,7 @@ const MainShare: React.FC = () => {
             <div className="flex flex-col sm:flex-row mt-5">
             <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg sm:mb-0 mb-5 mr-0 sm:mr-3">
               <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
-              Distance: <b className='ml-1.5'>{trip.distance} {userData?.userShared?.distance}</b>
+              Distance: <b className='ml-1.5'>{trip.distance} {userData.userShared.distance}</b>
             </p>
             <p className={` text-sm flex items-center rounded-lg border border-2 dark:border-accent p-3 text-accent dark:text-white`}>
               <FaClock className="mr-1 text-accent dark:text-white" />
@@ -223,9 +223,9 @@ const MainShare: React.FC = () => {
       onClick={() => window.open(`/share/${bag.id}`, '_blank')}
     >
       <img
-        src="/images/backpack.png"
+        src={bag.imageUrl}
         alt={bag.name}
-        className="w-14 h-14 object-contain cursor-pointer text-center mb-5"
+        className="w-full h-25 rounded-lg object-cover cursor-pointer text-center mb-5"
       />
       <h3 className="font-semibold mb-2">
         {bag.name && bag.name.length > 28
@@ -237,17 +237,6 @@ const MainShare: React.FC = () => {
           ? `${bag.description.substring(0, 50)}...`
           : bag.description}
       </p>
-      <IoArrowForwardCircle
-        className="absolute text-primary dark:text-white cursor-pointer transform transition-transform duration-200 hover:scale-125 opacity-0 group-hover:opacity-100"
-        title="View Details"
-        size={30}
-        style={{
-          bottom: '10',
-          right: '10',
-         
-          fontSize: '3rem',
-        }}
-      />
     </div>
   );
 })}

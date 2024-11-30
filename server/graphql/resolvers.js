@@ -11,10 +11,19 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { ObjectId } = require('mongodb'); 
 const s3 = require("../config/s3Config")
+const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
+
+
 
 const ensureOwner = (user, query = {}) => {
   if (!user) throw new Error('Not authenticated');
   return { ...query, owner: user.userId };
+};
+
+const getCurrentTimestamp = () => {
+  const now = new Date();
+  return now.toISOString().replace(/[-:.]/g, ''); 
 };
 
 
@@ -147,6 +156,17 @@ const resolvers = {
     trip: async (_, { id }, { user }) => {
       try {
         return await Trip.findOne(ensureOwner(user, { _id: id }));
+      } catch (error) {
+        console.error(`Error fetching trip with id ${id}:`, error);
+        throw new Error('Failed to fetch trip');
+      }
+    },
+
+
+
+    sharedTrip: async (_, { id }) => {
+      try {
+        return await Trip.findOne({ _id: id });
       } catch (error) {
         console.error(`Error fetching trip with id ${id}:`, error);
         throw new Error('Failed to fetch trip');
@@ -885,7 +905,6 @@ const resolvers = {
 
     
 
-   
 
     addItem: async (_, args, { user }) => {
       try {
@@ -898,6 +917,59 @@ const resolvers = {
         throw new Error('Failed to add item');
       }
     },
+
+
+
+
+    duplicateItem: async (_, args, { user }) => {
+      try {
+        if (!user) throw new Error("Not authenticated");
+    
+        let newImageUrl = args.imageUrl;
+        if (args.imageUrl) {
+          const originalKey = args.imageUrl.substring(args.imageUrl.lastIndexOf('/') + 1);
+          const fileExtension = originalKey.substring(originalKey.lastIndexOf('.')); 
+          const timestamp = getCurrentTimestamp();
+          const uuid = uuidv4();
+          const newKey = `${uuid}-${timestamp}${fileExtension}`; 
+    
+          const copyParams = {
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
+            CopySource: `/${process.env.AWS_S3_BUCKET_NAME}/${decodeURIComponent(originalKey)}`, 
+            Key: newKey,
+          };
+    
+          try {
+            await s3.copyObject(copyParams).promise();
+            newImageUrl = `https://light-pack-planner.s3.amazonaws.com/${newKey}`;
+          } catch (error) {
+            throw new Error("Failed to duplicate item image");
+          }
+        }
+      
+        const itemsCount = await Item.countDocuments({ categoryId: args.categoryId, owner: user.userId });
+    
+        const newItem = await Item.create({
+          name: args.name,
+          description: args.description,
+          weight: args.weight,
+          link: args.link,
+          qty: args.qty,
+          worn: args.worn,
+          categoryId: args.categoryId,
+          bagId: args.bagId,
+          tripId: args.tripId,
+          owner: user.userId,
+          order: itemsCount + 1,
+          imageUrl: newImageUrl,
+        });
+    
+        return newItem;
+      } catch (error) {
+        throw new Error("Failed to duplicate item");
+      }
+    },
+    
 
 
     deleteItem: async (_, { id }, { user }) => {

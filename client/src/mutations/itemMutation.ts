@@ -9,6 +9,15 @@ export const ADD_ITEM = gql`
   }
 `;
 
+
+export const DUPLICATE_ITEM = gql`
+  mutation DuplicateItem($tripId: String!, $bagId: String!, $categoryId: String!, $name: String!, $qty: Int!, $description: String, $weight: Float!, $priority: String, $worn: Boolean, $order: Int, $weightOption: String, $link: String, $imageUrl: String) {
+    duplicateItem(tripId: $tripId, bagId: $bagId, categoryId: $categoryId, name: $name, qty: $qty, description: $description, weight: $weight, priority: $priority, worn: $worn, order: $order, weightOption: $weightOption, link: $link, imageUrl: $imageUrl) {
+      tripId
+    }
+  }
+`;
+
 export const DELETE_ITEM = gql`
   mutation DeleteItem($id: ID!) {
     deleteItem(id: $id) {

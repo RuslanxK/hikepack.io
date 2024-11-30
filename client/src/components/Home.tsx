@@ -12,15 +12,12 @@ import { Link } from 'react-router-dom';
 import Message from './message/Message';
 import { GET_USER } from '../queries/userQueries';
 import Spinner from './loading/Spinner';
-import { TbAdjustmentsSearch } from "react-icons/tb";
-import { MdCancel } from "react-icons/md";
 
 const Home: React.FC = () => {
   const { loading, error, data } = useQuery<GetTripData>(GET_TRIPS);
   const { loading: latestBagLoading, error: latestBagError, data: latestBagData, refetch: refetchLatestBag } = useQuery<GetLatestBagWithDetailsData>(GET_LATEST_BAG_WITH_DETAILS);
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   const [searchName, setSearchName] = useState('');
   const [searchDistance, setSearchDistance] = useState('');
@@ -31,10 +28,7 @@ const Home: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const toggleFilters = () => {
-    setIsFiltersOpen(!isFiltersOpen);
-  };
-
+  
   useEffect(() => {
     refetchLatestBag();
   }, [refetchLatestBag]);
@@ -77,8 +71,8 @@ const Home: React.FC = () => {
     <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
       <div className="p-4 sm:p-10 flex flex-col items-between justify-start space-y-2">
         <div className="mb-5">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-            <div>
+          <div className="flex flex-col sm:flex-row bg-white dark:bg-box rounded-lg p-5">
+            <div className='w-full'>
               <div className="flex flex-row items-center">
                 <h1 className="text-xl font-semibold text-black dark:text-white">Welcome,</h1>
                 <span className="text-lg text-black font-semibold ml-1.5 dark:text-white">{userData?.user?.username}</span>
@@ -93,36 +87,14 @@ const Home: React.FC = () => {
               <p className="text-base text-black dark:text-gray-300 mt-1">
                 Seamless Trip Planning and Bag Organization Made Simple.
               </p>
-            </div>
 
-            {isFiltersOpen || data?.trips.length === 0 ? (
-             null
-            ) : (
-
-              <button
-              className="fixed z-30 rounded bg-white dark:bg-box dark:text-white p-2 cursor-pointer shadow-airbnb sm:shadow-none hover:text-primary 
-                         bottom-4 sm:bottom-auto sm:top-7 sm:right-7 right-4"
-              onClick={toggleFilters}
-            >
-              <TbAdjustmentsSearch size={20} />
-            </button>
-            )}
-
-{isFiltersOpen && (
-  <div
-    className="fixed bottom-0 left-0 w-full flex flex-col sm:top-5 sm:right-5 sm:bottom-auto sm:left-auto sm:w-auto sm:flex-col
-               bg-white rounded-t-lg sm:rounded-lg p-7 dark:bg-box shadow-lg z-30"
-  >
-    <MdCancel
-      className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 dark:text-white"
-      size={20}
-      onClick={toggleFilters}
-    />
-
-    <div className="flex flex-col space-y-2 w-full sm:w-auto">
+              {data?.trips.length === 0 ? null : (
+  <div className="w-full flex flex-col md:flex-row items-start bg-white dark:bg-box mt-5 bg-secondary p-4 rounded-lg">
+    {/* Group 1: Search by Name */}
+    <div className="flex flex-col w-full md:w-1/4 md:mr-10 mb-4 md:mb-0">
       <label
         htmlFor="search-name"
-        className="text-sm font-medium text-gray-700 dark:text-gray-300"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
       >
         Search by Name
       </label>
@@ -136,12 +108,13 @@ const Home: React.FC = () => {
       />
     </div>
 
-    <div className="flex flex-col space-y-2 mt-3 w-full sm:w-auto">
+    {/* Group 2: Search by Distance */}
+    <div className="flex flex-col w-full md:w-1/4 md:mr-10 mb-4 md:mb-0">
       <label
         htmlFor="search-distance"
-        className="text-sm font-medium text-gray-700 dark:text-gray-300"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
       >
-        Search by Distance (0 - 10,000)
+        Search by Distance
       </label>
       <input
         id="search-distance"
@@ -157,10 +130,11 @@ const Home: React.FC = () => {
       </span>
     </div>
 
-    <div className="flex flex-col space-y-2 mt-3 w-full sm:w-auto">
+    {/* Group 3: Search by Date */}
+    <div className="flex flex-col w-full md:w-1/4 md:mr-5 mb-4 md:mb-0">
       <label
         htmlFor="search-date"
-        className="text-sm font-medium text-gray-700 dark:text-gray-300"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
       >
         Search by Date
       </label>
@@ -173,27 +147,25 @@ const Home: React.FC = () => {
       />
     </div>
 
-    <div>
-    <button
-      onClick={() => {
-        setSearchName('');
-        setSearchDistance('');
-        setSearchDate('');
-      }}
-      className="mt-4 py-2 px-4 bg-accent text-white rounded-lg text-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-    >
-      Clear Filters
-    </button>
-
-    <button
-      onClick={toggleFilters}
-      className="mt-4 py-2 px-4 bg-primary text-white rounded-lg text-sm hover:bg-button-hover focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:hidden ml-2"
-    >
-      Search
-    </button>
+    {/* Clear Filters Button */}
+    <div className="w-full md:w-1/4 flex justify-start md:self-end">
+      <input
+        type="button"
+        value="Clear Filters"
+        onClick={() => {
+          setSearchName('');
+          setSearchDistance('');
+          setSearchDate('');
+        }}
+        className="p-2 border border-2 border-accent bg-accent text-white rounded-lg text-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 w-full md:w-auto cursor-pointer"
+      />
     </div>
   </div>
 )}
+
+   
+            </div>
+  
           </div>
         </div>
 

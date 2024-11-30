@@ -149,52 +149,64 @@ const TripDetails: React.FC = () => {
   <hr className="border-t-1 border dark:border-zinc-600 my-4" />
 
 
-  {trip.bags.length > 0 ? <div className='sm:w-full flex sm:flex-row flex-col items-start bg-white dark:bg-box dark:box rounded-b-lg'>
+  {trip.bags.length > 0 ? (
+  <div className="p-4 w-full flex flex-col sm:flex-row items-start bg-secondary dark:bg-box rounded-lg">
+    {/* Search by Name */}
+    <div className="flex flex-col w-full sm:w-1/3 sm:mr-10 mb-4 sm:mb-0">
+      <label
+        htmlFor="search-name"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+      >
+        Search by Name
+      </label>
+      <input
+        id="search-name"
+        type="text"
+        placeholder="Enter bag name"
+        value={searchName}
+        onChange={(e) => setSearchName(e.target.value)}
+        className="p-2 border rounded-lg focus:outline-none text-sm w-full dark:bg-black dark:border-accent dark:text-white"
+      />
+    </div>
 
-<div className="flex flex-col mb-4 sm:w-64 w-full sm:mr-5 mr-0">
-<label htmlFor="search-name" className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 w-full">
-  Search by Name
-</label>
-<input
-  id="search-name"
-  type="text"
-  placeholder="Enter bag name"
-  value={searchName}
-  onChange={(e) => setSearchName(e.target.value)}
-  className="p-2 border rounded-lg focus:outline-none text-sm w-full  dark:bg-black dark:border-accent dark:text-white"
-/>
-</div>
+    {/* Search by Goal */}
+    <div className="flex flex-col w-full sm:w-1/3 sm:mr-5 mb-4 sm:mb-0">
+      <label
+        htmlFor="search-goal"
+        className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+      >
+        Search by Goal
+      </label>
+      <input
+        id="search-goal"
+        type="range"
+        min="0"
+        max="100"
+        step="1"
+        value={searchGoal}
+        onChange={(e) => setSearchGoal(e.target.value)}
+        className="w-full"
+      />
+      <span className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+        Goal until: {searchGoal || 0} {userData.user.weightOption}
+      </span>
+    </div>
+    <div className='self-center sm:w-fit w-full'>
+      <button
+        onClick={() => {
+          setSearchName('');
+          setSearchGoal('');
+        }}
+        className="w-full py-2 px-4 bg-accent hover:bg-gray-500 text-white rounded-lg text-sm focus:outline-none"
+      >
+        Clear Filters
+      </button>
+      </div>
 
-<div className="flex flex-col sm:w-64 w-full sm:mr-5 mr-0">
-<label htmlFor="search-goal" className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-  Search by Goal
-</label>
-<input
-  id="search-goal"
-  type="range"
-  min="0"
-  max="100"
-  step="1"
-  value={searchGoal}
-  onChange={(e) => setSearchGoal(e.target.value)}
-  className="w-full"
-/>
-<span className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-  Goal until: {searchGoal || 0} {userData.user.weightOption}
-</span>
-</div>
+    </div>
+  
+) : null}
 
-<button
-onClick={() => {
-  setSearchName('');
-  setSearchGoal('');
-}}
-className="py-2 px-4 bg-accent hover:bg-gray-500 text-white rounded-lg text-sm focus:outline-none mt-2"
->
-Clear Filters
-</button>
-
-</div> : null }
 
 </div>
 

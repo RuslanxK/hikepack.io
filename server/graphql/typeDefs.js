@@ -137,6 +137,7 @@ const typeDefs = gql`
     userShared(bagId: ID!): User 
     trips: [Trip!]!
     trip(id: ID!): Trip
+    sharedTrip(id: ID!): Trip
     bags(tripId: ID!): [Bag!]!
     sharedBag(id: ID!): Bag
     bag(id: ID!): Bag
@@ -172,6 +173,7 @@ const typeDefs = gql`
 
     updateItem(id: ID!, name: String, qty: Int, description: String, weight: Float, priority: String, link: String, worn: Boolean, imageUrl: String, weightOption: String, order: Int): Item
     addItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String, link: String): Item
+    duplicateItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String, link: String imageUrl: String): Item
     deleteItem(id: ID!): Item
 
     createUser(email: String!, username: String, birthdate: String, password: String!, weightOption: String, verifiedCredentials: Boolean, distance: String, gender: String, activityLevel: String, country: String, isAdmin: Boolean, imageUrl: String): User

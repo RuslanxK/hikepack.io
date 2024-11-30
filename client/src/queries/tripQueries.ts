@@ -38,3 +38,26 @@ export const GET_TRIP = gql`
 `;
 
 
+export const GET_SHARED_TRIP = gql`
+ query GetsSharedTrip($id: ID!) {
+    sharedTrip(id: $id) {
+      id
+      name
+      about
+      distance
+      startDate
+      endDate
+      imageUrl
+      bags {
+        id
+        name
+        description
+        goal
+        imageUrl
+      }
+    }
+  }
+`;
+
+
+

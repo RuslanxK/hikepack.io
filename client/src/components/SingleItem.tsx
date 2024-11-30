@@ -5,7 +5,7 @@ import { GrDrag } from 'react-icons/gr';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useMutation } from '@apollo/client';
-import { UPDATE_ITEM, ADD_ITEM } from '../mutations/itemMutation';
+import { UPDATE_ITEM, DUPLICATE_ITEM } from '../mutations/itemMutation';
 import ItemPictureModal from './popups/ItemPictureModal';
 import AddLinkModal from './popups/AddLinkModal';
 import { GET_BAG } from '../queries/bagQueries';
@@ -29,7 +29,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const [priority, setPriority] = useState(itemData.priority || 'low');
 
   const [updateItem] = useMutation(UPDATE_ITEM);
-  const [addItem, { loading: addingItem }] = useMutation(ADD_ITEM); 
+  const [duplicateItem, { loading: addingItem }] = useMutation(DUPLICATE_ITEM); 
 
   const { id } = useParams<{ id: string }>();
 
@@ -94,7 +94,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   const handleCopyItem = async () => {
     try {
-      await addItem({
+      await duplicateItem({
         variables: {
           tripId: itemData.tripId,
           bagId: itemData.bagId,
@@ -105,7 +105,9 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
           weight: itemData.weight,
           priority: itemData.priority,
           worn: itemData.worn,
-          link: itemData.link
+          link: itemData.link,
+          imageUrl: itemData.imageUrl
+          
         },
         refetchQueries: [{ query: GET_BAG, variables: { id: id } },
          

@@ -90,31 +90,35 @@ const ResetPassword: React.FC = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-accent text-sm mb-2">New Password</label>
+            <label className="block text-accent text-sm mb-2">New Password * (at least 8 characters long numbers and letters)</label>
             <input
               type="password"
               name="password"
               value={password}
               onChange={handleInputChange}
-              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className={`w-full text-sm p-2 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                validationErrors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-primary'
+              }`}
               placeholder="Enter your new password"
               required
             />
-            {validationErrors.password && <p className="text-red text-xs mt-1">{validationErrors.password}</p>}
+            {validationErrors.password && <p className="text-red-500 text-xs mt-1">{validationErrors.password}</p>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-accent text-sm mb-2">Confirm New Password</label>
+            <label className="block text-accent text-sm mb-2">Confirm New Password *</label>
             <input
               type="password"
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleInputChange}
-              className="w-full text-sm p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className={`w-full text-sm p-2 sm:p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                validationErrors.confirmPassword ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-primary'
+              }`}
               placeholder="Confirm your new password"
               required
             />
-            {validationErrors.confirmPassword && <p className="text-red text-xs mt-1">{validationErrors.confirmPassword}</p>}
+            {validationErrors.confirmPassword && <p className="text-red-500 text-xs mt-1">{validationErrors.confirmPassword}</p>}
           </div>
 
           <button

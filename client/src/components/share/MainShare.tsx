@@ -25,12 +25,15 @@ const MainShare: React.FC = () => {
 
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER_SHARED, { variables: { bagId: id }});
   const { data: dataBag, loading: loadingBag, error: errorBag, refetch } = useQuery(GET_SHARED_BAG, { variables: { id } });
-  const { data: allBags, loading: loadingAllBags, error: errorAllBags } = useQuery(GET_ALL_USER_BAGS);
-
+  const { data: allBags, loading: loadingAllBags, error: errorAllBags } = useQuery(GET_ALL_USER_BAGS, {
+    variables: { userId: userData?.userShared?.id },
+    skip: !userData?.userShared?.id,
+  });
   const { data: dataTrip, loading: loadingTrip, error: errorTrip } = useQuery(GET_SHARED_TRIP, {
     variables: { id: dataBag?.sharedBag?.tripId }, 
     skip: !dataBag || !dataBag.sharedBag?.tripId,  
   });
+
 
  
   const [updateLikes] = useMutation(UPDATE_LIKES_BAG);

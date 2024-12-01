@@ -52,6 +52,7 @@ export const GET_USER_SETTINGS = gql`
 export const GET_USER_SHARED = gql`
 query GetSharedUser($bagId: ID!) {
   userShared(bagId: $bagId) {
+    id
     username
     weightOption
     imageUrl

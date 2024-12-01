@@ -113,8 +113,8 @@ export const GET_LATEST_BAGS = gql`
 
 
 export const GET_ALL_USER_BAGS = gql`
-  query GetUserBags {
-    allUserBags {
+  query GetUserBags($userId: ID!) {
+    allUserBags(userId: $userId) {
       id
       name
       description

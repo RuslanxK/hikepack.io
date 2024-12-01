@@ -145,7 +145,7 @@ const typeDefs = gql`
     items(categoryId: ID!): [Item!]!
     item(id: ID!): Item
     latestBags: [Bag!]!
-    allUserBags: [Bag!]
+    allUserBags(userId: ID!): [Bag!]
     latestBagWithDetails: BagWithDetails
     allItems: [Item!]!
     checkEmailExistence(email: String!): Boolean

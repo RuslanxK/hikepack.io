@@ -259,10 +259,10 @@ const resolvers = {
       }
     },
 
-
-    allUserBags: async () => {
+    allUserBags: async (_, { userId }) => {
       try {
-        return await Bag.find();
+        if (!userId) throw new Error('User ID is required');
+        return await Bag.find({ owner: userId });
       } catch (error) {
         console.error('Error fetching bags:', error);
         throw new Error('Failed to fetch bags');

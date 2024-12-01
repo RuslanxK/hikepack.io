@@ -37,6 +37,8 @@ const excludedResolvers = ['LoginUser', 'AddUser', 'GetSharedBag', 'GetCategorie
 
 const dynamicAuthMiddleware = async (resolve, parent, args, context, info) => {
 
+  console.log(info.operation.name.value)
+
   if (excludedResolvers.includes(info.operation.name.value)) {
     return resolve(parent, args, context, info); 
   }

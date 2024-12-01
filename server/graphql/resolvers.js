@@ -633,7 +633,7 @@ const resolvers = {
     
         await Promise.all(
           bags.map(async (bag) => {
-            const { _id, ...bagData } = bag.toObject(); // Exclude `_id`
+            const { _id, exploreBags, ...bagData } = bag.toObject(); // Exclude `_id`
             const newBag = await Bag.create({
               ...bagData,
               tripId: newTrip._id,

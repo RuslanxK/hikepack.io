@@ -75,7 +75,7 @@ const Home: React.FC = () => {
             <div className='w-full'>
               <div className="flex flex-row items-center">
                 <h1 className="text-xl font-semibold text-black dark:text-white">Welcome,</h1>
-                <span className="text-lg text-black font-semibold ml-1.5 dark:text-white">{userData?.user?.username}</span>
+                <span className="text-xl text-black font-semibold ml-1.5 dark:text-white">{userData?.user?.username}</span>
               </div>
               <p className="text-base text-black dark:text-gray-300 mt-1">
                 The journey of a thousand miles begins with a single step.

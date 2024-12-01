@@ -607,84 +607,79 @@ const resolvers = {
       try {
         if (!user) throw new Error("Not authenticated");
     
-       
+        const duplicateImage = async (imageUrl) => {
+          if (!imageUrl?.includes('amazon')) return imageUrl;
+          const originalKey = imageUrl.split('/').pop();
+          const newKey = `${uuidv4()}-${getCurrentTimestamp()}${originalKey.slice(originalKey.lastIndexOf('.'))}`;
+          await s3.copyObject({
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
+            CopySource: `/${process.env.AWS_S3_BUCKET_NAME}/${decodeURIComponent(originalKey)}`,
+            Key: newKey,
+          }).promise();
+          return `https://${process.env.AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${newKey}`;
+        };
+    
         const originalTrip = await Trip.findOne({ _id: id, owner: user.userId });
         if (!originalTrip) throw new Error("Trip not found");
     
-       
         const newTrip = await Trip.create({
           ...tripData,
           owner: user.userId,
+          imageUrl: await duplicateImage(originalTrip.imageUrl),
         });
     
-     
-        const originalBags = await Bag.find({ tripId: originalTrip._id, owner: user.userId });
+        const bags = await Bag.find({ tripId: originalTrip._id, owner: user.userId });
     
-        const bagPromises = originalBags.map(async (originalBag) => {
-          const newBag = await Bag.create({
-            name: originalBag.name,
-            goal: originalBag.goal,
-            imageUrl: originalBag.imageUrl,
-            tripId: newTrip._id, 
-            owner: user.userId,
-          });
-    
-         
-          const originalCategories = await Category.find({ bagId: originalBag._id });
-          const categoryMap = {};
-    
-         
-          const categoryPromises = originalCategories.map(async (originalCategory) => {
-            const newCategory = await Category.create({
-              name: originalCategory.name,
-              order: originalCategory.order,
-              color: originalCategory.color,
-              bagId: newBag._id, 
-              tripId: newTrip._id, 
+        await Promise.all(
+          bags.map(async (bag) => {
+            const { _id, ...bagData } = bag.toObject(); // Exclude `_id`
+            const newBag = await Bag.create({
+              ...bagData,
+              tripId: newTrip._id,
               owner: user.userId,
+              imageUrl: await duplicateImage(bag.imageUrl),
             });
-            categoryMap[originalCategory._id] = newCategory._id;
-            return newCategory;
-          });
     
-          await Promise.all(categoryPromises);
-    
-          const itemPromises = originalCategories.map(async (originalCategory) => {
-            const originalItems = await Item.find({ categoryId: originalCategory._id });
-    
-            return Promise.all(
-              originalItems.map((item) => {
-                return Item.create({
-                  name: item.name,
-                  description: item.description,
-                  weight: item.weight,
-                  link: item.link,
-                  qty: item.qty,
-                  worn: item.worn,
-                  categoryId: categoryMap[originalCategory._id], 
-                  bagId: newBag._id, 
+            const categories = await Category.find({ bagId: bag._id });
+            const categoryMap = {};
+            await Promise.all(
+              categories.map(async (category) => {
+                const { _id, ...categoryData } = category.toObject(); // Exclude `_id`
+                const newCategory = await Category.create({
+                  ...categoryData,
+                  bagId: newBag._id,
                   tripId: newTrip._id,
                   owner: user.userId,
                 });
+                categoryMap[category._id] = newCategory._id;
               })
             );
-          });
     
-          await Promise.all(itemPromises);
+            const items = await Item.find({ bagId: bag._id });
+            await Promise.all(
+              items.map(async (item) => {
+                const { _id, ...itemData } = item.toObject(); // Exclude `_id`
+                await Item.create({
+                  ...itemData,
+                  bagId: newBag._id,
+                  tripId: newTrip._id,
+                  categoryId: categoryMap[item.categoryId],
+                  owner: user.userId,
+                  imageUrl: await duplicateImage(item.imageUrl),
+                });
+              })
+            );
+          })
+        );
     
-          return newBag;
-        });
-    
-        await Promise.all(bagPromises);
-    
-        return newTrip; 
+        return newTrip;
       } catch (error) {
         console.error("Error duplicating trip:", error);
         throw new Error("Failed to duplicate trip");
       }
     },
     
-
+    
 
 
     deleteTrip: async (_, { id }, { user }) => {
@@ -736,9 +731,9 @@ const resolvers = {
     },
 
 
+
     duplicateBag: async (_, args, { user }) => {
       try {
-
         if (!user) throw new Error("Not authenticated");
     
         const { id, tripId, ...bagData } = args;
@@ -746,52 +741,60 @@ const resolvers = {
         const originalBag = await Bag.findOne({ _id: id, owner: user.userId });
         if (!originalBag) throw new Error("Bag not found");
     
+        const duplicateImage = async (imageUrl) => {
+          if (!imageUrl || !imageUrl.includes('amazon')) return imageUrl;
+    
+          const originalKey = imageUrl.split('/').pop();
+          const newKey = `${uuidv4()}-${getCurrentTimestamp()}${originalKey.slice(originalKey.lastIndexOf('.'))}`;
+          await s3.copyObject({
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
+            CopySource: `/${process.env.AWS_S3_BUCKET_NAME}/${decodeURIComponent(originalKey)}`,
+            Key: newKey,
+          }).promise();
+          return `https://${process.env.AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${newKey}`;
+        };
+    
         const newBag = await Bag.create({
           ...bagData,
-          tripId, 
+          tripId,
           owner: user.userId,
+          imageUrl: await duplicateImage(originalBag.imageUrl),
         });
     
-        const originalCategories = await Category.find({ bagId: originalBag._id });
+        const categories = await Category.find({ bagId: originalBag._id });
         const categoryMap = {};
     
-        const categoryPromises = originalCategories.map(async (originalCategory) => {
-          const newCategory = await Category.create({
-            name: originalCategory.name,
-            order: originalCategory.order,
-            color: originalCategory.color, 
-            bagId: newBag._id, 
-            tripId, 
-            owner: user.userId,
-          });
-          categoryMap[originalCategory._id] = newCategory._id; 
-          return newCategory;
-        });
+        await Promise.all(
+          categories.map(async (category) => {
+            const { _id, ...categoryData } = category.toObject(); // Exclude `_id`
+            const newCategory = await Category.create({
+              ...categoryData,
+              bagId: newBag._id,
+              tripId,
+              owner: user.userId,
+            });
+            categoryMap[category._id] = newCategory._id;
+          })
+        );
     
-        const newCategories = await Promise.all(categoryPromises);
-    
-        const itemPromises = originalCategories.map(async (originalCategory) => {
-          const originalItems = await Item.find({ categoryId: originalCategory._id });
-    
-          return Promise.all(
-            originalItems.map(async (item) => {
-              await Item.create({
-                name: item.name,
-                description: item.description,
-                weight: item.weight,
-                link: item.link,
-                qty: item.qty,
-                worn: item.worn,
-                categoryId: categoryMap[originalCategory._id], 
-                bagId: newBag._id, 
-                tripId, 
-                owner: user.userId,
-              });
-            })
-          );
-        });
-    
-        await Promise.all(itemPromises);
+        await Promise.all(
+          categories.map(async (category) => {
+            const items = await Item.find({ categoryId: category._id });
+            await Promise.all(
+              items.map(async (item) => {
+                const { _id, ...itemData } = item.toObject(); // Exclude `_id`
+                await Item.create({
+                  ...itemData,
+                  categoryId: categoryMap[category._id],
+                  bagId: newBag._id,
+                  tripId,
+                  owner: user.userId,
+                  imageUrl: await duplicateImage(item.imageUrl),
+                });
+              })
+            );
+          })
+        );
     
         return newBag;
       } catch (error) {
@@ -801,7 +804,7 @@ const resolvers = {
     },
     
     
-    
+  
 
     deleteBag: async (_, { id }, { user }) => {
       try {
@@ -951,51 +954,32 @@ const resolvers = {
       try {
         if (!user) throw new Error("Not authenticated");
     
-        let newImageUrl = args.imageUrl;
-        if (args.imageUrl) {
-          const originalKey = args.imageUrl.substring(args.imageUrl.lastIndexOf('/') + 1);
-          const fileExtension = originalKey.substring(originalKey.lastIndexOf('.')); 
-          const timestamp = getCurrentTimestamp();
-          const uuid = uuidv4();
-          const newKey = `${uuid}-${timestamp}${fileExtension}`; 
+        const newImageUrl = args.imageUrl
+          ? await (async () => {
+              const originalKey = args.imageUrl.split('/').pop();
+              const newKey = `${uuidv4()}-${getCurrentTimestamp()}${originalKey.slice(originalKey.lastIndexOf('.'))}`;
+              await s3.copyObject({
+                Bucket: process.env.AWS_S3_BUCKET_NAME,
+                CopySource: `/${process.env.AWS_S3_BUCKET_NAME}/${decodeURIComponent(originalKey)}`,
+                Key: newKey,
+              }).promise();
+              return `https://${process.env.AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${newKey}`;
+            })()
+          : args.imageUrl;
     
-          const copyParams = {
-            Bucket: process.env.AWS_S3_BUCKET_NAME,
-            CopySource: `/${process.env.AWS_S3_BUCKET_NAME}/${decodeURIComponent(originalKey)}`, 
-            Key: newKey,
-          };
-    
-          try {
-            await s3.copyObject(copyParams).promise();
-            newImageUrl = `https://light-pack-planner.s3.amazonaws.com/${newKey}`;
-          } catch (error) {
-            throw new Error("Failed to duplicate item image");
-          }
-        }
-      
         const itemsCount = await Item.countDocuments({ categoryId: args.categoryId, owner: user.userId });
     
-        const newItem = await Item.create({
-          name: args.name,
-          description: args.description,
-          weight: args.weight,
-          link: args.link,
-          qty: args.qty,
-          worn: args.worn,
-          categoryId: args.categoryId,
-          bagId: args.bagId,
-          tripId: args.tripId,
+        return await Item.create({
+          ...args,
           owner: user.userId,
           order: itemsCount + 1,
           imageUrl: newImageUrl,
         });
-    
-        return newItem;
       } catch (error) {
+        console.error("Error duplicating item:", error);
         throw new Error("Failed to duplicate item");
       }
     },
-    
 
 
     deleteItem: async (_, { id }, { user }) => {

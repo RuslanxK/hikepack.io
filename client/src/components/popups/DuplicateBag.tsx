@@ -26,8 +26,8 @@ const DuplicateBag: React.FC<DuplicateBagModalProps> = ({ isOpen, onClose, bag }
       });
       onClose();
      
-    } catch (e) {
-      setError('Error deleting trip. Please try again.');
+    } catch (error) {
+      setError('Failed to duplicate. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ const DuplicateBag: React.FC<DuplicateBagModalProps> = ({ isOpen, onClose, bag }
           DUPLICATE
           {loading && <Spinner w={4} h={4}/>}
         </button>
-        {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
+        {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message={error} type="error" /> }
       </div>
     </Modal>
   );

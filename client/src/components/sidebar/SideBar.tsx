@@ -121,9 +121,9 @@ const SideBar: React.FC = () => {
         </button>
 
         <img
-          src={isDarkTheme ? '/images/logo-black.png' : '/images/logo-black.png'}
+          src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
           width={90}
-          className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3 cursor-pointer dark:invert'
+          className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3 cursor-pointer'
           alt="logo"
           onClick={() => navigate('/')}
         />
@@ -136,9 +136,9 @@ const SideBar: React.FC = () => {
       >
         <div className="flex sm:flex-col justify-between items-center p-4">
           <img
-            src={isDarkTheme ? '/images/logo-black.png' : '/images/logo-black.png'}
+            src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
             width={90}
-            className="pb-2 pl-2 pr-2 sm:p-0 cursor-pointer dark:invert"
+            className="pb-2 pl-2 pr-2 sm:p-0 cursor-pointer"
             alt="logo"
             onClick={() => navigate('/')}
           />

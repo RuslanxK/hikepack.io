@@ -89,8 +89,8 @@ const Home: React.FC = () => {
               </p>
 
               {data?.trips.length === 0 ? null : (
-  <div className="w-full flex flex-col md:flex-row items-start bg-secondary dark:bg-box mt-5 bg-secondary p-4 rounded-lg">
-    {/* Group 1: Search by Name */}
+  <div className="w-full flex flex-col md:flex-row items-start bg-secondary dark:bg-black mt-5 bg-secondary p-4 rounded-lg">
+   
     <div className="flex flex-col w-full md:w-1/4 md:mr-10 mb-4 md:mb-0">
       <label
         htmlFor="search-name"
@@ -108,7 +108,6 @@ const Home: React.FC = () => {
       />
     </div>
 
-    {/* Group 2: Search by Distance */}
     <div className="flex flex-col w-full md:w-1/4 md:mr-10 mb-4 md:mb-0">
       <label
         htmlFor="search-distance"
@@ -129,8 +128,6 @@ const Home: React.FC = () => {
         {searchDistance} {userData?.user?.distance}
       </span>
     </div>
-
-    {/* Group 3: Search by Date */}
     <div className="flex flex-col w-full md:w-1/4 md:mr-5 mb-4 md:mb-0">
       <label
         htmlFor="search-date"
@@ -147,7 +144,6 @@ const Home: React.FC = () => {
       />
     </div>
 
-    {/* Clear Filters Button */}
     <div className="w-full md:w-1/4 flex justify-start md:self-end">
       <input
         type="button"
@@ -163,7 +159,6 @@ const Home: React.FC = () => {
   </div>
 )}
 
-   
             </div>
   
           </div>

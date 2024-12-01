@@ -39,7 +39,7 @@ export const GET_TRIP = gql`
 
 
 export const GET_SHARED_TRIP = gql`
- query GetsSharedTrip($id: ID!) {
+ query GetSharedTrip($id: ID!) {
     sharedTrip(id: $id) {
       id
       name

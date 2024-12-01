@@ -192,7 +192,8 @@ const BagDetails: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className='container mx-auto sm:mt-0 sm:p-4 mt-24 p-4'>
+    <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
+      <div className='p-4 sm:p-10 space-y-6'>
       <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataBag.bag.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
@@ -293,6 +294,7 @@ const BagDetails: React.FC = () => {
       
         {dataBag?.bag?.allItems?.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataBag?.bag?.allItems}  /> : null}
         <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />
+      </div>
       </div>
     </div>
   );

@@ -402,6 +402,10 @@ const resolvers = {
         if (!validPassword) {
           throw new Error('Invalid email or password.');
         }
+
+        user.lastLoggedIn = new Date();
+        await user.save();
+        
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
         res.cookie('token', token, {
           httpOnly: true, 
@@ -888,23 +892,46 @@ const resolvers = {
 
     deleteCategory: async (_, { id }, { user }) => {
       try {
-        const items = await Item.find({ categoryId: id, owner: user.userId });
 
+        const categoryToDelete = await Category.findOne({ _id: id, owner: user.userId });
+        if (!categoryToDelete) {
+          throw new Error('Category not found or not authorized to delete');
+        }
+  
+        const allCategories = await Category.find({ bagId: categoryToDelete.bagId, owner: user.userId }).sort('order');
+    
+        const reorderedCategories = allCategories
+          .filter((category) => category._id.toString() !== id) 
+          .map((category, index) => {
+            category.order = index; 
+            return category.save(); 
+          });
+    
+        await Promise.all(reorderedCategories);
+    
+        const items = await Item.find({ categoryId: id, owner: user.userId });
         for (const item of items) {
           if (item.imageUrl) {
-            await deleteFile(item.imageUrl);
+            await deleteFile(item.imageUrl); 
           }
         }
         await Item.deleteMany({ categoryId: id, owner: user.userId });
-        return await Category.findByIdAndDelete(ensureOwner(user, { _id: id }));
+    
+        const deletedCategory = await Category.findByIdAndDelete(id);
+    
+        return {
+          id: deletedCategory._id,
+          name: deletedCategory.name,
+          bagId: deletedCategory.bagId,
+        };
       } catch (error) {
         console.error(`Error deleting category with id ${id}:`, error);
         throw new Error('Failed to delete category');
       }
     },
-
     
-
+    
+    
 
     addItem: async (_, args, { user }) => {
       try {
@@ -917,7 +944,6 @@ const resolvers = {
         throw new Error('Failed to add item');
       }
     },
-
 
 
 

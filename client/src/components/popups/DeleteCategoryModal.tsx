@@ -22,10 +22,12 @@ const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({ isOpen, onClo
     try {
       await deleteCategory({
         variables: { id: categoryId },
-        refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
+        refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
+      });
       onClose();
-    } catch (e) {
+    } catch (error) { 
       setError('Error deleting category. Please try again.');
+      console.error(error); 
     } finally {
       setLoading(false);
     }
@@ -45,7 +47,7 @@ const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({ isOpen, onClo
           DELETE
           {loading && <Spinner w={4} h={4}/>}
         </button>
-        {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
+        {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message={error} type="error" /> }
       </div>
     </Modal>
   );

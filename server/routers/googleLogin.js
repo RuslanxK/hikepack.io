@@ -30,14 +30,18 @@ const findOrCreateUser = async (profile) => {
       googleId: profile.id,
       imageUrl: profile.picture,
       isAdmin: adminEmails.includes(profile.email) ? true : false, 
+      lastLoggedIn: new Date(),
     });
     await user.save();
   } else {
+
+     user.lastLoggedIn = new Date();
     
     if (adminEmails.includes(profile.email) && !user.isAdmin) {
       user.isAdmin = true;
-      await user.save();
     }
+
+    await user.save();
   }
 
   return user;

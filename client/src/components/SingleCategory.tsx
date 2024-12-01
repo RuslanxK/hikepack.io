@@ -134,13 +134,34 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
 
   const removeAllSelectedItems = async () => {
     try {
+      
       await Promise.all(
         checkedItems.map(async (item) => {
-          await deleteItem({ variables: { id: item.id },
-          refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
+          await deleteItem({ variables: { id: item.id } });
         })
       );
-      setCheckedItems([]); 
+  
+      const remainingItems = itemsData.filter(
+        (item) => !checkedItems.some((checkedItem) => checkedItem.id === item.id)
+      );
+  
+      const reorderedItems = remainingItems.map((item, index) => ({
+        ...item,
+        order: index + 1,
+      }));
+  
+      setItemsData(reorderedItems);
+  
+      await Promise.all(
+        reorderedItems.map((item) =>
+          updateItem({
+            variables: { id: item.id, order: item.order },
+            refetchQueries: [{ query: GET_BAG, variables: { id: id } }],
+          })
+        )
+      );
+  
+      setCheckedItems([]);
     } catch (error) {
       console.error("Error removing items:", error);
     }

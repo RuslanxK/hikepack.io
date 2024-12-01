@@ -356,14 +356,15 @@ const resolvers = {
       }
     },
 
-    allItems: async () => {
+    allItems: async (_, __, { user }) => {
       try {
-        const items = await Item.find({ name: { $ne: "", $exists: true } })
+        if (!user) throw new Error('Not authenticated');
+        const items = await Item.find({ owner: user.userId, name: { $ne: "", $exists: true } })
           .sort({ createdAt: -1 })
           .exec();
-
-        const uniqueItems = [...new Map(items.map(item => [item.name, item])).values()];
-
+  
+        const uniqueItems = [...new Map(items.map((item) => [item.name, item])).values()];
+  
         return uniqueItems.slice(0, 50);
       } catch (error) {
         console.error('Error fetching all items:', error);

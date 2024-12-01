@@ -260,9 +260,9 @@ const resolvers = {
     },
 
 
-    allUserBags: async (_, __, { user }) => {
+    allUserBags: async () => {
       try {
-        return await Bag.find(ensureOwner(user));
+        return await Bag.find();
       } catch (error) {
         console.error('Error fetching bags:', error);
         throw new Error('Failed to fetch bags');

@@ -32,12 +32,6 @@ const MainShare: React.FC = () => {
     skip: !dataBag || !dataBag.sharedBag?.tripId,  
   });
 
-
-  console.log(errorUser)
-  console.log(errorBag)
-  console.log( errorTrip)
-  console.log( errorAllBags)
-
  
   const [updateLikes] = useMutation(UPDATE_LIKES_BAG);
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);

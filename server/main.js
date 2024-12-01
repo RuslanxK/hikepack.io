@@ -33,7 +33,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-const excludedResolvers = ['LoginUser', 'AddUser', 'GetSharedBag', 'GetCategories', 'GetItems', 'GetItem', 'UpdateLikesBag', 'CheckEmailExistence', 'UpdateVerifiedCredentials', 'SendResetPasswordLink', 'ResetPassword', 'GetSharedUser, GetSharedTrip']; 
+const excludedResolvers = ['LoginUser', 'AddUser', 'GetSharedBag', 'GetCategories', 'GetItems', 'GetItem', 'UpdateLikesBag', 'CheckEmailExistence', 'UpdateVerifiedCredentials', 'SendResetPasswordLink', 'ResetPassword', 'GetSharedUser, GetSharedTrip, GetUserBags']; 
 
 const dynamicAuthMiddleware = async (resolve, parent, args, context, info) => {
 

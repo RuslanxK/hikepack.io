@@ -18,7 +18,7 @@ interface SupportUsModalProps {
 const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
   const [selectedCoffee, setSelectedCoffee] = useState<number>(1);
   const coffeeOptions = [1, 3, 5, 10];
-  const pricePerCoffee = 1;
+  const pricePerCoffee = 5;
 
   const paypalOptions: ReactPayPalScriptOptions = {
     clientId: process.env.REACT_APP_PAYPAL_CLIENT || "",
@@ -60,7 +60,6 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
             return actions.order.capture().then((details) => {
               const payerName = details?.payer?.name?.given_name || "Customer";
               alert(`Transaction completed by ${payerName}`);
-              console.log(data)
               onClose();
             });
           }
@@ -104,7 +103,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
               {coffeeOptions.map((option) => (
                 <button
                   key={option}
-                  className={`px-5 py-1.5 rounded-lg border ${
+                  className={`px-4 py-1 rounded-lg border ${
                     selectedCoffee === option
                       ? "bg-primary text-white"
                       : "bg-white dark:bg-black text-gray-800 dark:text-gray-200 dark:border-accent"
@@ -120,7 +119,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
                 min="1"
                 value={selectedCoffee}
                 placeholder="   +"
-                className="w-12 py-1.5 border text-md rounded-lg text-gray-800 dark:text-gray-200 dark:bg-black dark:border-accent focus:outline-none focus:ring focus:ring-primary text-center placeholder:text-gray-400"
+                className="w-12 py-1 border text-md rounded-lg text-gray-800 dark:text-gray-200 dark:bg-black dark:border-accent focus:outline-none focus:ring focus:ring-primary text-center placeholder:text-gray-400"
                 onChange={(e) => {
                   const value = parseInt(e.target.value, 10);
                   setSelectedCoffee(!isNaN(value) && value > 0 ? value : 1);

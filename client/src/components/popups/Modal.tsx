@@ -1,6 +1,5 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { FaTimes } from 'react-icons/fa';
 import { ModalProps } from '../../types/modal';
 import { MdCancel } from "react-icons/md";
 

@@ -13,6 +13,8 @@ import { GET_USER } from '../../queries/userQueries';
 import { googleLogout } from '@react-oauth/google';
 import { CgMenuLeftAlt } from 'react-icons/cg';
 import { MdCancel } from "react-icons/md";
+import { BiSolidCoffeeAlt } from "react-icons/bi";
+import SupportUsModal from '../popups/SupportUsModel';
 
 
 interface SideBarItemProps {
@@ -32,6 +34,7 @@ const SideBar: React.FC = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(initialTheme);
   const [showLatestBags, setShowLatestBags] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   const navigate = useNavigate();
@@ -201,7 +204,15 @@ const SideBar: React.FC = () => {
               </React.Fragment>
             ))}
           </ul>
-        </nav>
+
+    <div className="flex flex-row justify-center items-center bg-theme-light pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg mt-8 cursor-pointer dark:bg-black dark:hover:bg-primary hover:bg-primary group" onClick={() => setIsModalOpen(true)}>
+      <BiSolidCoffeeAlt size={16} className="text-current group-hover:text-white" />
+      <p className="text-sm ml-1.5 text-current group-hover:text-white">Support us</p>
+     </div>
+    </nav>
+
+
+     <SupportUsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
         <div className="p-4 flex items-center">
           {loadingUser ? (

@@ -8,7 +8,6 @@
    width: 0px;
 }
 
-
 #scroll {
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: rgba(100, 100, 100, 0.5) transparent; /* For Firefox */

@@ -150,7 +150,7 @@ const TripDetails: React.FC = () => {
 
 
   {trip.bags.length > 0 ? (
-  <div className="p-4 w-full flex flex-col sm:flex-row items-start bg-secondary dark:bg-black rounded-lg">
+  <div className="p-4 w-full flex flex-col sm:flex-row items-start bg-gray-100 border dark:bg-black rounded-lg">
     {/* Search by Name */}
     <div className="flex flex-col w-full sm:w-1/3 sm:mr-10 mb-4 sm:mb-0">
       <label

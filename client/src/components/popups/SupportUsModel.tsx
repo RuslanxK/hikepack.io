@@ -97,7 +97,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
           </p>
           <p className="text-sm text-gray-800 dark:text-gray-200 mb-1 mt-4 font-semibold">Choose your coffee amount:</p>
 
-          <div className="mt-4 bg-gray-100 p-3 border rounded-lg">
+          <div className="mt-4 bg-gray-100 sm:p-4 p-3 border rounded-lg">
             <div className="flex flex-wrap gap-3 items-center">
               <BiSolidCoffeeAlt size={30} className="text-primary" />
               <MdClose size={25} className="text-accent" />

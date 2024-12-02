@@ -58,6 +58,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
             return actions.order.capture().then((details) => {
               const payerName = details?.payer?.name?.given_name || "Customer";
               alert(`Transaction completed by ${payerName}`);
+              console.log(data)
               onClose();
             });
           }

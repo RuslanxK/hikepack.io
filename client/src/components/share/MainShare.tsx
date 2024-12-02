@@ -142,11 +142,11 @@ const MainShare: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row mt-5">
-            <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg sm:mb-0 mb-5 mr-0 sm:mr-3">
+            <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-1 p-3 rounded-lg sm:mb-0 mb-5 mr-0 sm:mr-3">
               <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
               Distance: <b className='ml-1.5'>{trip.distance} {userData.userShared.distance}</b>
             </p>
-            <p className={` text-sm flex items-center rounded-lg border border-2 dark:border-accent p-3 text-accent dark:text-white`}>
+            <p className={` text-sm flex items-center rounded-lg border border-1 dark:border-accent p-3 text-accent dark:text-white`}>
               <FaClock className="mr-1 text-accent dark:text-white" />
               Trip date: <b className='ml-1.5'>{trip.startDate}</b>
             </p>

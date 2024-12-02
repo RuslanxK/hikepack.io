@@ -124,11 +124,11 @@ const TripDetails: React.FC = () => {
                 </div>
 
                 <div className="flex flex-row sm:p-0">
-                  <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-2 p-3 rounded-lg mr-2.5">
+                  <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-1 p-3 rounded-lg mr-2.5">
                     <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
                     <b>{trip.distance} {userData?.user?.distance}</b>
                   </p>
-                  <p className={`text-sm flex items-center rounded-lg border border-2 dark:border-accent p-3 ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
+                  <p className={`text-sm flex items-center rounded-lg border border-1 dark:border-accent p-3 ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
                     <FaClock className="mr-1 text-accent dark:text-white" />
                     <b>{daysLeft === 'Traveled' ? 'Traveled' : daysLeft}</b>
                   </p>
@@ -148,10 +148,9 @@ const TripDetails: React.FC = () => {
 
   <hr className="border-t-1 border dark:border-zinc-600 my-4" />
 
-
   {trip.bags.length > 0 ? (
-  <div className="p-4 w-full flex flex-col sm:flex-row items-start bg-gray-100 border dark:bg-black rounded-lg">
-    {/* Search by Name */}
+  <div className="p-4 w-full flex flex-col sm:flex-row items-start bg-gray-100 border dark:border-black dark:bg-black rounded-lg">
+  
     <div className="flex flex-col w-full sm:w-1/3 sm:mr-10 mb-4 sm:mb-0">
       <label
         htmlFor="search-name"
@@ -169,7 +168,7 @@ const TripDetails: React.FC = () => {
       />
     </div>
 
-    {/* Search by Goal */}
+   
     <div className="flex flex-col w-full sm:w-1/3 sm:mr-5 mb-4 sm:mb-0">
       <label
         htmlFor="search-goal"

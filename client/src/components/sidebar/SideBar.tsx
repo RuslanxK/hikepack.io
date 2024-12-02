@@ -205,7 +205,7 @@ const SideBar: React.FC = () => {
             ))}
           </ul>
 
-     <button className="flex flex-row justify-center w-full border pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg bg-gray-100 mt-8 dark:bg-black dark:hover:bg-primary hover:bg-primary group" onClick={() => setIsModalOpen(true)}>
+     <button className="flex flex-row justify-center w-full border dark:border-black hover:dark:border-primary pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg bg-gray-100 mt-8 dark:bg-black dark:hover:bg-primary hover:bg-primary group" onClick={() => setIsModalOpen(true)}>
       <BiSolidCoffeeAlt size={16} className="text-current group-hover:text-white" />
       <p className="text-sm ml-1.5 text-current group-hover:text-white">Support us</p>
      </button>
@@ -246,8 +246,8 @@ const SideBar: React.FC = () => {
           ) : null}
         </div>
 
-        <div className="p-4 border-t border-gray-300 dark:border-gray-600 flex items-center">
-          <button className="text-black dark:text-white flex items-center w-full p-2 border rounded-lg hover:bg-button-light dark:hover:bg-button-dark text-sm" onClick={handleLogout}>
+        <div className="p-4 border-t border-gray-200 dark:border-accent flex items-center">
+          <button className="text-black dark:text-white flex items-center w-full p-2 rounded-lg hover:bg-button-light dark:hover:bg-button-dark text-sm" onClick={handleLogout}>
             <FaSignOutAlt className="mr-3 text-black dark:text-white" />
             Logout
           </button>

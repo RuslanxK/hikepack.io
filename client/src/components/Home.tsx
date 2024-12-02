@@ -89,7 +89,7 @@ const Home: React.FC = () => {
               </p>
 
               {data?.trips.length === 0 ? null : (
-  <div className="w-full flex flex-col md:flex-row items-start bg-gray-100 border dark:bg-black mt-5 bg-secondary p-4 rounded-lg">
+  <div className="w-full flex flex-col md:flex-row items-start bg-gray-100 border dark:border-black dark:bg-black mt-5 p-4 rounded-lg">
    
     <div className="flex flex-col w-full md:w-1/4 md:mr-10 mb-4 md:mb-0">
       <label
@@ -153,7 +153,7 @@ const Home: React.FC = () => {
           setSearchDistance('');
           setSearchDate('');
         }}
-        className="p-2 border border-2 bg-accent text-white rounded-lg text-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 w-full md:w-auto cursor-pointer"
+        className="p-2 border border-2 dark:border-accent bg-accent text-white rounded-lg text-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 w-full md:w-auto cursor-pointer"
       />
     </div>
   </div>

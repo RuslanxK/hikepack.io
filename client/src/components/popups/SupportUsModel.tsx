@@ -97,10 +97,10 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
           </p>
           <p className="text-sm text-gray-800 dark:text-gray-200 mb-1 mt-4 font-semibold">Choose your coffee amount:</p>
 
-          <div className="mt-4 bg-gray-100 sm:p-4 p-3 border rounded-lg">
+          <div className="mt-4 bg-gray-100 dark:bg-box sm:p-4 p-3 border dark:border-accent rounded-lg">
             <div className="flex flex-wrap gap-3 items-center">
               <BiSolidCoffeeAlt size={30} className="text-primary" />
-              <MdClose size={25} className="text-accent" />
+              <MdClose size={25} className="text-accent dark:text-gray-300" />
               {coffeeOptions.map((option) => (
                 <button
                   key={option}
@@ -139,7 +139,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
         </div>
 
        
-        <div className="sm:w-5/12 w-full bg-gray-100 dark:bg-black p-4 rounded-lg border dark:border-accent">
+        <div className="sm:w-5/12 w-full bg-gray-100 dark:bg-theme-dark p-4 rounded-lg border dark:border-accent">
           <div className="flex flex-row justify-between w-full items-center mb-4">
             <h3 className="text-lg font-semibold dark:text-white">Payment</h3>
           </div>

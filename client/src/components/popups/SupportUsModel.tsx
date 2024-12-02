@@ -88,7 +88,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
         }}
       >
         
-        <div className="md:w-6/12 sticky top-0">
+        <div className="md:w-6/12 sm:sticky sm:top-0">
           <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
             We are a team of developers and designers who love hiking and actively enjoy the outdoors. Our mission is to help hikers organize their trips & bags with ease and share their journeys with others.
           </p>
@@ -97,7 +97,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
           </p>
           <p className="text-sm text-gray-800 dark:text-gray-200 mb-1 mt-4 font-semibold">Choose your coffee amount:</p>
 
-          <div className="mt-4 bg-gray-100 p-4 border rounded-lg">
+          <div className="mt-4 bg-gray-100 p-3 border rounded-lg">
             <div className="flex flex-wrap gap-3 items-center">
               <BiSolidCoffeeAlt size={30} className="text-primary" />
               <MdClose size={25} className="text-accent" />

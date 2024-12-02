@@ -25,6 +25,8 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
     currency: "USD",
   };
 
+
+
   const PayPalButtonsWrapper: React.FC = () => {
     const [{ isPending }] = usePayPalScriptReducer();
 
@@ -85,7 +87,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
           overflowY: "auto",
         }}
       >
-        {/* Left Content Section */}
+        
         <div className="md:w-6/12 sticky top-0">
           <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
             We are a team of developers and designers who love hiking and actively enjoy the outdoors. Our mission is to help hikers organize their trips & bags with ease and share their journeys with others.
@@ -136,7 +138,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Right Payment Section */}
+       
         <div className="sm:w-5/12 w-full bg-gray-100 dark:bg-black p-4 rounded-lg border dark:border-accent">
           <div className="flex flex-row justify-between w-full items-center mb-4">
             <h3 className="text-lg font-semibold dark:text-white">Payment</h3>

@@ -5,9 +5,9 @@ const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center min-h-screen dark:bg-zinc-900 bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-9xl font-extrabold text-primary flex flex-row items-center justify-center">
+    <div className="flex items-center justify-center min-h-screen dark:bg-zinc-900 bg-gray-100 p-5">
+      <div className="text-center bg-white p-10 rounded-lg">
+        <h1 className="text-6xl font-extrabold text-primary flex flex-row items-center justify-center">
           404
         </h1>
         <p className="text-2xl text-gray-800 dark:text-white mt-4">Oops! Page Not Found</p>

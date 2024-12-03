@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import { BiSolidCoffeeAlt } from "react-icons/bi";
 import {
   PayPalScriptProvider,
   PayPalButtons,
@@ -18,8 +17,9 @@ interface SupportUsModalProps {
 
 const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
   const [selectedCoffee, setSelectedCoffee] = useState<number>(1);
+  const [customCoffeeAmount, setCustomCoffeeAmount] = useState<number | null>(null);
   const [message, setMessage] = useState<{ title: string; message: string; type: string } | null>(null);
-  const coffeeOptions = [1, 3, 5, 10];
+  const coffeeOptions = [1, 3, 5, 10, 15];
   const pricePerCoffee = 1;
 
   const paypalOptions: ReactPayPalScriptOptions = {
@@ -61,8 +61,8 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
           if (actions.order) {
             return actions.order.capture().then((details) => {
               setMessage({
-                title: "Success!",
-                message: "Thank you for your support!",
+                title: "Thank You for Supporting Our Mission!",
+                message: "We're deeply grateful for your generosity. Every coffee you buy keeps us innovating for you and our outdoor-loving community!",
                 type: "success",
               });
               
@@ -92,7 +92,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      title="Buy Us a Coffee"
+      title="Fuel Our Grind – Get Us a Coffee!"
       customClassName="sm:max-w-4xl"
     >
       <div
@@ -103,7 +103,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
         }}
       >
         
-        <div className="md:w-6/12 sm:sticky sm:top-0">
+        <div className="md:w-7/12 sm:sticky sm:top-0">
           <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
             We are a team of developers and designers who love hiking and actively enjoy the outdoors. Our mission is to help hikers organize their trips & bags with ease and share their journeys with others.
           </p>
@@ -114,7 +114,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
 
           <div className="mt-4 bg-gray-100 dark:bg-box sm:p-4 p-3 border dark:border-accent rounded-lg">
             <div className="flex flex-wrap gap-3 items-center">
-              <BiSolidCoffeeAlt size={30} className="text-primary" />
+              <img src="/images/coffee-cup.png" width={32} height={32} alt="coffee" />
               <MdClose size={25} className="text-accent dark:text-gray-300" />
               {coffeeOptions.map((option) => (
                 <button
@@ -130,26 +130,28 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
                 </button>
               ))}
 
-              <input
-                type="number"
-                min="1"
-                value={selectedCoffee}
-                placeholder="   +"
-                className="w-12 py-1 border text-md rounded-lg text-gray-800 dark:text-gray-200 dark:bg-black dark:border-accent focus:outline-none focus:ring focus:ring-primary text-center placeholder:text-gray-400"
-                onChange={(e) => {
-                  const value = parseInt(e.target.value, 10);
-                  setSelectedCoffee(!isNaN(value) && value > 0 ? value : 1);
-                }}
-              />
             </div>
+
+            <input
+  type="number"
+  min="1"
+  value={customCoffeeAmount ?? ""}
+  placeholder="Enter your amount – every drop counts!"
+  className="text-sm w-full mt-4 pl-2 pr-2 py-2 border text-md rounded-lg text-gray-800 dark:text-gray-200 dark:bg-black dark:border-accent focus:outline-none focus:ring focus:ring-primary placeholder:text-gray-400"
+  onChange={(e) => {
+    const value = parseInt(e.target.value, 10);
+    setCustomCoffeeAmount(!isNaN(value) && value > 0 ? value : null);
+  }}
+/>
+
           </div>
           <div className="text-sm text-gray-800 dark:text-gray-200 mt-5">
-            <p>
-              You are about to pay:{" "}
-              <span className="font-semibold text-primary">
-                ${(selectedCoffee * pricePerCoffee).toFixed(2)}
-              </span>
-            </p>
+          <p>
+  You are about to donate:{" "}
+  <span className="font-semibold text-primary">
+    ${((customCoffeeAmount ?? selectedCoffee) * pricePerCoffee).toFixed(2)}
+  </span>
+</p>
           </div>
         </div>
 
@@ -157,7 +159,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
         <div className="sm:w-5/12 w-full">
         <div className="bg-gray-100 dark:bg-theme-dark border dark:border-accent rounded-lg p-4">
           <div className="flex flex-row justify-between w-full items-center mb-4">
-            <h3 className="text-lg font-semibold dark:text-white">Payment</h3>
+            <h3 className="text-lg font-semibold dark:text-white">Donate Method</h3>
           </div>
           <PayPalScriptProvider options={paypalOptions}>
             <PayPalButtonsWrapper />

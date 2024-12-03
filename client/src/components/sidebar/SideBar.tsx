@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaHome, FaBook, FaSearch, FaCog, FaHistory, FaBug, FaUserShield, FaSignOutAlt, FaSun, FaMoon  } from 'react-icons/fa';
+import { FaHome, FaBook, FaSearch, FaCog, FaHistory, FaExclamationTriangle, FaUserShield, FaSignOutAlt, FaSun, FaMoon  } from 'react-icons/fa';
 import { PiEmptyBold } from "react-icons/pi";
 import { GiHiking, GiSchoolBag } from 'react-icons/gi';
 import SideBarItem from './SideBarItem';
@@ -13,7 +13,6 @@ import { GET_USER } from '../../queries/userQueries';
 import { googleLogout } from '@react-oauth/google';
 import { CgMenuLeftAlt } from 'react-icons/cg';
 import { MdCancel } from "react-icons/md";
-import { BiSolidCoffeeAlt } from "react-icons/bi";
 import SupportUsModal from '../popups/SupportUsModel';
 
 
@@ -54,7 +53,7 @@ const SideBar: React.FC = () => {
     { to: "/community-bags", icon: FaSearch, label: "Community Bags" },
     { to: "/settings", icon: FaCog, label: "Settings" },
     { to: "/changelog", icon: FaHistory, label: "Changelog" },
-    { to: "/bug-report", icon: FaBug, label: "Report a Bug" },
+    { to: "/bug-report", icon: FaExclamationTriangle, label: "Report a Bug" },
     ...(userData?.user?.isAdmin
       ? [{ to: "/admin-settings", icon: FaUserShield, label: "Admin settings" }]
       : [])

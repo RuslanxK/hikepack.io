@@ -9,6 +9,7 @@ import {
 } from "@paypal/react-paypal-js";
 import { MdClose } from "react-icons/md";
 import Spinner from "../loading/Spinner";
+import Message from "../message/Message";
 
 interface SupportUsModalProps {
   isOpen: boolean;
@@ -17,8 +18,9 @@ interface SupportUsModalProps {
 
 const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
   const [selectedCoffee, setSelectedCoffee] = useState<number>(1);
+  const [message, setMessage] = useState<{ title: string; message: string; type: string } | null>(null);
   const coffeeOptions = [1, 3, 5, 10];
-  const pricePerCoffee = 5;
+  const pricePerCoffee = 1;
 
   const paypalOptions: ReactPayPalScriptOptions = {
     clientId: process.env.REACT_APP_PAYPAL_CLIENT || "",
@@ -58,24 +60,38 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
         onApprove={(data, actions) => {
           if (actions.order) {
             return actions.order.capture().then((details) => {
-              const payerName = details?.payer?.name?.given_name || "Customer";
-              alert(`Transaction completed by ${payerName}`);
-              onClose();
+              setMessage({
+                title: "Success!",
+                message: "Thank you for your support!",
+                type: "success",
+              });
+              
             });
           }
           return Promise.reject("Order action is not available");
         }}
         onError={(err) => {
-          alert(`Something went wrong: ${err}`);
+          setMessage({
+            title: "Error",
+            message: `Something went wrong: ${err}`,
+            type: "error",
+          });
         }}
       />
     );
   };
 
+
+  const handleClose = () => {
+    setMessage(null); 
+    onClose(); 
+  };
+
+
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title="Buy Us a Coffee"
       customClassName="sm:max-w-4xl"
     >
@@ -138,13 +154,26 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
         </div>
 
        
-        <div className="sm:w-5/12 w-full bg-gray-100 dark:bg-theme-dark p-4 rounded-lg border dark:border-accent">
+        <div className="sm:w-5/12 w-full">
+        <div className="bg-gray-100 dark:bg-theme-dark border dark:border-accent rounded-lg p-4">
           <div className="flex flex-row justify-between w-full items-center mb-4">
             <h3 className="text-lg font-semibold dark:text-white">Payment</h3>
           </div>
           <PayPalScriptProvider options={paypalOptions}>
             <PayPalButtonsWrapper />
           </PayPalScriptProvider>
+          </div>
+          {message && (
+            <div className="mt-4">
+              <Message
+                padding="p-4"
+                width='w-full'
+                title={message.title}
+                message={message.message}
+                type={message.type as "success" | "error"}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Modal>

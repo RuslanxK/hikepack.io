@@ -1,26 +1,36 @@
 const express = require("express");
-const Article = require("../models/article"); 
-const router = express.Router();
-const s3 = require("../config/s3Config");
-const upload = require("../config/uploadConfig");
+const sanitizeHtml = require("sanitize-html");
 const { v4: uuidv4 } = require("uuid"); 
+const Article = require("../models/article"); 
+const s3 = require("../config/s3Config"); 
+const upload = require("../config/uploadConfig"); 
+const router = express.Router(); 
 
 
 router.post("/upload-article", upload.single("file"), (req, res) => {
   const file = req.file;
-  const { title, description } = req.body; 
+  const { title, description } = req.body;
+
   if (!file || !title || !description) {
     return res.status(400).json({ error: 'All fields are required: file, title, and description' });
   }
 
+  
+  const sanitizedDescription = sanitizeHtml(description, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["style"]), 
+    allowedAttributes: {
+      "*": ["style"], 
+    },
+  });
+
   const getCurrentTimestamp = () => {
     const now = new Date();
-    return now.toISOString().replace(/[-:.]/g, ''); 
+    return now.toISOString().replace(/[-:.]/g, '');
   };
 
-  const timestamp = getCurrentTimestamp(); 
+  const timestamp = getCurrentTimestamp();
   const uuid = uuidv4();
-  key = `${uuid}-${timestamp}-${file.originalname}`;
+  const key = `${uuid}-${timestamp}-${file.originalname}`;
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
@@ -38,8 +48,8 @@ router.post("/upload-article", upload.single("file"), (req, res) => {
     try {
       const newArticle = new Article({
         title,
-        description,
-        imageUrl: data.Location, 
+        description: sanitizedDescription,
+        imageUrl: data.Location,
       });
 
       await newArticle.save();
@@ -52,4 +62,4 @@ router.post("/upload-article", upload.single("file"), (req, res) => {
   });
 });
 
-module.exports = router;
+module.exports = router; 

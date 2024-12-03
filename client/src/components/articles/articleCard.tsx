@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import truncate from 'html-truncate';
 
 interface Article {
   id: number;
   title: string;
   imageUrl: string;
-  description: string;
-  createdAt: string; 
+  description: string; 
+  createdAt: string;
 }
 
 interface ArticleCardProps {
@@ -16,7 +17,6 @@ interface ArticleCardProps {
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   const navigate = useNavigate();
 
-
   const handleReadMore = () => {
     navigate(`/article/${article.id}`);
   };
@@ -25,19 +25,17 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
     article.title.length > 25
       ? `${article.title.slice(0, 25)}...`
       : article.title;
-  const truncatedDescription =
-    article.description.length > 70
-      ? `${article.description.slice(0, 70)}...`
-      : article.description;
 
+  const formattedDate = !isNaN(Number(article.createdAt))
+    ? new Date(Number(article.createdAt)).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+      })
+    : 'Invalid Date';
 
-      const formattedDate = !isNaN(Number(article.createdAt))
-      ? new Date(Number(article.createdAt)).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-        })
-      : 'Invalid Date';
+  // Truncate HTML description
+  const truncatedDescription = truncate(article.description, 70); // Limit to 70 characters
 
   return (
     <div
@@ -58,9 +56,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         <h2 className="text-md font-semibold text-black dark:text-white mb-2">
           {truncatedTitle}
         </h2>
-        <p className="text-sm text-accent dark:text-gray-300 mb-4">
-          {truncatedDescription}
-        </p>
+        {/* Render truncated HTML description */}
+        <div
+          className="text-sm text-accent dark:text-gray-300 mb-4"
+          dangerouslySetInnerHTML={{ __html: truncatedDescription }}
+        ></div>
         <button
           onClick={handleReadMore}
           className="text-primary text-sm dark:text-button-lightGreen flex items-center font-medium w-full flex justify-end hover:text-button-hover"

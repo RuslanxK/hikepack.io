@@ -76,7 +76,7 @@ const SingleArticle: React.FC = () => {
         <p className="text-sm text-black dark:text-white mb-4">
           Posted on: {formattedDate}
         </p>
-          <p>{article.description}</p>
+          <div dangerouslySetInnerHTML={{ __html: article.description }}></div>
         </div>
       </div>
     </div>

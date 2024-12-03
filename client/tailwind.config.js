@@ -40,6 +40,7 @@ module.exports = {
           lightGreen: "#02ccb2",
           red: "#C13C3C",
           purple: "#7963CD",
+          paypal: "#f2ba36"
         },
 
         box: {

@@ -205,9 +205,9 @@ const SideBar: React.FC = () => {
             ))}
           </ul>
 
-     <button className="flex flex-row justify-center w-full border dark:border-black hover:dark:border-primary pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg bg-gray-100 mt-8 dark:bg-black dark:hover:bg-primary hover:bg-primary group" onClick={() => setIsModalOpen(true)}>
-      <BiSolidCoffeeAlt size={16} className="text-current group-hover:text-white" />
-      <p className="text-sm ml-1.5 text-current group-hover:text-white">Support us</p>
+     <button className="flex flex-row justify-center w-full pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg bg-button-paypal mt-8 text-black hover:bg-button-yellow" onClick={() => setIsModalOpen(true)}>
+      <BiSolidCoffeeAlt size={16} />
+      <p className="text-sm ml-1.5">Support us</p>
      </button>
     </nav>
 

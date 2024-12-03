@@ -92,7 +92,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      title="Fuel Our Grind – Get Us a Coffee!"
+      title="Get Us a Coffee!"
       customClassName="sm:max-w-4xl"
     >
       <div
@@ -104,6 +104,7 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
       >
         
         <div className="md:w-7/12 sm:sticky sm:top-0">
+
           <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
             We are a team of developers and designers who love hiking and actively enjoy the outdoors. Our mission is to help hikers organize their trips & bags with ease and share their journeys with others.
           </p>

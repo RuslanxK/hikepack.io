@@ -205,10 +205,12 @@ const SideBar: React.FC = () => {
             ))}
           </ul>
 
-     <button className="flex flex-row justify-center w-full pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg bg-button-paypal mt-8 text-black hover:bg-button-yellow" onClick={() => setIsModalOpen(true)}>
-      <BiSolidCoffeeAlt size={16} />
+     <div className='bg-gray-100 dark:bg-box w-full p-5 rounded-lg flex flex-col items-center justify-center'>
+     <button className="flex flex-row justify-center w-full pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg bg-primary text-white hover:bg-button-hover" onClick={() => setIsModalOpen(true)}>
+      <img src="/images/coffee-cup.png" width={20} height={20} alt="coffee" />
       <p className="text-sm ml-1.5">Support us</p>
      </button>
+     </div>
     </nav>
 
 

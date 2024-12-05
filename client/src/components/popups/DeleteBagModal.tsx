@@ -23,6 +23,7 @@ const DeleteBagModal: React.FC<DeleteBagModalProps> = ({ isOpen, onClose, bag })
       await deleteBag({
         variables: { id: bag.id },
         refetchQueries: [{ query: GET_TRIP, variables: { id: id } }],
+        
       });
       onClose();
      

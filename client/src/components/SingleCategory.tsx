@@ -137,7 +137,8 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       
       await Promise.all(
         checkedItems.map(async (item) => {
-          await deleteItem({ variables: { id: item.id } });
+          await deleteItem({ variables: { id: item.id }, refetchQueries: [{ query: GET_BAG, variables: { id: id } }], }, );
+          
         })
       );
   
@@ -155,9 +156,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       await Promise.all(
         reorderedItems.map((item) =>
           updateItem({
-            variables: { id: item.id, order: item.order },
-            refetchQueries: [{ query: GET_BAG, variables: { id: id } }],
-          })
+            variables: { id: item.id, order: item.order },})
         )
       );
   
@@ -209,17 +208,38 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
                 </SortableContext>
               </DndContext>
            
-           {checkedItems.length ? <button className="flex items-center pt-3 pb-3 text-button-red hover:text-accent focus:outline-none" onClick={removeAllSelectedItems}>
-              <TiDelete className="mr-1" size={19} />
-              Delete items { deletingItem ? <Spinner h={4} w={4}/> : null }
-            </button> :
-            <button className="flex items-center pt-3 pb-3 text-primary hover:text-accent dark:hover:text-primary dark:text-button-lightGreen focus:outline-none" onClick={handleAddItemSubmit}>
-              <FaPlus className="mr-1" size={14} />
-              Add item {addingItem ? <Spinner h={4} w={4}/> : null }
-            </button> }
-          </div>
-        
-      )}
+              {checkedItems.length > 0 ? (
+      <button
+        className="flex items-center pt-3 pb-3 text-button-red hover:text-accent focus:outline-none"
+        onClick={removeAllSelectedItems}
+      >
+        <TiDelete className="mr-1" size={19} />
+        {deletingItem ? (
+          <>
+            Deleting... <Spinner h={4} w={4} />
+          </>
+        ) : (
+          'Delete items'
+        )}
+      </button>
+    ) : (
+      <button
+        className="flex items-center pt-3 pb-3 text-primary hover:text-accent dark:hover:text-primary dark:text-button-lightGreen focus:outline-none"
+        onClick={handleAddItemSubmit}
+        disabled={addingItem}
+      >
+        <FaPlus className="mr-1" size={14} />
+        {addingItem ? (
+          <>
+            Adding... <Spinner h={4} w={4} />
+          </>
+        ) : (
+          'Add item'
+        )}
+      </button>
+    )}
+  </div>
+)}
 
       <DeleteCategoryModal isOpen={isModalDeleteOpen} categoryId={categoryData.id} categoryName={categoryData.name} onClose={() => setIsModalDeleteOpen(false)}  />
 

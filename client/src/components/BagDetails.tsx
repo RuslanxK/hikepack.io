@@ -30,7 +30,7 @@ const BagDetails: React.FC = () => {
 
   const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white focus:outline-none rounded p-1.5 dark:hover:bg-button-hover';
 
-  const { data: dataBag, loading: loadingBag, error: errorBag } = useQuery(GET_BAG, { variables: { id } });
+  const { data: dataBag, loading: loadingBag, error: errorBag, refetch} = useQuery(GET_BAG, { variables: { id } });
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
 
 
@@ -46,6 +46,14 @@ const BagDetails: React.FC = () => {
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [isSidePanelVisible, setIsSidePanelVisible] = useState( window.matchMedia('(max-width: 767px)').matches ? false : true); 
+
+
+  useEffect(() => {
+
+    refetch()
+
+  }, [id, refetch]);
+
 
   useEffect(() => {
     if (dataBag?.bag?.categories) {

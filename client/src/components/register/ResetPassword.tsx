@@ -78,7 +78,7 @@ const ResetPassword: React.FC = () => {
      
       <div className="sm:w-full md:w-1/2 bg-cover bg-center relative h-52 sm:h-auto" style={{ backgroundImage: `url('/images/new-password-img.jpg')` }}>
         <div className="absolute top-4 sm:top-8 left-4 sm:left-8">
-        <img src="/images/logo-black.png" alt="Logo" width={90} />
+        <img src="/images/logo-black.png" alt="Logo" width={75} className='sm:w-24'/>
         </div>
       </div>
 

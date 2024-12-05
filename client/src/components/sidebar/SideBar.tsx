@@ -115,17 +115,17 @@ const SideBar: React.FC = () => {
 
   return (
     <>
-      <div>
+      <div className="flex flex-row-reverse w-full bg-white dark:bg-box justify-between absolute p-4 sm:hidden">
         <button
-          className="sm:hidden p-1.5 absolute right-0 top-4 right-4 text-black dark:text-white bg-white dark:bg-box rounded"
+          className="text-black dark:text-white bg-white dark:bg-box rounded"
           onClick={() => setIsSidebarOpen(true)}>
           <CgMenuLeftAlt className="dark:text-white text-xl" />
         </button>
 
         <img
           src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
-          width={90}
-          className='sm:hidden p-2 z-30 absolute right-0 top-2 left-3 cursor-pointer'
+          width={75}
+          className='cursor-pointer'
           alt="logo"
           onClick={() => navigate('/')}
         />
@@ -140,7 +140,7 @@ const SideBar: React.FC = () => {
           <img
             src={isDarkTheme ? '/images/logo-white.png' : '/images/logo-black.png'}
             width={90}
-            className="pb-2 pl-2 pr-2 sm:p-0 cursor-pointer"
+            className="pb-2 pl-2 pr-2 sm:p-0 cursor-pointer sm:w-24"
             alt="logo"
             onClick={() => navigate('/')}
           />

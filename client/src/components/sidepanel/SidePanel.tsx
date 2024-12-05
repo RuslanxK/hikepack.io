@@ -17,7 +17,7 @@ const SidePanel: React.FC<SidePanelProps> = ({ isVisible, toggleVisibility, item
   
   return (
     <div
-      className={`bg-primary dark:bg-theme-bgDark w-1/2 sm:w-56 h-screen fixed right-0 top-0 transition-transform z-50  ${
+      className={`bg-primary sm:dark:bg-box dark:bg-theme-bgDark w-1/2 sm:w-56 h-screen fixed right-0 top-0 transition-transform z-50  ${
         isVisible ? 'translate-x-0' : 'translate-x-full'
       }`}
     >

@@ -27,7 +27,7 @@ const SidePanel: React.FC<SidePanelProps> = ({ isVisible, toggleVisibility, item
       >
         {isVisible ? <GoArrowRight size={20} /> : <GoArrowLeft size={20} />}
       </button>
-      <div className="p-4 flex flex-col items-center mt-18 sm:mt-0">
+      <div className="p-4 flex flex-col items-center mt-20 sm:mt-0">
         <h2 className="text-lg font-bold text-white mb-4"> Recent Items</h2>
         <ul className="text-base text-gray-100 dark:text-gray-300 max-h-[85vh] overflow-y-auto">
           {items.map(item => (

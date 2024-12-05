@@ -224,7 +224,7 @@ const BagDetails: React.FC = () => {
               <div className='w-fit sm:w-4/12 flex justify-end items-center'>
 
              
-             { bag.categories.some((category: Category) => category.items.length > 0) ? <label className="w-full inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:flex fixed bottom-0 p-2 sm:p-0 right-0 z-40 sm:static bg-white sm:bg-transparent sm:dark:bg-transparent dark:bg-theme-dark">
+             { bag.categories.some((category: Category) => category.items.length > 0) ? <label className="w-full inline-flex flex-row items-center justify-center cursor-pointer mr-0 sm:flex fixed bottom-0 p-4 sm:p-0 right-0 z-40 sm:static bg-white sm:bg-transparent sm:dark:bg-transparent dark:bg-theme-dark">
               <label className="dark:text-white text-sm text-accent mr-3">Share with Community</label>
               <input
                 type="checkbox"

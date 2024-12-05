@@ -110,7 +110,7 @@ const MainShare: React.FC = () => {
   return (
     <div className="container mx-auto p-4 w-full sm:w-10/12">
       <div className="flex flex-row items-center justify-between space-y-2 w-full bg-white dark:bg-box p-5 rounded-lg">
-              <img src={'/images/logo-black.png'} width={90} className="sm:p-0 p-2" alt="logo" onClick={() => navigate('/')} />
+              <img src={'/images/logo-black.png'} width={90} className="sm:p-0 p-2 sm:w-24" alt="logo" onClick={() => navigate('/')} />
               <button 
                 onClick={handleLikeToggle} 
                 className={`flex items-center space-x-1 pt-1.5 pb-1.5 pl-2 pr-2 rounded-lg ${hasLiked ? 'bg-primary text-white' : 'bg-zinc-400 text-zinc-100'} dark:${hasLiked ? 'bg-primary text-white' : 'bg-zinc-600 text-gray-400'}`}

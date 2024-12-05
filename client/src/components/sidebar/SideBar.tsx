@@ -114,8 +114,8 @@ const SideBar: React.FC = () => {
   };
 
   return (
-    <>
-      <div className="flex flex-row-reverse w-full bg-white dark:bg-box justify-between absolute p-4 sm:hidden">
+    <div className='fixed w-full z-50'>
+      <div className="flex flex-row-reverse w-full bg-white dark:bg-box justify-between p-4 sm:hidden">
         <button
           className="text-black dark:text-white bg-white dark:bg-box rounded"
           onClick={() => setIsSidebarOpen(true)}>
@@ -277,7 +277,7 @@ const SideBar: React.FC = () => {
           onClick={() => setIsSidebarOpen(false)} 
         />
       )}
-    </>
+    </div>
   );
 };
 

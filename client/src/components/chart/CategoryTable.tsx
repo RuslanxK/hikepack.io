@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CategoryTableProps } from '../../types/category';
+import Cookies from 'js-cookie';
+
 
 const weightConversionRates = {
   lb: { lb: 1, kg: 0.453592, g: 453.592, oz: 16 },
@@ -30,6 +32,10 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories, weightUnit: i
   const totalWeight = convertedCategories.reduce((sum, category) => sum + category.totalWeight, 0);
   const totalWornWeight = convertedCategories.reduce((sum, category) => sum + category.totalWornWeight, 0);
   const baseWeight = totalWeight - totalWornWeight;
+
+  useEffect(() => {
+    Cookies.set('totalWeight', totalWeight.toFixed(3), { expires: 7 }); 
+  }, [totalWeight, weightUnit, categories, initialWeightUnit]);
 
   return (
     <div className="w-full sm:p-0">

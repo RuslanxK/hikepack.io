@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import Message from './message/Message';
 import { GET_USER } from '../queries/userQueries';
 import Spinner from './loading/Spinner';
+import Cookies from 'js-cookie'; 
+
 
 const Home: React.FC = () => {
   const { loading, error, data } = useQuery<GetTripData>(GET_TRIPS);
@@ -22,6 +24,13 @@ const Home: React.FC = () => {
   const [searchName, setSearchName] = useState('');
   const [searchDistance, setSearchDistance] = useState('');
   const [searchDate, setSearchDate] = useState('');
+  const [totalWeightFromCookie, setTotalWeightFromCookie] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    const weight = Cookies.get('totalWeight');
+    setTotalWeightFromCookie(weight || '0');
+  }, []);
 
 
   const handleAddTrip = () => {
@@ -213,7 +222,7 @@ const Home: React.FC = () => {
                 <GridBox
                   title="Total Weight"
                   goal={` / ${latestBagData.latestBagWithDetails.goal} ${userData?.user?.weightOption}`}
-                  details={latestBagData.latestBagWithDetails.totalWeight.toFixed(2)}
+                  details={totalWeightFromCookie || "0"}
                   icon={FaWeight}
                 />
                 <GridBox

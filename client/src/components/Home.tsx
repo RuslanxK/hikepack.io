@@ -13,7 +13,7 @@ import Message from './message/Message';
 import { GET_USER } from '../queries/userQueries';
 import Spinner from './loading/Spinner';
 import Cookies from 'js-cookie'; 
-
+import TrailforksWidget from './TrailforksWidget';
 
 const Home: React.FC = () => {
   const { loading, error, data } = useQuery<GetTripData>(GET_TRIPS);
@@ -243,6 +243,8 @@ const Home: React.FC = () => {
         )}
 
         <AddTripModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} distanceUnit={userData?.user?.distance} />
+
+      <TrailforksWidget />
       </div>
     </div>
   );

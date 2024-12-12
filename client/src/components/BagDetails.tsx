@@ -348,6 +348,11 @@ const BagDetails: React.FC = () => {
               </DndContext>
             </div>
           </div>
+
+          
+
+
+          
       
         {dataBag?.bag?.allItems?.length ? <SidePanel isVisible={isSidePanelVisible} toggleVisibility={toggleSidePanel} categories={categoriesData} items={dataBag?.bag?.allItems}  /> : null}
         <UpdateBagModal isOpen={isModalUpdateOpen} onClose={() => setIsModalUpdateOpen(false)} bag={bag} weightUnit={userData?.user?.weightOption} />

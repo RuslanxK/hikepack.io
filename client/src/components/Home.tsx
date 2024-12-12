@@ -14,6 +14,8 @@ import { GET_USER } from '../queries/userQueries';
 import Spinner from './loading/Spinner';
 import Cookies from 'js-cookie';
 import Joyride, { Step } from 'react-joyride';
+import { useTransition, animated } from '@react-spring/web'; // React Spring import
+
 
 const Home: React.FC = () => {
   const { loading, error, data } = useQuery<GetTripData>(GET_TRIPS);
@@ -40,6 +42,14 @@ const Home: React.FC = () => {
   useEffect(() => {
     refetchLatestBag();
   }, [refetchLatestBag]);
+
+
+  const tripTransitions = useTransition(data?.trips || [], {
+    keys: (trip) => trip.id,
+    from: { opacity: 0, transform: 'translateY(20px)' },
+    enter: { opacity: 1, transform: 'translateY(0)' },
+    leave: { opacity: 0, transform: 'translateY(-20px)' },
+  });
 
   
   useEffect(() => {
@@ -236,8 +246,10 @@ const Home: React.FC = () => {
               <FaPlus className="text-xl text-accent dark:text-white" />
             </li>
 
-            {filteredTrips?.map((trip: any) => (
-              <SingleTrip key={trip.id} tripData={trip} />
+            {tripTransitions((style, trip) => (
+              <animated.li style={style}>
+                <SingleTrip key={trip.id} tripData={trip} />
+              </animated.li>
             ))}
           </ul>
         </div>

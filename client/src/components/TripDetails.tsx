@@ -13,6 +13,7 @@ import Message from './message/Message';
 import dayjs from 'dayjs';
 import Spinner from './loading/Spinner';
 import Joyride, { Step } from 'react-joyride';
+import { useTransition, animated } from '@react-spring/web'; // React Spring import
 
 
 const TripDetails: React.FC = () => {
@@ -37,6 +38,12 @@ const TripDetails: React.FC = () => {
   }, [loadingTrip, dataTrip, navigate]);
 
 
+  const bagTransitions = useTransition(dataTrip?.trip.bags || [], {
+      keys: (trip) => trip.id,
+      from: { opacity: 0, transform: 'translateY(20px)' },
+      enter: { opacity: 1, transform: 'translateY(0)' },
+      leave: { opacity: 0, transform: 'translateY(-20px)' },
+    });
   
   useEffect(() => {
       
@@ -82,7 +89,6 @@ const TripDetails: React.FC = () => {
       </div>
     );
   }
-
 
 
 
@@ -280,10 +286,15 @@ const TripDetails: React.FC = () => {
                 onClick={handleAddBag}>
                 <FaPlus className='text-xl text-accent dark:text-white' />
               </li>
-              {filteredBags.map((bag: any) => (
+              {bagTransitions((style, bag) => (
+               <animated.li style={style}>
                 <SingleBag key={bag.id} bagData={bag} />
+                </animated.li>
               ))}
             </ul>
+
+           
+
           </div>
         </div>
 

@@ -215,7 +215,7 @@ const SideBar: React.FC = () => {
 
      <SupportUsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-        <div className="p-4 flex items-center">
+        <div className="p-4 flex items-center" onClick={() => navigate('/settings')}>
           {loadingUser ? (
             <div role="status" className="flex items-center animate-pulse">
               <div className="flex-shrink-0">

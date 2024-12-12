@@ -80,6 +80,14 @@ select option {
 }
 
 
+.blog h1 {
+
+   font-size: 30px;
+   font-weight: 600;
+   color: black;
+}
+
+
    @media (min-width: 1600px) {
      .grid-cols-2xl-4 {
        grid-template-columns: repeat(4, minmax(0, 1fr));

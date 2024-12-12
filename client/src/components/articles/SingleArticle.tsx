@@ -51,7 +51,7 @@ const SingleArticle: React.FC = () => {
   : 'Invalid Date';
 
   return (
-    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2 blog">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
       <div className="p-4 sm:p-10">
         <div className="flex items-center mb-6 bg-white dark:bg-box p-5 rounded-lg">
           <button 
@@ -71,7 +71,7 @@ const SingleArticle: React.FC = () => {
           alt={article.title} 
           className="w-full h-72 object-cover rounded-lg mt-6 mb-6" 
         />
-        <div className="prose prose-lg text-accent dark:text-gray-300 max-w-none mb-5 bg-white dark:bg-box p-5 rounded-lg">
+        <div className="prose prose-lg text-accent dark:text-gray-300 max-w-none mb-5 bg-white dark:bg-box p-5 rounded-lg blog">
 
         <p className="text-sm text-black dark:text-white mb-4">
           Posted on: {formattedDate}

@@ -71,7 +71,7 @@ const SingleArticle: React.FC = () => {
           alt={article.title} 
           className="w-full h-72 object-cover rounded-lg mt-6 mb-6" 
         />
-        <div className="prose prose-lg text-accent dark:text-gray-300 max-w-none mb-6 bg-white dark:bg-box p-5 rounded-lg">
+        <div className="prose prose-lg text-accent dark:text-gray-300 max-w-none mb-6 bg-white dark:bg-box p-5 rounded-lg blog">
 
         <p className="text-sm text-black dark:text-white mb-4">
           Posted on: {formattedDate}

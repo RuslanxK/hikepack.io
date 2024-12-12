@@ -9,7 +9,8 @@ import { UPDATE_ITEM_PICTURE } from '../../mutations/itemMutation';
 import { FaCloudUploadAlt, FaCheckCircle } from 'react-icons/fa';
 import { API_BASE_URL } from '../../utils/apiConfigs';
 import { GET_BAG } from '../../queries/bagQueries';
-import { useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
+import Form from '../form/Form';
 
 const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, itemId, itemPicLink }) => {
   const [loading, setLoading] = useState(false);
@@ -33,12 +34,19 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
     setPreview(null);
   }, [selectedFile]);
 
+
+  const handleClose = () => {
+
+      setError('')
+      onClose()
+  }
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
 
     if (file && file.size > 2 * 1024 * 1024) {
       setSelectedFile(null);
-      setError('File size should not exceed 2 MB.');
+      setError('File size should not exceed 2MB');
       setIsFileUploaded(false);
       return;
     }
@@ -67,7 +75,7 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
       setIsFileUploaded(true);
       setError('');
     } else {
-      setError('File size should not exceed 2 MB.');
+      setError('File size should not exceed 2MB');
       setIsFileUploaded(false);
     }
   };
@@ -109,14 +117,15 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Item Picture">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Item Picture">
+      <Form onSubmit={handleSavePicture}>
       <div className="space-y-4 flex flex-col items-center">
         {(preview || itemPicLink) && (
           <div className="flex justify-center">
             <img 
               src={preview || itemPicLink} 
               alt="Selected Preview" 
-              className="h-72 w-full object-cover rounded p-2"
+              className="h-72 w-full object-cover  p-2"
             />
           </div>
         )}
@@ -163,13 +172,14 @@ const ItemPictureModal: React.FC<ItemPictureModalProps> = ({ isOpen, onClose, it
         </div>
       </div>
       <button
-        className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mt-4 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center"
-        onClick={handleSavePicture}
-        disabled={loading}
-      >
+        type='submit'
+        className={`text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3 mt-4  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  disabled={loading || error === 'File size should not exceed 2MB'}>
         SAVE {loading && <Spinner w={4} h={4} />}
       </button>
-      {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
+      { error && <div className='mt-3'>
+        <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message={error} type="error" />
+        </div>}
+        </Form>
     </Modal>
   );
 };

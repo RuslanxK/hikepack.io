@@ -146,6 +146,11 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
     }
   };
 
+  const handleClose = () => {
+    setError(''); // Reset only the error state
+    onClose(); // Call the original onClose function
+  };
+
   const resetFileUpload = () => {
     setFile(null);
     setSelectedFileName('');
@@ -177,7 +182,7 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
   );
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Update Bag">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Update Bag">
       <Form onSubmit={handleUpdateBag}>
         <div className="flex justify-between space-x-4">
           <div className="w-1/2">
@@ -269,22 +274,14 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
         <div className="pt-1">
           <button
             type="submit"
-            className="mt-3 text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center"
-            disabled={loading}>
+            className={`text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  disabled={loading || error === 'File size should not exceed 2MB'}>
             UPDATE
             {loading && <Spinner w={4} h={4} />}
           </button>
         </div>
-        {error && (
-          <Message
-            width="w-full"
-            title=""
-            padding="p-5 sm:p-3"
-            titleMarginBottom=""
-            message="Something went wrong. Please try again later."
-            type="error"
-          />
-        )}
+        { error && <div className='mt-3'>
+        <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message={error} type="error" />
+        </div>}
       </Form>
     </Modal>
   );

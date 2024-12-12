@@ -86,6 +86,20 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
     }
   };
 
+
+  const handleClose = () => {
+    setName('');
+    setDescription('');
+    setGoal('');
+    setFile(null);
+    setSelectedFileName('');
+    setIsFileUploaded(false);
+    setSelectedImage(images[0]); // Reset to the first image
+    setError(''); // Reset error state
+    onClose(); // Call the original onClose function
+  };
+
+
   const handlePrevImage = () => {
     setSelectedImage((prev) => {
       const currentIndex = images.indexOf(prev);
@@ -187,7 +201,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
   );
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create New Bag">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Create New Bag">
       <Form onSubmit={handleAddBag}>
         <div className="flex justify-between space-x-4">
           <div className="w-1/2">
@@ -299,23 +313,16 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
         <div className="pt-1">
           <button
             type="submit"
-            className="mt-3 text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center"
-            disabled={loading}
+            className={`text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  
+            disabled={loading || error === 'File size should not exceed 2MB'}
           >
             CREATE
             {loading && <Spinner w={4} h={4} />}
           </button>
         </div>
-        {error && (
-          <Message
-            width="w-full"
-            title=""
-            padding="p-5 sm:p-3"
-            titleMarginBottom=""
-            message="Something went wrong. Please try again later."
-            type="error"
-          />
-        )}
+        { error && <div className='mt-3'>
+        <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message={error} type="error" />
+        </div>}
       </Form>
     </Modal>
   );

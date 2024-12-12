@@ -43,6 +43,12 @@ const UpdateTripModal: React.FC<UpdateTripModalProps> = ({ isOpen, onClose, trip
 
   const [updateTrip] = useMutation<UpdateTripData, UpdateTripVars>(UPDATE_TRIP);
 
+
+  const handleClose = () => {
+    setError(''); // Reset only the error state
+    onClose(); // Call the original onClose function
+  };
+
   
 
   const handleUpdateTrip = async (e: React.FormEvent) => {
@@ -150,7 +156,7 @@ const UpdateTripModal: React.FC<UpdateTripModalProps> = ({ isOpen, onClose, trip
   );
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Update Trip">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Update Trip">
       <Form onSubmit={handleUpdateTrip}>
         <div className="flex justify-between space-x-4">
           <div className="w-1/2">
@@ -214,11 +220,13 @@ const UpdateTripModal: React.FC<UpdateTripModalProps> = ({ isOpen, onClose, trip
             </div>
           </div>
         </div>
-        <button type="submit" className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3 mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center" disabled={loading}>
+        <button type="submit"  className={`text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  disabled={loading || error === 'File size should not exceed 2MB'}>
           UPDATE
           {loading && <Spinner w={4} h={4} />}
         </button>
-        {error &&  <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" /> }
+        { error && <div className='mt-3'>
+        <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message={error} type="error" />
+        </div>}
       </Form>
     </Modal>
   );

@@ -61,6 +61,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
           const formData = new FormData();
           formData.append('file', file);
           const { data } = await axios.post(`${API_BASE_URL}/upload-image`, formData, {headers: { 'Content-Type': 'multipart/form-data'}});
+          console.log(data)
           imageUrl = data.data.Location; 
         } catch (error) {
           console.error('File upload failed:', error);
@@ -87,6 +88,21 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
       setLoading(false);
     }
   };
+
+
+  const handleClose = () => {
+    setName('');
+    setAbout('');
+    setDistance('');
+    setStartDate('');
+    setEndDate('');
+    setFile(null);
+    setSelectedFileName('');
+    setIsFileUploaded(false);
+    setError(''); // Reset error state
+    onClose();
+  };
+  
 
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,6 +142,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
     }
   };
 
+
   const renderInputField = (
     label: string,
     type: string,
@@ -149,7 +166,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   );
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create New Trip">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Create New Trip">
       <Form onSubmit={handleAddTrip}>
       <div className="flex justify-between space-x-4">
   <div className="w-1/2">
@@ -217,11 +234,13 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   </div>
 </div>
 
-        <button type="submit" className="text-sm bg-primary font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg hover:bg-button-hover flex items-center justify-center" disabled={loading}>
+        <button type="submit" className={`text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  disabled={loading || error === 'File size should not exceed 2MB'}>
           CREATE
           {loading && <Spinner w={4} h={4}/>}
         </button>
-        {error && <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message="Something went wrong. Please try again later." type="error" />}
+       { error && <div className='mt-3'>
+        <Message width='w-full' title="" padding="p-5 sm:p-3" titleMarginBottom="" message={error} type="error" />
+        </div>}
       </Form>
     </Modal>
   );

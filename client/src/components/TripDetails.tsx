@@ -12,12 +12,15 @@ import UpdateTripModal from './popups/UpdateTripModal';
 import Message from './message/Message';
 import dayjs from 'dayjs';
 import Spinner from './loading/Spinner';
+import Joyride, { Step } from 'react-joyride';
+
 
 const TripDetails: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [searchName, setSearchName] = useState('');
   const [searchGoal, setSearchGoal] = useState('');
+  const [walkthroughActive, setWalkthroughActive] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,6 +35,16 @@ const TripDetails: React.FC = () => {
       navigate('/404');
     }
   }, [loadingTrip, dataTrip, navigate]);
+
+
+  
+  useEffect(() => {
+      
+    if (!loadingTrip && !loadingUser) {
+      setWalkthroughActive(true);
+    }
+  }, [loadingTrip, loadingUser]);
+
 
   const calculateDaysLeft = (startDate: string) => {
     const today = dayjs().startOf('day');
@@ -70,6 +83,9 @@ const TripDetails: React.FC = () => {
     );
   }
 
+
+
+
   const trip = dataTrip?.trip;
   const daysLeft = calculateDaysLeft(trip.startDate);
 
@@ -89,8 +105,45 @@ const TripDetails: React.FC = () => {
     return matchesName && matchesGoal;
   });
 
+    const steps: Step[] = [
+      {
+        target: '.add-bag-button',
+       content: 'Add a new bag and organize your trip essentials!',
+        placement: 'bottom',
+        disableBeacon: true
+        
+      },
+     
+    ];
+
   return (
     <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
+
+<Joyride
+        steps={steps}
+        run={walkthroughActive}
+        continuous={true}
+        showSkipButton
+        styles={{
+          options: {
+            arrowColor: '#f0f0f0',
+            backgroundColor: '#ffffff',
+            overlayColor: 'rgba(0, 0, 0, 0.4)',
+            primaryColor: '#1d4ed8',
+            textColor: '#000',
+            zIndex: 1000,
+          },
+          buttonNext: {
+            display: 'none',
+          }
+        }}
+        callback={(data) => {
+          if (data.status === 'finished' || data.status === 'skipped') {
+            setWalkthroughActive(false);
+          }
+        }}
+      />
+
       <div className='p-4 sm:p-10 space-y-6'>
         <div className='flex flex-col lg:flex-row'>
           <div className="w-full flex flex-col">
@@ -201,19 +254,28 @@ const TripDetails: React.FC = () => {
         Clear Filters
       </button>
       </div>
-
     </div>
-  
+
 ) : null}
 
-
+{filteredBags.length === 0 && trip.bags.length !== 0 ? (
+  <div className="w-full mt-5"> 
+    <Message 
+      title="Attention Needed" 
+      padding="sm:p-5 p-3" 
+      width="w-full" 
+      titleMarginBottom="mb-2" 
+      message="No bags match your search criteria." 
+      type="info" 
+    />
+  </div>
+) : null}
 </div>
-
 
 
             <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 mt-8 '>
               <li 
-                className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-accent text-accent rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white' 
+                className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-accent text-accent rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white add-bag-button' 
                 style={{ minHeight: "205px", height: 'calc(100% - 1rem)' }} 
                 onClick={handleAddBag}>
                 <FaPlus className='text-xl text-accent dark:text-white' />
@@ -221,17 +283,6 @@ const TripDetails: React.FC = () => {
               {filteredBags.map((bag: any) => (
                 <SingleBag key={bag.id} bagData={bag} />
               ))}
-
-              {filteredBags.length === 0 && (
-                <Message 
-                  title="Attention Needed" 
-                  padding="sm:p-5 p-3" 
-                  width="w-80" 
-                  titleMarginBottom="mb-2" 
-                  message="No bags match your search criteria." 
-                  type="info" 
-                />
-              )}
             </ul>
           </div>
         </div>

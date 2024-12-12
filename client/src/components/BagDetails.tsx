@@ -21,6 +21,8 @@ import Message from './message/Message';
 import { FaArrowLeft } from 'react-icons/fa';
 import Spinner from './loading/Spinner';
 import { GET_USER } from '../queries/userQueries';
+import Joyride, { Step } from 'react-joyride';
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -44,6 +46,7 @@ const BagDetails: React.FC = () => {
   const [updateCategoryOrder] = useMutation(UPDATE_CATEGORY_ORDER);
 
   const [categoriesData, setCategoriesData] = useState<Category[]>([]);
+  const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [isSidePanelVisible, setIsSidePanelVisible] = useState( window.matchMedia('(max-width: 767px)').matches ? false : true); 
 
@@ -53,6 +56,14 @@ const BagDetails: React.FC = () => {
     refetch()
 
   }, [id, refetch]);
+
+
+   useEffect(() => {
+        
+      if (!loadingBag && !loadingUser) {
+        setWalkthroughActive(true);
+      }
+    }, [loadingBag, loadingUser]);
 
 
   useEffect(() => {
@@ -119,6 +130,18 @@ const BagDetails: React.FC = () => {
       </div>
     );
   }
+
+
+   const steps: Step[] = [
+        {
+          target: '.add-category-button',
+          content: 'Add a category to organize your items!',
+          placement: 'bottom',
+          disableBeacon: true
+    
+        },
+       
+      ];
 
 
   const handleAddCategory = async () => {
@@ -201,6 +224,32 @@ const BagDetails: React.FC = () => {
 
   return (
     <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
+
+<Joyride
+        steps={steps}
+        run={walkthroughActive}
+        continuous={true}
+        showSkipButton
+        styles={{
+          options: {
+            arrowColor: '#f0f0f0',
+            backgroundColor: '#ffffff',
+            overlayColor: 'rgba(0, 0, 0, 0.4)',
+            primaryColor: '#1d4ed8',
+            textColor: '#000',
+            zIndex: 1000,
+          },
+          buttonNext: {
+            display: 'none',
+          }
+        }}
+        callback={(data) => {
+          if (data.status === 'finished' || data.status === 'skipped') {
+            setWalkthroughActive(false);
+          }
+        }}
+      />
+
       <div className='p-4 sm:p-10 space-y-6'>
       <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataBag.bag.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
@@ -284,7 +333,7 @@ const BagDetails: React.FC = () => {
   </div>
 )}
         
-            <button onClick={handleAddCategory} className="rounded-lg bg-white dark:bg-box mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-white">
+            <button onClick={handleAddCategory} className="rounded-lg bg-white dark:bg-box mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-white add-category-button">
               <FaPlus className="text-xl text-accent dark:text-white" size={13} /> { addingCategory ? <Spinner w={4} h={4}/> : null }
             </button>
             <div className="w-full pb-14">

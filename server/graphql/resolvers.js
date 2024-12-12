@@ -145,6 +145,7 @@ const resolvers = {
 
     trips: async (_, __, { user }) => {
       try {
+        
       return await Trip.find(ensureOwner(user));
       }
       catch(error) {

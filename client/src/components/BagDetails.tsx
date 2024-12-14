@@ -53,7 +53,7 @@ const BagDetails: React.FC = () => {
   const [isSidePanelVisible, setIsSidePanelVisible] = useState( window.matchMedia('(max-width: 767px)').matches ? false : true); 
 
 
-   const categoryTransitions = useTransition(dataBag?.bag.categories || [], {
+   const categoryTransitions = useTransition(categoriesData || [], {
         keys: (trip) => trip.id,
         from: { opacity: 0, transform: 'translateY(20px)' },
         enter: { opacity: 1, transform: 'translateY(0)' },
@@ -362,6 +362,7 @@ const BagDetails: React.FC = () => {
             </div>
           </div>
 
+             
            
           
 

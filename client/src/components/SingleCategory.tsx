@@ -48,9 +48,9 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   }, [categoryData]);
 
 
-   const ItemTransitions = useTransition(categoryData.items || [], {
+   const ItemTransitions = useTransition(itemsData || [], {
         keys: (item) => item.id,
-        from: { opacity: 0, transform: 'translateY(20px)' },
+        from: { opacity: 0, transform: 'translateY(5px)' },
         enter: { opacity: 1, transform: 'translateY(0)' },
         leave: { opacity: 0, transform: 'translateY(-20px)' },
       });

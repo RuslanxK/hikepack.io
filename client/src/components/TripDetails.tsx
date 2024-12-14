@@ -39,7 +39,7 @@ const TripDetails: React.FC = () => {
 
   const trip = dataTrip?.trip;
 
-  const filteredBags = trip.bags.filter((bag: any) => {
+  const filteredBags = trip?.bags?.filter((bag: any) => {
     const matchesName = bag.name.toLowerCase().includes(searchName.toLowerCase());
     const matchesGoal = searchGoal
       ? parseFloat(bag.goal || "0") <= parseFloat(searchGoal || "0")

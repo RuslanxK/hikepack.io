@@ -37,8 +37,18 @@ const TripDetails: React.FC = () => {
     }
   }, [loadingTrip, dataTrip, navigate]);
 
+  const trip = dataTrip?.trip;
 
-  const bagTransitions = useTransition(dataTrip?.trip.bags || [], {
+  const filteredBags = trip.bags.filter((bag: any) => {
+    const matchesName = bag.name.toLowerCase().includes(searchName.toLowerCase());
+    const matchesGoal = searchGoal
+      ? parseFloat(bag.goal || "0") <= parseFloat(searchGoal || "0")
+      : true;
+    return matchesName && matchesGoal;
+  });
+
+
+  const bagTransitions = useTransition(filteredBags || [], {
       keys: (bag) => bag.id,
       from: { opacity: 0, transform: 'translateY(20px)' },
       enter: { opacity: 1, transform: 'translateY(0)' },
@@ -90,9 +100,6 @@ const TripDetails: React.FC = () => {
     );
   }
 
-
-
-  const trip = dataTrip?.trip;
   const daysLeft = calculateDaysLeft(trip.startDate);
 
   const handleAddBag = () => {
@@ -103,13 +110,7 @@ const TripDetails: React.FC = () => {
     setIsModalUpdateOpen(true);
   };
 
-  const filteredBags = trip.bags.filter((bag: any) => {
-    const matchesName = bag.name.toLowerCase().includes(searchName.toLowerCase());
-    const matchesGoal = searchGoal
-      ? parseFloat(bag.goal || "0") <= parseFloat(searchGoal || "0")
-      : true;
-    return matchesName && matchesGoal;
-  });
+
 
     const steps: Step[] = [
       {

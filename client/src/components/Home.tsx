@@ -14,7 +14,7 @@ import { GET_USER } from '../queries/userQueries';
 import Spinner from './loading/Spinner';
 import Cookies from 'js-cookie';
 import Joyride, { Step } from 'react-joyride';
-import { useTransition, animated } from '@react-spring/web'; // React Spring import
+import { useTransition, animated } from '@react-spring/web'; 
 
 
 const Home: React.FC = () => {
@@ -30,6 +30,24 @@ const Home: React.FC = () => {
 
   const [walkthroughActive, setWalkthroughActive] = useState(false);
 
+
+  const filteredTrips = data?.trips.filter((trip) => {
+    const matchesName = trip.name.toLowerCase().includes(searchName.toLowerCase());
+    const matchesDistance = searchDistance
+      ? parseFloat(trip.distance || '0') <= parseFloat(searchDistance || '0')
+      : true;
+    const matchesDate = searchDate ? trip.startDate.startsWith(searchDate) : true;
+    return matchesName && matchesDistance && matchesDate;
+  });
+
+  const tripTransitions = useTransition(filteredTrips || [], {
+    keys: (trip) => trip.id,
+    from: { opacity: 0, transform: 'translateY(20px)' },
+    enter: { opacity: 1, transform: 'translateY(0)' },
+    leave: { opacity: 0, transform: 'translateY(-20px)' },
+  });
+
+
   useEffect(() => {
     const weight = Cookies.get('totalWeight');
     setTotalWeightFromCookie(weight || '0');
@@ -43,13 +61,6 @@ const Home: React.FC = () => {
     refetchLatestBag();
   }, [refetchLatestBag]);
 
-
-  const tripTransitions = useTransition(data?.trips || [], {
-    keys: (trip) => trip.id,
-    from: { opacity: 0, transform: 'translateY(20px)' },
-    enter: { opacity: 1, transform: 'translateY(0)' },
-    leave: { opacity: 0, transform: 'translateY(-20px)' },
-  });
 
   
   useEffect(() => {
@@ -81,15 +92,8 @@ const Home: React.FC = () => {
     );
   }
 
-  const filteredTrips = data?.trips.filter((trip) => {
-    const matchesName = trip.name.toLowerCase().includes(searchName.toLowerCase());
-    const matchesDistance = searchDistance
-      ? parseFloat(trip.distance || '0') <= parseFloat(searchDistance || '0')
-      : true;
-    const matchesDate = searchDate ? trip.startDate.startsWith(searchDate) : true;
-    return matchesName && matchesDistance && matchesDate;
-  });
 
+  
   
   const steps: Step[] = [
     {

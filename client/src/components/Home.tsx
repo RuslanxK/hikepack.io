@@ -247,9 +247,9 @@ const Home: React.FC = () => {
             </li>
 
             {tripTransitions((style, trip) => (
-              <animated.li style={style}>
+              <animated.div style={style}>
                 <SingleTrip key={trip.id} tripData={trip} />
-              </animated.li>
+              </animated.div>
             ))}
           </ul>
         </div>

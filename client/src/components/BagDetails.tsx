@@ -22,6 +22,8 @@ import { FaArrowLeft } from 'react-icons/fa';
 import Spinner from './loading/Spinner';
 import { GET_USER } from '../queries/userQueries';
 import Joyride, { Step } from 'react-joyride';
+import { useTransition, animated } from '@react-spring/web'; // React Spring import
+
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -49,6 +51,14 @@ const BagDetails: React.FC = () => {
   const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [isSidePanelVisible, setIsSidePanelVisible] = useState( window.matchMedia('(max-width: 767px)').matches ? false : true); 
+
+
+   const categoryTransitions = useTransition(dataBag?.bag.categories || [], {
+        keys: (trip) => trip.id,
+        from: { opacity: 0, transform: 'translateY(20px)' },
+        enter: { opacity: 1, transform: 'translateY(0)' },
+        leave: { opacity: 0, transform: 'translateY(-20px)' },
+      });
 
 
   useEffect(() => {
@@ -341,14 +351,18 @@ const BagDetails: React.FC = () => {
 
               <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
                 <SortableContext items={categoriesData.map((category) => category.id)} strategy={verticalListSortingStrategy}>
-                  {categoriesData.map((category) => (
-                    <SingleCategory key={category.id} categoryData={category} weightUnit={userData?.user?.weightOption}/>
-                  ))}
+                {categoryTransitions((style, category) => (
+                         <animated.div style={style}>
+                           <SingleCategory key={category.id} categoryData={category} weightUnit={userData?.user?.weightOption}/>
+                          </animated.div>
+                        ))}
+
                 </SortableContext>
               </DndContext>
             </div>
           </div>
 
+           
           
 
 

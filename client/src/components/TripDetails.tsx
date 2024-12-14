@@ -39,7 +39,7 @@ const TripDetails: React.FC = () => {
 
 
   const bagTransitions = useTransition(dataTrip?.trip.bags || [], {
-      keys: (trip) => trip.id,
+      keys: (bag) => bag.id,
       from: { opacity: 0, transform: 'translateY(20px)' },
       enter: { opacity: 1, transform: 'translateY(0)' },
       leave: { opacity: 0, transform: 'translateY(-20px)' },
@@ -287,9 +287,9 @@ const TripDetails: React.FC = () => {
                 <FaPlus className='text-xl text-accent dark:text-white' />
               </li>
               {bagTransitions((style, bag) => (
-               <animated.li style={style}>
+               <animated.div style={style}>
                 <SingleBag key={bag.id} bagData={bag} />
-                </animated.li>
+                </animated.div>
               ))}
             </ul>
 

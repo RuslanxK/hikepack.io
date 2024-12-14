@@ -17,6 +17,7 @@ import Spinner from './loading/Spinner';
 import { TiDelete } from "react-icons/ti";
 import { GET_BAG } from '../queries/bagQueries';
 import { useParams } from 'react-router-dom';
+import { useTransition, animated } from '@react-spring/web'; // React Spring import
 
 
 const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) => {
@@ -45,6 +46,14 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       setItemsData(categoryData.items.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
     }
   }, [categoryData]);
+
+
+   const ItemTransitions = useTransition(categoryData.items || [], {
+        keys: (item) => item.id,
+        from: { opacity: 0, transform: 'translateY(20px)' },
+        enter: { opacity: 1, transform: 'translateY(0)' },
+        leave: { opacity: 0, transform: 'translateY(-20px)' },
+      });
 
 
   const moveItem = async (fromIndex: number, toIndex: number) => {
@@ -202,9 +211,20 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
           <div className="px-5 text-sm  bg-white dark:bg-box rounded-b-lg">
               <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
                 <SortableContext items={itemsData.map((item) => item.id) || []} strategy={verticalListSortingStrategy}>
-                  {itemsData.map((item, index) => (
-                    <SingleItem key={item.id} itemData={item} sendChecked={handleUpdateChecked} weightUnit={weightUnit} index={index} />
-                  ))}
+                {ItemTransitions((style, item) => {
+  const index = itemsData.findIndex((i) => i.id === item.id); // Ensure index is calculated as a number
+  return (
+    <animated.div style={style} key={item.id}>
+      <SingleItem
+        key={item.id}
+        itemData={item}
+        sendChecked={handleUpdateChecked}
+        weightUnit={weightUnit}
+        index={index} // Pass index explicitly
+      />
+    </animated.div>
+  );
+})}
                 </SortableContext>
               </DndContext>
            

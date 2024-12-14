@@ -60,6 +60,11 @@ body, html {
 }
 
 
+li::marker {
+  content: '';
+}
+
+
 .check.icon {
   color: #000;
   position: absolute;

@@ -15,6 +15,7 @@ import { GET_SHARED_BAG, GET_ALL_USER_BAGS } from '../../queries/bagQueries';
 import { GET_SHARED_TRIP } from '../../queries/tripQueries';
 import { FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { Bag } from '../../types/bag';
+import { BiLike } from "react-icons/bi";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -113,9 +114,10 @@ const MainShare: React.FC = () => {
               <img src={'/images/logo-black.png'} width={90} className="sm:p-0 p-2 sm:w-24" alt="logo" onClick={() => navigate('/')} />
               <button 
                 onClick={handleLikeToggle} 
-                className={`flex items-center space-x-1 pt-1.5 pb-1.5 pl-2 pr-2 rounded-lg ${hasLiked ? 'bg-primary text-white' : 'bg-zinc-400 text-zinc-100'} dark:${hasLiked ? 'bg-primary text-white' : 'bg-zinc-600 text-gray-400'}`}
+                className={`flex items-center pt-1.5 pb-1.5 pl-2 pr-2 rounded-full ${hasLiked ? 'bg-primary text-white' : 'bg-sky-600 text-zinc-100'} dark:${hasLiked ? 'bg-primary text-white' : 'bg-zinc-600 text-gray-400'}`}
               >
-                <span className="text-sm w-10">{hasLiked ? 'Unlike' : 'Like'}</span>
+                <BiLike />
+                <span className="text-sm w-10">{hasLiked ? 'Liked' : 'Like'}</span>
               </button>
       </div>
 

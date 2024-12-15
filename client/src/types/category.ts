@@ -31,6 +31,7 @@ export interface Category {
       bagId: string;
       name: string;
       items: Item[];
+      color: string;
     };
 
     weightUnit: string

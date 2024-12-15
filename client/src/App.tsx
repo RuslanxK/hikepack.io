@@ -6,7 +6,7 @@ import ExploreBags from "./components/ExploreBags";
 import Settings from "./components/Settings";
 import BugReport from "./components/BugReport";
 import Changelog from "./components/Changelog";
-import AdminSettings from "./components/AdminSettings";
+import AdminSettings from "./components/admin/AdminSettings";
 import TripDetails from "./components/TripDetails";
 import BagDetails from "./components/BagDetails";
 import MainShare from "./components/share/MainShare";
@@ -20,6 +20,8 @@ import VerifyAccount from "./components/register/VerifyAccount";
 import EmailCheck from "./components/register/EmailCheck";
 import ResetPassword from "./components/register/ResetPassword";
 import AdminRoute from "./routes/AdminRoute";
+import AdminMain from "./components/admin/AdminMain";
+import Dashboard from "./components/admin/Dashboard";
 
 const App: React.FC = () => {
 
@@ -55,7 +57,9 @@ const App: React.FC = () => {
             <Route path="/bug-report" element={<BugReport />} />
 
             <Route element={<AdminRoute />}>  
+              <Route path="/admin" element={<AdminMain />} />
               <Route path="/admin-settings" element={<AdminSettings />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Route>
 
             <Route path="*" element={<NotFoundPage />} />

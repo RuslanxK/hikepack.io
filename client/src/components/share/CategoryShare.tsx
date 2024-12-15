@@ -22,7 +22,7 @@ const CategoryShare: React.FC<CategoryProps> = ({ categoryData, weightUnit }) =>
   
   return (
     <div className="mb-2">
-      <div className="cursor-pointer bg-white dark:bg-zinc-800 w-full rounded-t-lg">
+      <div className="cursor-pointer bg-white dark:bg-zinc-800 w-full rounded-t-lg" style={{ borderLeft: `8px solid ${categoryData.color}` }}>
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">
             <input

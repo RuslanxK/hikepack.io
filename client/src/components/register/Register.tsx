@@ -21,7 +21,7 @@ const initialFormData: FormData = {
   dateOfBirth: '', 
   gender: '', 
   distanceUnit: 'miles', 
-  weightUnit: 'kg', 
+  weightUnit: 'lb', 
   activityLevel: 'Beginner' 
 };
 
@@ -328,8 +328,9 @@ const Register: React.FC = () => {
               <div className="flex flex-wrap -mx-2">
                 <div className="w-1/2 px-2">
                   {renderSelect('weightUnit', 'Weight Unit', [
-                    { value: 'kg', label: 'Kilograms (kg)' },
                     { value: 'lb', label: 'Pounds (lb)' },
+                    { value: 'kg', label: 'Kilograms (kg)' },
+                   
                   ])}
                 </div>
                 <div className="w-1/2 px-2">

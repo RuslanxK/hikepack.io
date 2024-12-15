@@ -23,6 +23,7 @@ import { useTransition, animated } from '@react-spring/web'; // React Spring imp
 const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) => {
 
   const { id } = useParams<{ id: string }>();
+  
 
   const [expanded, setExpanded] = useState(true);
   const categoryNameRef = useRef<HTMLInputElement>(null);
@@ -40,6 +41,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const sensors = useSensors(mouseSensor, touchSensor);
 
   const buttonClass ='text-accent dark:text-gray-400 hover:text-accent rounded-full p-1 transform transition-transform duration-200 hover:scale-125';
+
 
   useEffect(() => {
     if (categoryData.items) {
@@ -184,7 +186,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
 
   return (
     <div className={`mb-2`} ref={setNodeRef} style={style}>
-      <div className="cursor-pointer bg-white dark:bg-box  w-full rounded-t-lg">
+      <div className="cursor-pointer bg-white dark:bg-box  w-full rounded-t-lg" style={{ borderLeft: `8px solid ${categoryData.color}` }}>
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">
             <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing" size={18} {...attributes} {...listeners} />

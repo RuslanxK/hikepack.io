@@ -13,8 +13,7 @@ import Message from './message/Message';
 import dayjs from 'dayjs';
 import Spinner from './loading/Spinner';
 import Joyride, { Step } from 'react-joyride';
-import { useTransition, animated } from '@react-spring/web'; // React Spring import
-
+import { useTransition, animated } from '@react-spring/web'; 
 
 const TripDetails: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -186,7 +185,8 @@ const TripDetails: React.FC = () => {
                 <div className="flex flex-row sm:p-0">
                   <p className="text-sm text-accent dark:text-white flex items-center dark:border-accent border border-1 p-3 rounded-lg mr-2.5">
                     <FaMapMarkerAlt className="mr-1 text-accent dark:text-white" />
-                    <b>{trip.distance} {userData?.user?.distance}</b>
+                   <span className='mr-1'>Distance</span>
+                    <b> { trip.distance} {userData?.user?.distance}</b>
                   </p>
                   <p className={`text-sm flex items-center rounded-lg border border-1 dark:border-accent p-3 ${daysLeft === 'Traveled' ? 'text-accent' : 'text-primary'} dark:text-white`}>
                     <FaClock className="mr-1 text-accent dark:text-white" />
@@ -200,7 +200,7 @@ const TripDetails: React.FC = () => {
               <div className='flex sm:flex-row flex-col justify-between items-start'>
 
               <p className="text-accent dark:text-white text-center sm:text-left w-full">
-                {trip.about}
+                <b>Description:</b> {trip.about}
               </p>
               
 

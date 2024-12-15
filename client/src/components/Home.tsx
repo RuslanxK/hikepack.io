@@ -36,7 +36,11 @@ const Home: React.FC = () => {
     const matchesDistance = searchDistance
       ? parseFloat(trip.distance || '0') <= parseFloat(searchDistance || '0')
       : true;
-    const matchesDate = searchDate ? trip.startDate.startsWith(searchDate) : true;
+  
+    const matchesDate = searchDate
+      ? new Date(trip.startDate).getFullYear() === parseInt(searchDate, 10)
+      : true;
+  
     return matchesName && matchesDistance && matchesDate;
   });
 
@@ -195,20 +199,21 @@ const Home: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col w-full md:w-1/4 md:mr-5 mb-4 md:mb-0">
-                    <label
-                      htmlFor="search-date"
-                      className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                    >
-                      Search by Date
-                    </label>
-                    <input
-                      id="search-date"
-                      type="date"
-                      value={searchDate}
-                      onChange={(e) => setSearchDate(e.target.value)}
-                      className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent dark:text-white"
-                    />
-                  </div>
+  <label
+    htmlFor="search-date"
+    className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+  >
+    Search by Year
+  </label>
+  <input
+    id="search-date"
+    type="number"
+    value={searchDate}
+    onChange={(e) => setSearchDate(e.target.value)}
+    placeholder="Enter year (e.g., 2025)"
+    className="p-2 border rounded-lg w-full text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:bg-black dark:border-accent dark:text-white"
+  />
+</div>
 
                   <div className="w-full md:w-1/4 flex justify-start md:self-end">
                     <input

@@ -38,46 +38,48 @@ const SupportUsModal: React.FC<SupportUsModalProps> = ({ isOpen, onClose }) => {
       </div>
     ) : (
       <PayPalButtons
-        style={{
-          shape: "rect",
-          layout: "vertical",
-          color: "gold",
-          label: "pay",
-        }}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            intent: "CAPTURE",
-            purchase_units: [
-              {
-                amount: {
-                  currency_code: "USD",
-                  value: (selectedCoffee * pricePerCoffee).toFixed(2),
-                },
-              },
-            ],
-          });
-        }}
-        onApprove={(data, actions) => {
-          if (actions.order) {
-            return actions.order.capture().then((details) => {
-              setMessage({
-                title: "Thank You for Supporting Our Mission!",
-                message: "We're deeply grateful for your generosity. Every coffee you buy keeps us innovating for you and our outdoor-loving community!",
-                type: "success",
-              });
-              
-            });
-          }
-          return Promise.reject("Order action is not available");
-        }}
-        onError={(err) => {
-          setMessage({
-            title: "Error",
-            message: `Something went wrong: ${err}`,
-            type: "error",
-          });
-        }}
-      />
+  style={{
+    shape: "rect",
+    layout: "vertical",
+    color: "gold",
+    label: "pay",
+  }}
+  createOrder={(data, actions) => {
+    return actions.order.create({
+      intent: "CAPTURE",
+      purchase_units: [
+        {
+          amount: {
+            currency_code: "USD",
+            value: (
+              (customCoffeeAmount ?? selectedCoffee) * pricePerCoffee
+            ).toFixed(2),
+          },
+        },
+      ],
+    });
+  }}
+  onApprove={(data, actions) => {
+    if (actions.order) {
+      return actions.order.capture().then((details) => {
+        setMessage({
+          title: "Thank You for Supporting Our Mission!",
+          message:
+            "We're deeply grateful for your generosity. Every coffee you buy keeps us innovating for you and our outdoor-loving community!",
+          type: "success",
+        });
+      });
+    }
+    return Promise.reject("Order action is not available");
+  }}
+  onError={(err) => {
+    setMessage({
+      title: "Error",
+      message: `Something went wrong: ${err}`,
+      type: "error",
+    });
+  }}
+/>
     );
   };
 

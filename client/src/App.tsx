@@ -26,10 +26,9 @@ import Dashboard from "./components/admin/Dashboard";
 import { getSocket, disconnectSocket } from "./utils/websocketService";
 
 const App: React.FC = () => {
-  const [liveUsers, setLiveUsers] = useState<number>(0); // Global live users count
+  const [liveUsers, setLiveUsers] = useState<number>(0); 
   const location = useLocation();
 
-  // Define pages where the sidebar should be hidden
   const hideSidebar =
     location.pathname.startsWith("/share") ||
     location.pathname.startsWith("/register") ||
@@ -38,7 +37,6 @@ const App: React.FC = () => {
     location.pathname.startsWith("/reset-password") ||
     location.pathname.startsWith("/new-password");
 
-  // Define pages where WebSocket should not connect
   const skipWebSocket =
     location.pathname.startsWith("/register") ||
     location.pathname.startsWith("/login") ||
@@ -51,16 +49,12 @@ const App: React.FC = () => {
         console.log("WebSocket connection skipped for this page.");
         return;
       }
-    
       try {
-        const socket = getSocket(); // Connect WebSocket
-    
-        // Listen for live users count updates
+        const socket = getSocket(); 
         socket.on("liveUsers", (count: number) => {
           setLiveUsers(count);
         });
-    
-        // Cleanup WebSocket connection on unmount
+  
         return () => {
           disconnectSocket();
         };
@@ -71,7 +65,7 @@ const App: React.FC = () => {
           console.error("WebSocket connection failed with an unknown error:", error);
         }
       }
-    }, [skipWebSocket]); // Reinitialize when `skipWebSocket` changes
+    }, [skipWebSocket]); 
     
 
   return (

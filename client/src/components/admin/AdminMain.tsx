@@ -25,7 +25,6 @@ const AdminMain = () => {
           </p>
         </div>
 
-        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <Card
             title="Dashboard"
@@ -37,7 +36,7 @@ const AdminMain = () => {
             icon={<FaClipboardList size={20} />}
             onClick={() => navigate('/add-changelog')}
           />
-          {/* Add more cards as needed */}
+        
           <Card
             title="Users"
             icon={<FaClipboardList size={20} />}

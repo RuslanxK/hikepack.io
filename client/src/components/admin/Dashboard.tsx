@@ -11,11 +11,12 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
-import { FaArrowLeft, FaUsers } from "react-icons/fa";
+import { FaArrowLeft, FaUsers, FaUser, FaMap, FaHiking, FaShareAlt} from "react-icons/fa";
+
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-type Timeframe = "daily" | "weekly" | "monthly" | "yearly";
+type TimeFrame = "daily" | "weekly" | "monthly" | "yearly";
 
 type AnalyticsData = {
   labels: string[];
@@ -28,7 +29,7 @@ type AnalyticsData = {
   }[];
 };
 
-const analyticsData: Record<Timeframe, AnalyticsData> = {
+const analyticsData: Record<TimeFrame, AnalyticsData> = {
   daily: {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
@@ -84,7 +85,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ liveUsers }) => {
-  const [timeframe, setTimeframe] = useState<Timeframe>("monthly");
+  const [timeFrame, setTimeFrame] = useState<TimeFrame>("monthly");
   const navigate = useNavigate();
 
   const stats = {
@@ -102,7 +103,7 @@ const Dashboard: React.FC<DashboardProps> = ({ liveUsers }) => {
       },
       title: {
         display: true,
-        text: `User Analytics (${timeframe.charAt(0).toUpperCase() + timeframe.slice(1)})`,
+        text: `User Analytics (${timeFrame.charAt(0).toUpperCase() + timeFrame.slice(1)})`,
       },
     },
   };
@@ -126,14 +127,14 @@ const Dashboard: React.FC<DashboardProps> = ({ liveUsers }) => {
           </p>
         </div>
 
-        <div className="bg-indigo-400 text-white p-6 rounded-lg mb-6 flex items-center justify-between">
+        <div className="bg-indigo-800 dark:bg-box text-white p-6 rounded-lg mb-6 flex items-center justify-between">
   <div className="flex items-center gap-4">
     <div className="p-4 bg-white bg-opacity-20 rounded-full">
       <FaUsers size={30} />
     </div>
     <div className="relative">
     
-        <div className="w-2 h-2 absolute  bg-green rounded-full animate-ping"></div>
+        <div className="w-2 h-2 absolute bg-green rounded-full animate-ping"></div>
      
       <p className="text-sm font-light mt-3">Live Users</p>
       <h2 className="text-4xl font-bold">{liveUsers}</h2>
@@ -141,49 +142,77 @@ const Dashboard: React.FC<DashboardProps> = ({ liveUsers }) => {
     </div>
   </div>
   <div>
-    <span className="text-sm bg-white text-primary px-4 py-1 rounded-full">
+    <span className="text-sm bg-white bg-opacity-20  px-4 py-1 rounded-full dark:bg-opacity-20 dark:text-white">
       Real-time
     </span>
   </div>
 </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <div className="bg-white p-6 rounded-lg">
-            <h2 className="text-lg font-medium text-gray-600">Registered Users</h2>
-            <p className="text-2xl font-semibold text-primary">{stats.users}</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg">
-            <h2 className="text-lg font-medium text-gray-600">Trips Created</h2>
-            <p className="text-2xl font-semibold text-primary">{stats.trips}</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg">
-            <h2 className="text-lg font-medium text-gray-600">Bags Created</h2>
-            <p className="text-2xl font-semibold text-primary">{stats.bags}</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg">
-            <h2 className="text-lg font-medium text-gray-600">Community Bags</h2>
-            <p className="text-2xl font-semibold text-primary">{stats.communityBags}</p>
-          </div>
-        </div>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+  {/* Registered Users */}
+  <div className="bg-white dark:bg-box p-6 rounded-lg flex items-center">
+    <div className="p-4 bg-primary bg-opacity-20 rounded-full">
+      <FaUser size={30} className="text-primary" />
+    </div>
+    <div className="ml-4">
+      <h2 className="text-md text-black dark:text-white mb-2">Registered Users</h2>
+      <p className="text-2xl font-bold text-primary">{stats.users}</p>
+    </div>
+  </div>
 
-        <div className="mb-4 flex justify-end">
-          {(["daily", "weekly", "monthly", "yearly"] as Timeframe[]).map((time) => (
-            <button
-              key={time}
-              className={`px-4 py-2 mx-1 text-sm font-medium border rounded ${
-                timeframe === time
-                  ? "bg-primary text-white"
-                  : "bg-white text-gray-800 border-gray-300"
-              } hover:bg-primary hover:text-white transition`}
-              onClick={() => setTimeframe(time)}
-            >
-              {time.charAt(0).toUpperCase() + time.slice(1)}
-            </button>
-          ))}
-        </div>
+  {/* Trips Created */}
+  <div className="bg-white dark:bg-box p-6 rounded-lg flex items-center">
+    <div className="p-4 bg-button-orange bg-opacity-20 rounded-full">
+      <FaMap size={30} className="text-button-orange" />
+    </div>
+    <div className="ml-4">
+      <h2 className="text-md text-black dark:text-white mb-2">Trips Created</h2>
+      <p className="text-2xl font-bold text-primary">{stats.trips}</p>
+    </div>
+  </div>
 
-        <div className="bg-white p-8 rounded-lg">
-          <Bar data={analyticsData[timeframe]} options={options} />
+  {/* Bags Created */}
+  <div className="bg-white dark:bg-box p-6 rounded-lg flex items-center">
+    <div className="p-4 bg-indigo-500 bg-opacity-20 rounded-full">
+      <FaHiking size={30} className="text-indigo-500" />
+    </div>
+    <div className="ml-4">
+      <h2 className="text-md text-black dark:text-white mb-2">Bags Created</h2>
+      <p className="text-2xl font-bold text-primary">{stats.bags}</p>
+    </div>
+  </div>
+
+  {/* Shared Bags */}
+  <div className="bg-white dark:bg-box p-6 rounded-lg flex items-center">
+    <div className="p-4 bg-yellow-400 bg-opacity-20 rounded-full">
+      <FaShareAlt size={30} className="text-yellow-400" />
+    </div>
+    <div className="ml-4">
+      <h2 className="text-md text-black dark:text-white mb-2">Shared Bags</h2>
+      <p className="text-2xl font-bold text-primary">{stats.communityBags}</p>
+    </div>
+  </div>
+</div>
+
+
+        <div className="bg-white dark:bg-box p-8 rounded-lg relative">
+
+        <div className="absolute top-4 right-4 flex gap-3">
+    {(["daily", "weekly", "monthly", "yearly"] as TimeFrame[]).map((time) => (
+      <button
+        key={time}
+        className={`px-4 py-2 text-sm font-semibold rounded shadow ${
+          timeFrame === time
+            ? "bg-indigo-500 text-white hover:bg-indigo-600"
+            : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+        }`}
+        onClick={() => setTimeFrame(time)}
+      >
+        {time.charAt(0).toUpperCase() + time.slice(1)}
+      </button>
+    ))}
+  </div>
+          <Bar data={analyticsData[timeFrame]} options={options} />
         </div>
       </div>
     </div>

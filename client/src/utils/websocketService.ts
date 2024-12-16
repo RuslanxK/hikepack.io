@@ -1,23 +1,18 @@
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
 
-const SOCKET_URL = process.env.REACT_APP_API || "http://localhost:4000";
+const SOCKET_URL = process.env.REACT_APP_API;
 let socket: Socket | null = null;
-
-// Function to establish or return the existing WebSocket connection
 export const getSocket = (): Socket => {
   if (!socket) {
     const token = Cookies.get("token");
-
     if (!token) {
       throw new Error("No auth token found in cookies. WebSocket cannot connect.");
     }
-
     socket = io(SOCKET_URL, {
-      auth: { token }, // Pass the token here
-      transports: ["websocket"], // Ensure WebSocket transport
+      auth: { token },
+      transports: ["websocket"], 
     });
-
     socket.on("connect", () => {
       console.log("WebSocket connected");
     });
@@ -33,12 +28,10 @@ export const getSocket = (): Socket => {
 
   return socket;
 };
-
-// Function to disconnect and clean up the WebSocket connection
 export const disconnectSocket = (): void => {
   if (socket) {
-    socket.disconnect(); // Disconnect the WebSocket
-    socket = null; // Reset the socket variable
+    socket.disconnect(); 
+    socket = null; 
     console.log("WebSocket disconnected and reset.");
   }
 };

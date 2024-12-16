@@ -195,7 +195,7 @@ const Dashboard: React.FC<DashboardProps> = ({ liveUsers }) => {
 </div>
 
 
-        <div className="bg-white dark:bg-box p-8 rounded-lg relative">
+        <div className="bg-white dark:bg-box p-8 rounded-lg relative hidden sm:block">
 
         <div className="absolute top-4 right-4 flex gap-3">
     {(["daily", "weekly", "monthly", "yearly"] as TimeFrame[]).map((time) => (
@@ -212,7 +212,9 @@ const Dashboard: React.FC<DashboardProps> = ({ liveUsers }) => {
       </button>
     ))}
   </div>
+        
           <Bar data={analyticsData[timeFrame]} options={options} />
+      
         </div>
       </div>
     </div>

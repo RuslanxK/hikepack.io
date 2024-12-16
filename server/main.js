@@ -14,6 +14,8 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { applyMiddleware } = require('graphql-middleware');
 const cookieParser = require('cookie-parser');
 const googleAuthRoute = require('./routers/googleLogin');
+const User = require("./models/user")
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -76,21 +78,57 @@ const io = new Server(httpServer, {
   },
 });
 
-// Track live users
-let liveUsers = 0;
+io.use(async (socket, next) => {
+  const token = socket.handshake.auth.token;
+  if (!token) {
+    console.log('Token is missing. Connection rejected.');
+    return next(new Error('Authorization header is missing.'));
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId); 
+    if (!user) {
+      console.log('User not found. Connection rejected.');
+      return next(new Error('User does not exist.'));
+    }
+    socket.user = user;
+    console.log(`User authenticated: ${user.id}`);
+    next(); // Proceed to connection
+  } catch (error) {
+    console.log('Invalid token. Connection rejected.', error);
+    return next(new Error('Invalid token.'));
+  }
+});
+
+const connectedUsers = new Set();
 
 io.on('connection', (socket) => {
-  liveUsers++;
-  io.emit('liveUsers', liveUsers); 
+  // Ensure the user is authenticated
+  if (!socket.user) {
+    console.log('Unauthorized connection. Skipping live user count.');
+    return;
+  }
 
-  console.log(`New connection. Total live users: ${liveUsers}`);
+  // Get the user's unique ID
+  const userId = socket.user.id;
 
+  // Add the user to the Set if not already present
+  if (!connectedUsers.has(userId)) {
+    connectedUsers.add(userId);
+    io.emit('liveUsers', connectedUsers.size); // Notify all clients about live users
+    console.log(`User connected: ${userId}. Total live users: ${connectedUsers.size}`);
+  }
+
+  // Handle disconnection
   socket.on('disconnect', () => {
-    liveUsers--;
-    io.emit('liveUsers', liveUsers); 
-    console.log(`User disconnected. Total live users: ${liveUsers}`);
+    // Remove the user from the Set
+    connectedUsers.delete(userId);
+    io.emit('liveUsers', connectedUsers.size); // Notify all clients about live users
+    console.log(`User disconnected: ${userId}. Total live users: ${connectedUsers.size}`);
   });
 });
+
 
 const startServer = async () => {
   await mongoose.connect(process.env.DATA_BASE_URL);

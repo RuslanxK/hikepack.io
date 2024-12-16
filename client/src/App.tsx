@@ -23,14 +23,13 @@ import ResetPassword from "./components/register/ResetPassword";
 import AdminRoute from "./routes/AdminRoute";
 import AdminMain from "./components/admin/AdminMain";
 import Dashboard from "./components/admin/Dashboard";
-import io from "socket.io-client";
-
-const SOCKET_URL = process.env.REACT_APP_API 
+import { getSocket, disconnectSocket } from "./utils/websocketService";
 
 const App: React.FC = () => {
   const [liveUsers, setLiveUsers] = useState<number>(0); // Global live users count
   const location = useLocation();
 
+  // Define pages where the sidebar should be hidden
   const hideSidebar =
     location.pathname.startsWith("/share") ||
     location.pathname.startsWith("/register") ||
@@ -39,18 +38,41 @@ const App: React.FC = () => {
     location.pathname.startsWith("/reset-password") ||
     location.pathname.startsWith("/new-password");
 
-  // Establish WebSocket connection and update liveUsers globally
-  useEffect(() => {
-    const socket = io(SOCKET_URL);
+  // Define pages where WebSocket should not connect
+  const skipWebSocket =
+    location.pathname.startsWith("/register") ||
+    location.pathname.startsWith("/login") ||
+    location.pathname.startsWith("/verify-account") ||
+    location.pathname.startsWith("/reset-password") ||
+    location.pathname.startsWith("/new-password");
 
-    socket.on("liveUsers", (count: number) => {
-      setLiveUsers(count); // Update the global live user count
-    });
-
-    return () => {
-      socket.disconnect(); // Clean up WebSocket connection
-    };
-  }, []);
+    useEffect(() => {
+      if (skipWebSocket) {
+        console.log("WebSocket connection skipped for this page.");
+        return;
+      }
+    
+      try {
+        const socket = getSocket(); // Connect WebSocket
+    
+        // Listen for live users count updates
+        socket.on("liveUsers", (count: number) => {
+          setLiveUsers(count);
+        });
+    
+        // Cleanup WebSocket connection on unmount
+        return () => {
+          disconnectSocket();
+        };
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error("WebSocket connection failed:", error.message);
+        } else {
+          console.error("WebSocket connection failed with an unknown error:", error);
+        }
+      }
+    }, [skipWebSocket]); // Reinitialize when `skipWebSocket` changes
+    
 
   return (
     <div className="flex">

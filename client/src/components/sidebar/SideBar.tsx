@@ -55,7 +55,7 @@ const SideBar: React.FC = () => {
     { to: "/changelog", icon: FaHistory, label: "Changelog" },
     { to: "/bug-report", icon: FaExclamationTriangle, label: "Report a Bug" },
     ...(userData?.user?.isAdmin
-      ? [{ to: "/admin", icon: FaUserShield, label: "Admin" }]
+      ? [{ to: "/admin", icon: FaUserShield, label: "Admin Panel" }]
       : [])
   ];
 

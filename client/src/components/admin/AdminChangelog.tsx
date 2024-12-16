@@ -13,7 +13,7 @@ interface Field {
   rows?: number;
 }
 
-const AdminSettings: React.FC = () => {
+const AdminChangelog: React.FC = () => {
   const [addChangeLog] = useMutation(ADD_CHANGELOG);
   const [formValues, setFormValues] = useState<{ [key: string]: string | File }>({});
   const [loadingChangelog, setLoadingChangelog] = useState(false);
@@ -76,7 +76,7 @@ const AdminSettings: React.FC = () => {
         >
           <FaArrowLeft size={17} />
         </button>
-        <h1 className="text-xl font-semibold text-black dark:text-white">Admin Settings</h1>
+        <h1 className="text-xl font-semibold text-black dark:text-white">Changelog</h1>
       </div>
       <p className="text-left text-accent dark:text-gray-300">
         Manage the app's content by adding changelogs.
@@ -84,7 +84,6 @@ const AdminSettings: React.FC = () => {
       </div>
 
       <div className="bg-white dark:bg-box p-8 rounded-lg">
-        <h2 className="text-lg font-semibold text-black dark:text-white mb-6">Add a Changelog</h2>
         <form onSubmit={handleSubmitChangelog}>
           {changelogFields.map(({ label, id, placeholder, type = 'text', rows }) => (
             <div key={id} className="mb-4">
@@ -152,4 +151,4 @@ const AdminSettings: React.FC = () => {
   );
 };
 
-export default AdminSettings;
+export default AdminChangelog;

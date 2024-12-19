@@ -109,7 +109,7 @@ const MainShare: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className="container mx-auto p-4 w-full sm:w-10/12">
+    <div className="container mx-auto p-3 w-full sm:w-10/12">
       <div className="flex flex-row items-center justify-between space-y-2 w-full bg-white dark:bg-box p-5 rounded-lg">
               <img src={'/images/logo-black.png'} width={90} className="sm:p-0 p-2 sm:w-24" alt="logo" onClick={() => navigate('/')} />
               <button 
@@ -124,20 +124,20 @@ const MainShare: React.FC = () => {
 
           <div className='p-5 bg-white dark:bg-box rounded-lg my-5'>
 
-       <div className="text-center text-accent dark:text-gray-200 flex items-center justify-start w-full">
-        <img src={userData.userShared.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-2 ml-2' /> 
+       <div className="text-center text-accent dark:text-gray-200 flex items-center justify-start w-full my-2">
+        <img src={userData.userShared.imageUrl || '/images/default.jpg'} alt='user' className='w-6 h-6 object-cover rounded-full mr-2' /> 
         <p className="text-sm mr-1">Shared by:</p>
         <span className="font-semibold text-primary text-sm">{userData?.userShared?.username}</span>
         </div>
 
-            <div className='flex items-center my-4'>
-            <span className='text-sm text-accent mr-2 font-semibold'>Title:</span>
+            <span className='text-sm text-accent font-semibold'>Title:</span>
+            <div className='flex items-center mb-2'>
             <h1 className="text-xl font-semibold text-black dark:text-white">
              {trip.name}
             </h1>
             </div>
-            <div className='flex items-start my-4'>
-            <span className='text-sm text-accent mr-2 font-semibold'>Description:</span>
+            <span className='text-sm text-accent font-semibold'>Description:</span>
+            <div className='flex items-start my-2'>
             <p className="text-sm text-accent dark:text-gray-200">
               {trip.about}
             </p>
@@ -158,14 +158,15 @@ const MainShare: React.FC = () => {
 
       
       <div className='p-5 bg-white dark:bg-box rounded-lg'>
-      <div className='flex items-center mb-5'>
-      <span className='text-sm text-accent mr-2 font-semibold'>Bag:</span>
+      <span className='text-sm text-accent font-semibold'>Bag:</span>
+      <div className='flex items-center mb-2'>
             <h1 className="text-xl font-semibold text-black dark:text-white">
               {bag.name}
             </h1>
             </div>
-            <div className='flex items-start'>
-            <span className='text-sm text-accent mr-2 font-semibold'>Description:</span>
+
+            <span className='text-sm text-accent font-semibold'>Description:</span>
+            <div className='flex items-start my-2'>
             <p className="text-sm text-accent dark:text-gray-200">
               {bag.description}
             </p>

@@ -123,7 +123,7 @@ const TripDetails: React.FC = () => {
     ];
 
   return (
-    <div className='container mx-auto sm:mt-0 sm:p-0 mt-14 p-2'>
+    <div className='container mx-auto sm:mt-0 sm:p-0 mt-20 p-3'>
 
 <Joyride
         steps={steps}
@@ -150,10 +150,10 @@ const TripDetails: React.FC = () => {
         }}
       />
 
-      <div className='p-4 sm:p-10 space-y-6'>
+      <div className='sm:p-5 space-y-6'>
         <div className='flex flex-col lg:flex-row'>
           <div className="w-full flex flex-col">
-            <div className='flex flex-row justify-between items-center bg-white dark:bg-box rounded-lg p-5 mb-8'>
+            <div className='flex flex-row justify-between items-center bg-white dark:bg-box rounded-lg p-5 mb-5'>
               <div className="flex items-center">
                 <button 
                   type="button" 
@@ -280,7 +280,7 @@ const TripDetails: React.FC = () => {
 </div>
 
 
-            <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 mt-8 '>
+            <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-5 mt-5 '>
               <li 
                 className='bg-white dark:bg-box flex flex-col items-center justify-center border-2 border-dashed border-accent text-accent rounded-lg p-4 cursor-pointer hover:border-primary dark:hover:border-white add-bag-button' 
                 style={{ minHeight: "205px", height: 'calc(100% - 1rem)' }} 

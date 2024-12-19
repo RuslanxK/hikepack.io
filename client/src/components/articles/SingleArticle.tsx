@@ -51,8 +51,8 @@ const SingleArticle: React.FC = () => {
   : 'Invalid Date';
 
   return (
-    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
-      <div className="p-4 sm:p-10">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-20 p-3">
+      <div className="sm:p-5">
         <div className="flex items-center mb-6 bg-white dark:bg-box p-5 rounded-lg">
           <button 
             type="button" 
@@ -63,8 +63,6 @@ const SingleArticle: React.FC = () => {
           <h1 className="text-xl font-semibold text-black dark:text-white">{article.title}</h1>
           
         </div>
-
-        
 
         <img 
           src={article.imageUrl} 

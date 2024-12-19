@@ -233,7 +233,7 @@ const BagDetails: React.FC = () => {
   const hasCategoriesWithWeight = categoriesData.some(category => category.totalWeight > 0);
 
   return (
-    <div className='container mx-auto sm:mt-0 sm:p-0 mt-14 p-2'>
+    <div className='container mx-auto sm:mt-0 sm:p-0 mt-20 p-3'>
 
 <Joyride
         steps={steps}
@@ -260,7 +260,7 @@ const BagDetails: React.FC = () => {
         }}
       />
 
-      <div className='p-4 sm:p-10 space-y-6'>
+      <div className='sm:p-5'>
       <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataBag.bag.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 w-full">
@@ -346,7 +346,7 @@ const BagDetails: React.FC = () => {
             <button onClick={handleAddCategory} className="rounded-lg bg-white dark:bg-box mt-5 mb-4 w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-400 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:border-primary dark:hover:border-white add-category-button">
               <FaPlus className="text-xl text-accent dark:text-white" size={13} /> { addingCategory ? <Spinner w={4} h={4}/> : null }
             </button>
-            <div className="w-full pb-14">
+            <div className="w-full">
               {categoriesData.length === 0 ?  <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-full" titleMarginBottom="mb-2" message="click on the plus icon to add a category." type="info" /> : null }
 
               <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">

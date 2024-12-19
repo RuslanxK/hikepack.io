@@ -123,7 +123,7 @@ const TripDetails: React.FC = () => {
     ];
 
   return (
-    <div className='container mx-auto sm:mt-0 sm:p-0 mt-24 p-2'>
+    <div className='container mx-auto sm:mt-0 sm:p-0 mt-14 p-2'>
 
 <Joyride
         steps={steps}

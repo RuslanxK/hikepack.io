@@ -111,7 +111,7 @@ const Home: React.FC = () => {
   ];
 
   return (
-    <div className="container mx-auto sm:mt-0 sm:p-0 mt-24 p-2">
+    <div className="container mx-auto sm:mt-0 sm:p-0 mt-16 p-2">
       <Joyride
         steps={steps}
         run={walkthroughActive}
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
         }}
       />
 
-      <div className="p-4 sm:p-10 flex flex-col items-between justify-start space-y-2">
+      <div className="p-0 sm:p-10 flex flex-col items-between justify-start space-y-2">
         <div className="mb-5">
           <div className="flex flex-col sm:flex-row bg-white dark:bg-box rounded-lg p-5">
             <div className="w-full">

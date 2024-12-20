@@ -207,7 +207,7 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
               <FaArrowLeft size={14} />
             </button>
 
-            <div ref={carouselRef} className="overflow-x-auto flex items-center space-x-4 mx-10 p-1">
+            {/* <div ref={carouselRef} className="overflow-x-auto flex items-center space-x-4 mx-10 p-1">
               {images.map((img, index) => (
                 <img
                   key={index}
@@ -222,7 +222,7 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
                   }`}
                 />
               ))}
-            </div>
+            </div> */}
 
             <button
               type="button"

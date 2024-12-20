@@ -60,9 +60,12 @@ body, html {
 }
 
 
-li::marker {
+
+/* li::marker {
   content: '';
-}
+} */
+
+
 
 
 .check.icon {
@@ -104,8 +107,6 @@ select option {
 .animate-ping {
   animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
-
-
 
 
 

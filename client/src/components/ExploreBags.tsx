@@ -193,7 +193,7 @@ const ExploreBags: React.FC = () => {
                     {paginatedBags.map((bag: Bag) => {
                       const user = usersData.users.find((user: any) => user.id === bag.owner);
                       const truncatedName = bag.name.length > 20 ? `${bag.name.substring(0, 20)}...` : bag.name;
-                      const truncatedDescription = bag.description.length > 40 ? `${bag.description.substring(0, 40)}...` : bag.description;
+                      const truncatedDescription = bag?.description?.length > 40 ? `${bag.description.substring(0, 40)}...` : bag.description;
   
                       return (
                         <tr 

@@ -1,5 +1,5 @@
 // src/utils/colorUtils.ts
-export function getRandomSolidColor(existingColors: string[]): string {
+export function getRandomDarkColor(existingColors: string[]): string {
   let color;
   do {
     color = "#";

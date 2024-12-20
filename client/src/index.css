@@ -52,13 +52,6 @@ body, html {
 
 }
 
-.blog h1 {
-
-  font-size: 30px;
-  color: black;
-  font-weight: 600;
-}
-
 
 
 li::marker {
@@ -67,10 +60,50 @@ li::marker {
 
 
 .blog li::marker {
-  content: default; 
+  content: default !important; 
 }
 
+.blog {
+  padding: 40px;
+}
 
+.blog div {
+display: flex;
+flex-direction: column;
+gap: 10px
+
+}
+
+.blog h1 {
+margin-bottom: 10px;
+font-weight: 700;
+color: #058373;
+
+}
+
+.blog h2 {
+font-size: 22px;
+font-weight: 600;
+color: black;
+}
+
+.blog p {
+color: black;
+}
+
+.blog ul, .blog ol {
+list-style-type: disc;
+list-style-position: inside;
+padding: 20px;
+font-size: 14px;
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+
+.blog li {
+font-size: 14px;
+}
 
 
 

@@ -85,29 +85,29 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
     }
   };
 
-  const handlePrevImage = () => {
-    setSelectedImage((prev) => {
-      const currentIndex = images.indexOf(prev);
-      const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-      return images[newIndex];
-    });
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -150, behavior: 'smooth' });
-    }
-    resetFileUpload();
-  };
+  // const handlePrevImage = () => {
+  //   setSelectedImage((prev) => {
+  //     const currentIndex = images.indexOf(prev);
+  //     const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+  //     return images[newIndex];
+  //   });
+  //   if (carouselRef.current) {
+  //     carouselRef.current.scrollBy({ left: -150, behavior: 'smooth' });
+  //   }
+  //   resetFileUpload();
+  // };
 
-  const handleNextImage = () => {
-    setSelectedImage((prev) => {
-      const currentIndex = images.indexOf(prev);
-      const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
-      return images[newIndex];
-    });
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 150, behavior: 'smooth' });
-    }
-    resetFileUpload();
-  };
+  // const handleNextImage = () => {
+  //   setSelectedImage((prev) => {
+  //     const currentIndex = images.indexOf(prev);
+  //     const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+  //     return images[newIndex];
+  //   });
+  //   if (carouselRef.current) {
+  //     carouselRef.current.scrollBy({ left: 150, behavior: 'smooth' });
+  //   }
+  //   resetFileUpload();
+  // };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -197,7 +197,7 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
         </div>
 
         {/* Carousel for predefined images */}
-        <div className="my-4">
+        {/* <div className="my-4">
           <p className="text-center text-sm font-medium mb-2 text-accent dark:text-gray-300">Select an Image</p>
           <div className="relative flex items-center">
             <button
@@ -205,7 +205,7 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
               onClick={handlePrevImage}
               className="absolute left-0 z-10 bg-gray-200 p-2 rounded hover:bg-gray-300 dark:bg-white dark:hover:bg-gray-600">
               <FaArrowLeft size={14} />
-            </button>
+            </button> */}
 
             {/* <div ref={carouselRef} className="overflow-x-auto flex items-center space-x-4 mx-10 p-1">
               {images.map((img, index) => (
@@ -224,14 +224,14 @@ const UpdateBagModal: React.FC<UpdateBagModalProps> = ({ isOpen, onClose, bag, w
               ))}
             </div> */}
 
-            <button
+            {/* <button
               type="button"
               onClick={handleNextImage}
               className="absolute right-0 z-10 bg-gray-200 p-2 rounded hover:bg-gray-300 dark:bg-white dark:hover:bg-gray-600">
               <FaArrowRight size={14} />
             </button>
           </div>
-        </div>
+        </div> */}
 
         <div className="mb-4">
           <div

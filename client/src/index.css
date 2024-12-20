@@ -61,9 +61,15 @@ body, html {
 
 
 
-/* li::marker {
+li::marker {
   content: '';
-} */
+}
+
+
+.blog li::marker {
+  content: default; 
+}
+
 
 
 

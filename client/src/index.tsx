@@ -8,6 +8,7 @@ import { ApolloProvider, InMemoryCache, ApolloClient, createHttpLink } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import Cookies from 'js-cookie';
 import { GoogleOAuthProvider } from "@react-oauth/google"
+import { FilterProvider } from './context/FilterContext';
 
 
 const httpLink = createHttpLink({
@@ -47,7 +48,9 @@ root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
+      <FilterProvider>
         <App />
+      </FilterProvider>
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>

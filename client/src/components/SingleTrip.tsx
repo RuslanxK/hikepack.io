@@ -27,7 +27,7 @@ const handleDuplicateTrip = () => {
 }
 
   return (
-    <li
+    <div
       className={`relative bg-white dark:bg-box shadow-airbnb rounded-lg mb-4 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl group`}>
       <button className='bg-white p-1 rounded-full absolute top-2 right-2 transform transition-transform duration-200 hover:scale-125'>
       <HiDocumentDuplicate size={14} className='text-accent' onClick={handleDuplicateTrip} />
@@ -60,7 +60,7 @@ const handleDuplicateTrip = () => {
 
       <DeleteTripModal isOpen={isModalDeleteOpen} onClose={() => setIsModalDeleteOpen(false)} trip={tripData} />
       <DuplicateTrip isOpen={isModalDuplicateOpen} onClose={() => setIsModalDuplicateOpen(false)} trip={tripData}/>
-    </li>
+    </div>
   );
 };
 

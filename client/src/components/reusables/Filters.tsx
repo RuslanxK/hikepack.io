@@ -2,6 +2,13 @@ import React from 'react';
 import { useFilterContext } from '../../context/FilterContext';
 
 
+interface DistanceFilterInputProps {
+  distance: number;
+}
+interface GoalFilterInputProps {
+  weightOption: string;
+}
+
 export const NameFilterInput: React.FC = () => {
   const { searchName, setSearchName } = useFilterContext();
 
@@ -22,7 +29,8 @@ export const NameFilterInput: React.FC = () => {
   );
 };
 
-export const DistanceFilterInput: React.FC = () => {
+export const DistanceFilterInput: React.FC<DistanceFilterInputProps> = ({ distance }) => {
+  
   const { searchDistance, setSearchDistance } = useFilterContext();
 
   return (
@@ -39,7 +47,7 @@ export const DistanceFilterInput: React.FC = () => {
         max={10000}
         className="w-full"
       />
-      <span className="text-sm  dark:text-white">{searchDistance} km</span>
+      <span className="text-sm  dark:text-white">{searchDistance} {distance}</span>
     </div>
   );
 };
@@ -66,7 +74,7 @@ export const YearFilterInput: React.FC = () => {
 };
 
 
-export const GoalFilterInput: React.FC = () => {
+export const GoalFilterInput: React.FC<GoalFilterInputProps> = ({weightOption}) => {
   const { searchGoal, setSearchGoal } = useFilterContext();
 
   return (
@@ -85,7 +93,7 @@ export const GoalFilterInput: React.FC = () => {
         className="w-full mt-1"
       />
       <span className="block text-sm mt-1 text-gray-700 dark:text-white">
-        Goal: <strong>{searchGoal}</strong>
+        Goal: {searchGoal} {weightOption} 
       </span>
     </div>
   );

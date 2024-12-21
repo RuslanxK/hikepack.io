@@ -24,7 +24,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 
   const [updateBagPassedStatus] = useMutation(UPDATE_BAG_PASSED_STATUS);
 
-  // 🛠️ Convert Weights
+  
   useEffect(() => {
     const convertWeights = (categories: any, fromUnit: any, toUnit: any) => {
       const conversionRate = (weightConversionRates as any)[fromUnit][toUnit];
@@ -37,7 +37,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
     setConvertedCategories(convertWeights(categories, initialWeightUnit, weightUnit));
   }, [weightUnit, categories, initialWeightUnit]);
 
-  // 📊 Calculate Weights
+ 
   const totalWeight = convertedCategories.reduce((sum, category) => sum + category.totalWeight, 0);
   const totalWornWeight = convertedCategories.reduce(
     (sum, category) => sum + category.totalWornWeight,
@@ -45,12 +45,12 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   );
   const baseWeight = totalWeight - totalWornWeight;
 
-  // 🍪 Store Total Weight in Cookies
+ 
   useEffect(() => {
     Cookies.set('totalWeight', totalWeight.toFixed(3), { expires: 7 });
   }, [totalWeight]);
 
-  // ✅ Check Goal Status
+
   useEffect(() => {
     if (bag?.goal) {
       const goal = parseFloat(bag.goal);
@@ -71,15 +71,14 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
     }
   }, [baseWeight, bag?.goal, updateBagPassedStatus, bag?.id]);
 
-  // 🖥️ Render Table
   return (
     <div className="w-full sm:p-0">
-      <table className="w-full text-sm text-left text-gray-800 dark:text-gray-300 rounded-lg bg-white dark:bg-zinc-800">
-        <thead className="text-xs text-gray-700 uppercase dark:text-gray-400 bg-gray-100 dark:bg-zinc-700">
+      <table className="w-full text-sm text-left text-gray-800 dark:text-gray-300 rounded-lg">
+        <thead className="text-xs text-accent uppercase dark:white bg-gray-100 dark:bg-gray-300">
           <tr>
-            <th className="px-4 sm:px-6 py-2 border-r border-b dark:border-zinc-600">Color</th>
-            <th className="px-4 sm:px-6 py-2 border-r border-b dark:border-zinc-600">Category</th>
-            <th className="px-3 sm:px-6 py-2 border-b dark:border-zinc-600">
+            <th className="px-4 sm:px-6 py-2 border-r border-b text-black">Color</th>
+            <th className="px-4 sm:px-6 py-2 border-r border-b text-black">Category</th>
+            <th className="px-3 sm:px-6 py-2 border-b text-black">
               Weight
               <select
                 value={weightUnit}
@@ -115,7 +114,6 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
             </tr>
           ))}
 
-          {/* 📊 Display Total, Worn, and Base weights */}
           {['Total', 'Worn', 'Base'].map((label, index) => {
             const value =
               index === 0
@@ -129,7 +127,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
                 className={`font-semibold border-b dark:border-zinc-600 ${
                   label === 'Base' && bag?.goal
                     ? isGoalMet
-                      ? 'text-green-600 dark:text-green-400'
+                      ? 'text-primary dark:text-primary'
                       : 'text-red-600 dark:text-red-400'
                     : 'text-gray-800 dark:text-gray-300'
                 }`}

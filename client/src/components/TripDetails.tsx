@@ -159,7 +159,7 @@ const TripDetails: React.FC = () => {
          </div>
          <div className={`${isMobileFiltersOpen ? 'flex flex-col gap-2' : 'hidden'} sm:flex sm:flex-row sm:gap-5 items-center border border-2 border-gray-100 w-full rounded-lg pl-5 pr-5 pt-3 sm:pb-2 pb-5 dark:border-zinc-600`}>
          <NameFilterInput />
-         <GoalFilterInput />
+         <GoalFilterInput weightOption={userData?.user.weightOption} />
          <PassedFilterInput />
          <ClearFiltersButton />
          </div>

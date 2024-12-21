@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback} from 'react';
+import React, { useState, useEffect, useRef, useCallback, Fragment} from 'react';
 import { GrDrag } from 'react-icons/gr';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useSortable } from '@dnd-kit/sortable';
@@ -17,13 +17,15 @@ import Spinner from './loading/Spinner';
 import { TiDelete } from "react-icons/ti";
 import { GET_BAG } from '../queries/bagQueries';
 import { useParams } from 'react-router-dom';
-import { useTransition, animated } from '@react-spring/web'; // React Spring import
-
+import { animated } from '@react-spring/web'; 
+import { useAnimation } from '../hooks/useAnimation';
+import JoyrideWrapper from '../guide/JoyrideWrapper';
+import { categoryDetailsStepsConfig } from '../guide/stepsConfigs';
+import { getSteps } from '../guide/steps';
 
 const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) => {
 
   const { id } = useParams<{ id: string }>();
-  
 
   const [expanded, setExpanded] = useState(true);
   const categoryNameRef = useRef<HTMLInputElement>(null);
@@ -50,12 +52,10 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   }, [categoryData]);
 
 
-   const ItemTransitions = useTransition(itemsData || [], {
-        keys: (item) => item.id,
-        from: { opacity: 0, transform: 'translateY(5px)' },
-        enter: { opacity: 1, transform: 'translateY(0)' },
-        leave: { opacity: 0, transform: 'translateY(-20px)' },
-      });
+  const ItemTransitions = useAnimation({
+          items: itemsData || [],
+          keys: (item: Item) => item.id,
+        });
 
 
   const moveItem = async (fromIndex: number, toIndex: number) => {
@@ -92,7 +92,6 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
       const toIndex = itemsData.findIndex((item) => item.id === over?.id);
       moveItem(fromIndex, toIndex);
     }
-   
   };
   
 
@@ -126,51 +125,39 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
     }
   };
 
-
-
   const handleCategoryNameBlur = async () => {
     if (categoryNameRef.current && categoryNameRef.current.value !== categoryData.name) {
       try {
-
         await updateCategoryName({
           variables: { id: categoryData.id, name: categoryNameRef.current.value },
           refetchQueries: [{ query: GET_BAG, variables: { id: id }}]});
-        
       } catch (error) {
         console.error('Error updating category name:', error);
       }
     }
   };
 
-
   const removeAllSelectedItems = async () => {
     try {
-      
       await Promise.all(
         checkedItems.map(async (item) => {
           await deleteItem({ variables: { id: item.id }, refetchQueries: [{ query: GET_BAG, variables: { id: id } }], }, );
-          
         })
       );
-  
       const remainingItems = itemsData.filter(
         (item) => !checkedItems.some((checkedItem) => checkedItem.id === item.id)
       );
-  
       const reorderedItems = remainingItems.map((item, index) => ({
         ...item,
         order: index + 1,
       }));
-  
       setItemsData(reorderedItems);
-  
       await Promise.all(
         reorderedItems.map((item) =>
           updateItem({
             variables: { id: item.id, order: item.order },})
         )
       );
-  
       setCheckedItems([]);
     } catch (error) {
       console.error("Error removing items:", error);
@@ -179,30 +166,28 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
 
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: categoryData.id });
-
-
   const style = { transform: CSS.Translate.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   
-
   return (
     <div className={`mb-2`} ref={setNodeRef} style={style}>
+       <JoyrideWrapper steps={getSteps(categoryDetailsStepsConfig)} run={true}  />
       <div className="cursor-pointer bg-white dark:bg-box  w-full rounded-t-lg" style={{ borderLeft: `8px solid ${categoryData.color}` }}>
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">
-            <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing" size={18} {...attributes} {...listeners} />
+            <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing drag-category-button" size={18} {...attributes} {...listeners} />
             <input
               type="text"
               defaultValue={categoryData.name}
               placeholder='e.g., Clothes'
               ref={categoryNameRef}
               onBlur={handleCategoryNameBlur}
-              className="border-b border-neutral-200 dark:border-neutral-600 px-2 py-1 mr-4 flex-grow bg-transparent focus:outline-none focus:ring-1 focus:ring-button-lightGreen rounded w-full text-gray-800 dark:text-gray-200"
+              className="edit-category-button border-b border-neutral-200 dark:border-neutral-600 px-2 py-1 mr-4 flex-grow bg-transparent focus:outline-none focus:ring-1 focus:ring-button-lightGreen rounded w-full text-gray-800 dark:text-gray-200"
             />
             <div className="flex items-center">
-              <span className="mr-2 text-gray-400 dark:text-gray-500" onClick={handleRowClick}>
+              <span className="mr-2 text-gray-400 dark:text-gray-500 close-open-category-button" onClick={handleRowClick}>
                 {expanded ? <FaChevronUp size={14}/> : <FaChevronDown size={14}/>}
               </span>
-              <button type="button" className='' onClick={handleDeleteClick}>
+              <button type="button" className='delete-category-button' onClick={handleDeleteClick}>
               <TiDelete className={buttonClass} size={32}  />
               </button>
             </div>
@@ -214,55 +199,33 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
               <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
                 <SortableContext items={itemsData.map((item) => item.id) || []} strategy={verticalListSortingStrategy}>
                 {ItemTransitions((style, item) => {
-  const index = itemsData.findIndex((i) => i.id === item.id); // Ensure index is calculated as a number
-  return (
-    <animated.div style={style} key={item.id}>
-      <SingleItem
-        key={item.id}
-        itemData={item}
-        sendChecked={handleUpdateChecked}
-        weightUnit={weightUnit}
-        index={index} // Pass index explicitly
-      />
-    </animated.div>
-  );
-})}
+                 const index = itemsData.findIndex((i) => i.id === item.id); 
+                 return (
+                <animated.div style={style} key={item.id}>
+                <SingleItem key={item.id} itemData={item} sendChecked={handleUpdateChecked} weightUnit={weightUnit} index={index} />
+                </animated.div>)})}
                 </SortableContext>
               </DndContext>
            
               {checkedItems.length > 0 ? (
       <button
         className="flex items-center pt-3 pb-3 text-button-red hover:text-accent focus:outline-none"
-        onClick={removeAllSelectedItems}
-      >
+        onClick={removeAllSelectedItems}>
         <TiDelete className="mr-1" size={19} />
         {deletingItem ? (
-          <>
-            Deleting... <Spinner h={4} w={4} />
-          </>
-        ) : (
-          'Delete items'
-        )}
+          <Fragment> Deleting... <Spinner h={4} w={4} /> </Fragment>) : ('Delete items')}
       </button>
     ) : (
       <button
-        className="flex items-center pt-3 pb-3 text-primary hover:text-accent dark:hover:text-primary dark:text-button-lightGreen focus:outline-none"
+        className="flex items-center pt-3 pb-3 text-primary hover:text-accent dark:hover:text-primary dark:text-button-lightGreen focus:outline-none add-item-button"
         onClick={handleAddItemSubmit}
-        disabled={addingItem}
-      >
+        disabled={addingItem}>
         <FaPlus className="mr-1" size={14} />
-        {addingItem ? (
-          <>
-            Adding... <Spinner h={4} w={4} />
-          </>
-        ) : (
-          'Add item'
-        )}
+        {addingItem ? (<Fragment> Adding... <Spinner h={4} w={4} /></Fragment>) : ('Add item')}
       </button>
     )}
   </div>
 )}
-
       <DeleteCategoryModal isOpen={isModalDeleteOpen} categoryId={categoryData.id} categoryName={categoryData.name} onClose={() => setIsModalDeleteOpen(false)}  />
 
     </div>

@@ -1,3 +1,4 @@
+import { Bag } from "./bag";
 import { Item } from "./item";
 
 export interface Category {
@@ -45,6 +46,7 @@ export interface Category {
   export interface CategoryTableProps {
     categories: Category[];
     weightUnit: string
+    bag?: Bag
   }
 
 

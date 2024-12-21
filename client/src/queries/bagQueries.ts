@@ -12,6 +12,7 @@ export const GET_BAG = gql`
       likes
       imageUrl
       exploreBags
+      passed
       
       categories {
       id
@@ -136,6 +137,7 @@ export const GET_LATEST_BAG_WITH_DETAILS = gql`
       totalItems
       totalWeight
       goal
+      passed
     }
   }
 `;

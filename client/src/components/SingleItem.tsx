@@ -12,6 +12,9 @@ import { GET_BAG } from '../queries/bagQueries';
 import Spinner from './loading/Spinner';
 import { useParams } from 'react-router-dom';
 import { HiDocumentDuplicate } from "react-icons/hi2";
+import JoyrideWrapper from '../guide/JoyrideWrapper';
+import { getSteps } from '../guide/steps';
+import { itemDetailsStepsConfig } from '../guide/stepsConfigs';
 
 
 const inputClasses = "py-1 px-2 rounded border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-button-lightGreen dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
@@ -31,7 +34,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [duplicateItem, { loading: addingItem }] = useMutation(DUPLICATE_ITEM); 
 
-  const { id } = useParams<{ id: string }>();
+  const { id: bagId } = useParams<{ id: string }>();
 
 
   const priorityClass = priority === 'low' ? 'bg-emerald-100 dark:bg-primary' : 
@@ -58,7 +61,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     setWeightOption(unit);
     updateItem({
       variables: { id: itemData.id, weightOption: unit },
-      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
+      refetchQueries: [{ query: GET_BAG, variables: { id: bagId } }]
     });
   };
 
@@ -72,19 +75,19 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   const handleQtyChange = (value: number) => {
     updateItem({ variables: { id: itemData.id, qty: value },
-      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
+      refetchQueries: [{ query: GET_BAG, variables: { id: bagId } }]
     });
   };
 
   const handleWeightChange = (value: number) => {
     updateItem({ variables: { id: itemData.id, weight: value },
-      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
+      refetchQueries: [{ query: GET_BAG, variables: { id: bagId } }]
     });
   };
 
   const handleToggleWorn = () => {
     updateItem({ variables: { id: itemData.id, worn: !itemData.worn },
-      refetchQueries: [{ query: GET_BAG, variables: { id: id } }]
+      refetchQueries: [{ query: GET_BAG, variables: { id: bagId } }]
     });
   };
 
@@ -94,24 +97,10 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   const handleCopyItem = async () => {
     try {
-      await duplicateItem({
-        variables: {
-          tripId: itemData.tripId,
-          bagId: itemData.bagId,
-          categoryId: itemData.categoryId,
-          name: itemData.name,
-          description: itemData.description,
-          qty: itemData.qty,
-          weight: itemData.weight,
-          priority: itemData.priority,
-          worn: itemData.worn,
-          link: itemData.link,
-          imageUrl: itemData.imageUrl
-          
-        },
-        refetchQueries: [{ query: GET_BAG, variables: { id: id } },
-         
-        ]
+
+      const { __typename, id, order, ...itemFields } = itemData;
+      await duplicateItem({variables: {...itemFields,},
+      refetchQueries: [{ query: GET_BAG, variables: {id: bagId } }],
       });
     } catch (error) {
       console.error("Error copying item:", error);
@@ -121,8 +110,6 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
   const updateChecked = async (e: any) => {
     sendChecked(itemData.id, e.target.checked);
   };
-
-
 
   const showTooltip = (content: string) => {
     setTooltipContent(content);
@@ -135,17 +122,18 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   return (
     <div id='scroll' className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible relative" ref={setNodeRef} style={style}>
+       <JoyrideWrapper steps={getSteps(itemDetailsStepsConfig)} run={true} />
       <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
-        <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing" size={14} {...attributes} {...listeners} />
-        <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300 cursor-pointer"/>
+        <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing drag-item-button" size={14} {...attributes} {...listeners} />
+        <input type="checkbox" id="checkbox-default" onChange={updateChecked} className="w-4 h-4 text-blue-600 border-gray-300 cursor-pointer checkbox-item-button"/>
       </div>
 
       <input 
         type="text" 
         placeholder="e.g., Hiking socks"
         name="name" 
-        className={`${inputClasses} w-auto sm:w-full`} 
+        className={`${inputClasses} w-auto sm:w-full item-name`} 
         defaultValue={itemData.name} 
         onBlur={(e) => handleBlur('name', e.target.value)} 
       />
@@ -154,7 +142,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="text" 
         placeholder="note" 
         name="description" 
-        className={`${inputClasses} w-auto sm:w-full`} 
+        className={`${inputClasses} w-auto sm:w-full item-description`} 
         defaultValue={itemData.description} 
         onBlur={(e) => handleBlur('description', e.target.value)} 
       />
@@ -164,7 +152,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="number" 
         id="qty" 
         name="qty" 
-        className={`${inputClasses} w-16`} 
+        className={`${inputClasses} w-16 item-qty`} 
         min={1} 
         defaultValue={itemData.qty} 
         onChange={(e) => handleQtyChange(+e.target.value)} 
@@ -175,7 +163,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
         type="number" 
         id="weight" 
         name="weight" 
-        className={`${inputClasses} w-20`} 
+        className={`${inputClasses} w-20 item-weight`} 
         min={0} 
         defaultValue={itemData.weight} 
         onChange={(e) => handleWeightChange(+e.target.value)} 
@@ -186,8 +174,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     id="weight-unit-select"
     value={weightOption}
     onChange={(e) => handleWeightOptionChange(e.target.value)} 
-    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border bg-white cursor-pointer ${inputClasses}`}
-  >
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border bg-white cursor-pointer ${inputClasses} item-weight-option`}>
     <option value="lb" className="bg-white dark:bg-zinc-700">lb</option>
     <option value="kg" className="bg-white dark:bg-zinc-700">kg</option>
     <option value="g" className="bg-white dark:bg-zinc-700">g</option>
@@ -199,7 +186,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     id="priority-select"
     value={priority}
     onChange={(e) => handlePriorityChange(e.target.value)} 
-    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer`} // Add `rounded-none`
+    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer item-priority`} // Add `rounded-none`
   >
     <option value="low" className="bg-emerald-100 dark:bg-primary">Low Priority</option>
     <option value="med" className="bg-yellow-100 dark:bg-button-yellow dark:text-white">Med Priority</option>
@@ -211,28 +198,28 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
       <div className="flex space-x-3 pl-2 relative">
         <FaImage 
           size={14} 
-          className={`text-accent cursor-pointer ${iconClasses} ${itemData.imageUrl ? 'text-button-orange dark:text-button-orange' : 'text-accent dark:text-gray-400'}`} 
+          className={`text-accent cursor-pointer item-image ${iconClasses} ${itemData.imageUrl ? 'text-button-orange dark:text-button-orange' : 'text-accent dark:text-gray-400'}`} 
           onClick={handlePicModal} 
           onMouseEnter={() => showTooltip('image')}
           onMouseLeave={hideTooltip}
         />
        <FaWalking 
           size={14} 
-          className={`cursor-pointer ${iconClasses} ${itemData.worn ? 'text-primary dark:text-button-lightGreen' : 'text-accent dark:text-gray-400'}`} 
+          className={`cursor-pointer item-wear ${iconClasses} ${itemData.worn ? 'text-primary dark:text-button-lightGreen' : 'text-accent dark:text-gray-400'}`} 
           onClick={handleToggleWorn} 
           onMouseEnter={() => showTooltip(itemData.worn ? 'worn' : 'wear')}
           onMouseLeave={hideTooltip}
         /> 
        { addingItem ? <Spinner w={3} h={3} /> : <HiDocumentDuplicate 
           size={14} 
-          className={`cursor-pointer text-accent dark:text-gray-400 ${iconClasses}`} 
+          className={`cursor-pointer item-duplicate text-accent dark:text-gray-400 ${iconClasses}`} 
           onClick={handleCopyItem} 
           onMouseEnter={() => showTooltip('duplicate')}
           onMouseLeave={hideTooltip}
         /> }
         <FaLink 
           size={14} 
-          className={`cursor-pointer ${iconClasses} ${itemData.link ? 'text-blue' : 'text-accent dark:text-gray-400'}`} 
+          className={`cursor-pointer item-link ${iconClasses} ${itemData.link ? 'text-blue' : 'text-accent dark:text-gray-400'}`} 
           onClick={() => setIsModalLinkOpen(true)} 
           onMouseEnter={() => showTooltip('link')}
           onMouseLeave={hideTooltip}

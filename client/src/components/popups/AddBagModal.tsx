@@ -12,6 +12,10 @@ import Message from '../message/Message';
 import { FaArrowRight, FaArrowLeft, FaCloudUploadAlt, FaCheckCircle } from 'react-icons/fa';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/apiConfigs';
+import JoyrideWrapper from '../../guide/JoyrideWrapper';
+import { getSteps } from '../../guide/steps';
+import { createBagStepsConfig } from '../../guide/stepsConfigs';
+
 
 const images = Array.from({ length: 8 }, (_, i) => `/images/backpack-${i + 1}.jpg`);
 
@@ -202,12 +206,13 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Create New Bag">
+      <JoyrideWrapper steps={getSteps(createBagStepsConfig )} run={true} />
       <Form onSubmit={handleAddBag}>
         <div className="flex justify-between space-x-4">
-          <div className="w-1/2">
+          <div className="w-1/2 bag-name">
             {renderInputField('Name', 'text', setName, 'e.g., Hiking Bag')}
           </div>
-          <div className="w-1/2">
+          <div className="w-1/2 bag-weight-goal">
             {renderInputField(
               `Goal (${weightUnit})`,
               'number',
@@ -218,7 +223,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
             )}
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full bag-description">
           {renderInputField(
             'Description',
             'text',
@@ -228,7 +233,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
         </div>
 
         {/* Carousel for predefined images */}
-        <div className="my-4">
+        <div className="my-4 bag-image-upload">
           <p className="text-center text-sm font-medium mb-2 text-accent dark:text-gray-300">Select an Image</p>
           <div className="relative flex items-center">
             <button
@@ -272,7 +277,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
 
         <div className="mb-4">
           <div
-            className={`mb-5 flex justify-center items-center px-6 pt-5 pb-6 border-2 ${
+            className={` bag-custom-image mb-5 flex justify-center items-center px-6 pt-5 pb-6 border-2 ${
               isDragging ? 'border-blue-500' : 'border-gray-300'
             } border-dashed rounded-md dark:border-zinc-500`}
             onDragOver={handleDragOver}
@@ -313,7 +318,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
         <div className="pt-1">
           <button
             type="submit"
-            className={`text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  
+            className={`bag-submit-button text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  
             disabled={loading || error === 'File size should not exceed 2MB'}
           >
             CREATE

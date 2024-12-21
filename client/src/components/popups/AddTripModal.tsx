@@ -12,6 +12,9 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 import { FaCheckCircle } from 'react-icons/fa';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/apiConfigs';
+import { getSteps } from '../../guide/steps';
+import { createTripStepsConfig } from '../../guide/stepsConfigs';
+import JoyrideWrapper from '../../guide/JoyrideWrapper';
 
 const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUnit }) => {
   const [name, setName] = useState('');
@@ -167,28 +170,29 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Create New Trip">
+       <JoyrideWrapper steps={getSteps(createTripStepsConfig )} run={true} />
       <Form onSubmit={handleAddTrip}>
       <div className="flex justify-between space-x-4">
-  <div className="w-1/2">
+  <div className="w-1/2 trip-name">
     {renderInputField('Name', 'text', setName, 'e.g., Hiking in the Alps')}
   </div>
-  <div className="w-1/2">
+  <div className="w-1/2 trip-distance">
     {renderInputField(`Distance (${distanceUnit})`, 'number', setDistance, `e.g., 100`, '0')}
   </div>
 </div>
-<div className="w-full">
+<div className="w-full trip-description">
   {renderInputField('Description', 'text', setAbout, 'e.g., A thrilling adventure through the mountains.')}
 </div>
 <div className="flex justify-between space-x-4">
-  <div className="w-1/2">
+  <div className="w-1/2 trip-start-date">
     {renderInputField('Start Date', 'date', setStartDate, '', '', endDate)}
   </div>
-  <div className="w-1/2">
+  <div className="w-1/2 trip-end-date">
     {renderInputField('End Date', 'date', setEndDate, '', startDate)}
   </div>
 </div>
 
-        <div className="mb-4">
+<div className="mb-4 trip-image">
   <label className="block text-sm font-medium text-accent dark:text-gray-300 mb-2 mt-1">
     Upload Image
   </label>
@@ -234,7 +238,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   </div>
 </div>
 
-        <button type="submit" className={`text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  disabled={loading || error === 'File size should not exceed 2MB'}>
+        <button type="submit" className={`trip-submit-button text-sm ${error ? `bg-accent` : `bg-primary`} font-medium w-full text-white p-2 sm:p-3  mb-1 rounded-lg ${error ? null : 'hover:bg-button-hover'} flex items-center justify-center`}  disabled={loading || error === 'File size should not exceed 2MB'}>
           CREATE
           {loading && <Spinner w={4} h={4}/>}
         </button>

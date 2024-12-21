@@ -204,7 +204,7 @@ const SideBar: React.FC = () => {
             ))}
           </ul>
 
-     <div className='bg-gray-100 dark:bg-box w-full p-5 rounded-lg flex flex-col items-center justify-center'>
+     <div className='bg-gray-50 dark:bg-box w-full p-5 rounded-lg flex flex-col items-center justify-center'>
      <button className="flex flex-row justify-center w-full pt-2.5 pb-2.5 pl-4 pr-4 rounded-lg bg-primary text-white hover:bg-button-hover" onClick={() => setIsModalOpen(true)}>
       <img src="/images/coffee-cup.png" width={20} height={20} alt="coffee" />
       <p className="text-sm ml-1.5">Support us</p>
@@ -215,7 +215,7 @@ const SideBar: React.FC = () => {
 
      <SupportUsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-        <div className="p-4 flex items-center cursor-pointer" onClick={() => navigate('/settings')}>
+        <div className="p-4 flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-box" onClick={() => navigate('/settings')}>
           {loadingUser ? (
             <div role="status" className="flex items-center animate-pulse">
               <div className="flex-shrink-0">

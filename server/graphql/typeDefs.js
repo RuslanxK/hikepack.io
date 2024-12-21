@@ -104,6 +104,7 @@ const typeDefs = gql`
     totalItems: Int!
     totalWeight: Float!
     goal: String!
+    passed: Boolean
   }
 
 
@@ -170,6 +171,7 @@ const typeDefs = gql`
     deleteCategory(id: ID!): Category
     updateCategoryName(id: ID!, name: String!): Category
     updateCategoryOrder(id: ID!, order: Int!): Category
+    updateBagPassedStatus(id: ID!, passed: Boolean!): Bag
 
     updateItem(id: ID!, name: String, qty: Int, description: String, weight: Float, priority: String, link: String, worn: Boolean, imageUrl: String, weightOption: String, order: Int): Item
     addItem(tripId: String!, bagId: String!, categoryId: String!, name: String!, qty: Int!, description: String, weight: Float!, priority: String, worn: Boolean, order: Int, weightOption: String, link: String): Item

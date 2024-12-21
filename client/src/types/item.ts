@@ -13,6 +13,7 @@ export interface Item {
     imageUrl?: string;
     order?: number;
     weightOption?: string
+    __typename?: string
   }
   
   export interface GetItemsData {

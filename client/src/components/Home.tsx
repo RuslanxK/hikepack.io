@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GetTripData } from '../types/trip';
+import { GetTripData, Trip } from '../types/trip';
 import { useQuery } from '@apollo/client';
 import { GET_TRIPS } from '../queries/tripQueries';
 import { GET_LATEST_BAG_WITH_DETAILS } from '../queries/bagQueries';
@@ -27,18 +27,21 @@ import { FaFilter } from 'react-icons/fa';
 
 
 const Home: React.FC = () => {
+
   const { loading, error, data } = useQuery<GetTripData>(GET_TRIPS);
   const { loading: latestBagLoading, error: latestBagError, data: latestBagData, refetch: refetchLatestBag } = useQuery<GetLatestBagWithDetailsData>(GET_LATEST_BAG_WITH_DETAILS);
   const { loading: loadingUser, error: errorUser, data: userData } = useQuery(GET_USER);
   const { searchName, searchDistance, searchDate } = useFilterContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalWeightFromCookie, setTotalWeightFromCookie] = useState<string | null>(null);
-  const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
   const toggleMobileFilters = () => {
     setIsMobileFiltersOpen((prev) => !prev);
   };
+
+  console.log(latestBagData?.latestBagWithDetails?.passed)
+
 
   const filteredTrips = data?.trips.filter((trip) => {
     const matchesName = trip.name.toLowerCase().includes(searchName.toLowerCase());
@@ -55,7 +58,7 @@ const Home: React.FC = () => {
 
   const tripTransitions = useAnimation({
     items: filteredTrips || [],
-    keys: (trip) => trip.id,
+    keys: (trip: Trip) => trip.id,
   });
 
   useEffect(() => {
@@ -71,13 +74,6 @@ const Home: React.FC = () => {
     refetchLatestBag();
   }, [refetchLatestBag]);
 
-
-  
-  useEffect(() => {
-    if (!loading && !loadingUser && !latestBagLoading) {
-      setWalkthroughActive(true);
-    }
-  }, [loading, loadingUser, latestBagLoading]);
 
 
   if (loading || latestBagLoading || loadingUser) {
@@ -98,8 +94,8 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <JoyrideWrapper steps={getSteps(homeStepsConfig)} run={walkthroughActive} />
-      <div className="sm:p-5 flex flex-col items-between justify-start space-y-2">
+      <JoyrideWrapper steps={getSteps(homeStepsConfig)} run={true} />
+      <div className="sm:p-5 flex flex-col items-between justify-start">
         <div className="mb-5">
         <div className="flex flex-row items-center">
                 <h1 className="text-xl font-semibold text-black dark:text-white">Welcome,</h1>
@@ -131,28 +127,21 @@ const Home: React.FC = () => {
         </button>
       </div>
 
-     
-      {isMobileFiltersOpen && (
-        <div className="flex flex-col sm:hidden gap-4 mb-4 dark:bg-box p-4 rounded-lg border border-2 border-gray-100">
-          <NameFilterInput />
-          <DistanceFilterInput />
-          <YearFilterInput />
-          <ClearFiltersButton />
-        </div>
-      )}
-
-      {/* Desktop Filters */}
-      <div className="hidden sm:flex flex-row gap-6 items-center border border-2 border-gray-100 w-full rounded-lg pl-5 pr-5 pt-3 pb-2 dark:border-zinc-600">
+      <div
+        className={`${
+          isMobileFiltersOpen ? 'flex flex-col gap-2' : 'hidden'
+        } sm:flex sm:flex-row sm:gap-5 items-center border border-2 border-gray-100 w-full rounded-lg pl-5 pr-5 pt-3 sm:pb-2 pb-5 dark:border-zinc-600`}
+      >
         <NameFilterInput />
         <DistanceFilterInput />
         <YearFilterInput />
         <ClearFiltersButton />
       </div>
-       
+
        </div> )}
 
               {filteredTrips?.length === 0 && data?.trips.length !== 0 ? (
-                <div className="w-full">
+                <div className="w-full mt-3">
                   <Message title="Attention Needed" padding="sm:p-5 p-3" width="w-full" titleMarginBottom="mb-2" message="No trips match your search criteria." type="info" />
                 </div>
               ) : null }
@@ -169,14 +158,11 @@ const Home: React.FC = () => {
       ))}
     </Grid>
 
-        {latestBagData?.latestBagWithDetails && (
-          <div className="text-center justify-center w-full pt-10 pb-5">
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-              My last bag status
-              <Link
-                className="text-button dark:text-button-lightGreen hover:text-button-hover hover:underline"
-                to={`bag/${latestBagData.latestBagWithDetails.id}`}
-              >
+ {latestBagData?.latestBagWithDetails && (
+<div className="text-center justify-center w-full pt-10 pb-5">
+<h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+My last bag status{" "}
+ <Link className="text-button dark:text-button-lightGreen hover:text-button-hover hover:underline" to={`bag/${latestBagData.latestBagWithDetails.id}`}>
                 {latestBagData.latestBagWithDetails.name.length > 10
                   ? `${latestBagData.latestBagWithDetails.name.substring(0, 10)}...`
                   : latestBagData.latestBagWithDetails.name}
@@ -186,28 +172,39 @@ const Home: React.FC = () => {
               Streamline Your Gear, Simplify Your Adventure.
             </p>
 
-            <div className="flex justify-center mt-5">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-auto">
-                <GridBox
-                  title="Total Weight"
-                  goal={` / ${latestBagData.latestBagWithDetails.goal} ${userData?.user?.weightOption}`}
-                  details={totalWeightFromCookie || '0'}
-                  icon={FaWeight}/>
-                <GridBox
-                  title="Total Categories"
-                  goal=""
-                  details={latestBagData.latestBagWithDetails.totalCategories.toString()}
-                  icon={FaListAlt}/>
-                <GridBox
-                  title="Total Items"
-                  goal=""
-                  details={latestBagData.latestBagWithDetails.totalItems.toString()}
-                  icon={FaBox}
-                />
-              </div>
-            </div>
-          </div>
-        )}
+  <div className="flex justify-center mt-5">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-auto">
+    <GridBox passed={latestBagData?.latestBagWithDetails?.passed}>
+      <h2 className="text-base text-black dark:text-gray-100 text-left">Total Weight</h2>
+      <FaWeight
+        size={25}
+        className={'text-accent dark:text-white'}/>
+      <p
+        className={`text-lg font-semibold text-left ${
+          latestBagData?.latestBagWithDetails?.passed === false ? 'text-red-500' : 'text-primary dark:text-button-lightGreen'
+        }`}
+      >
+        {totalWeightFromCookie || '0'} / {latestBagData.latestBagWithDetails.goal}{' '}
+        {userData?.user?.weightOption}
+      </p>
+    </GridBox>
+    <GridBox>
+      <h2 className="text-base text-black dark:text-gray-100 text-left">Total Categories</h2>
+      <FaListAlt size={25} className="text-accent dark:text-white" />
+      <p className="text-lg font-semibold text-left dark:text-white">
+        {latestBagData.latestBagWithDetails.totalCategories}
+      </p>
+    </GridBox>
+    <GridBox>
+      <h2 className="text-base text-black dark:text-gray-100 text-left">Total Items</h2>
+      <FaBox size={25} className="text-accent dark:text-white" />
+      <p className="text-lg font-semibold text-left dark:text-white">
+        {latestBagData.latestBagWithDetails.totalItems}
+      </p>
+    </GridBox>
+  </div>
+</div>
+</div>)}
 
         <AddTripModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} distanceUnit={userData?.user?.distance} />
       </div>

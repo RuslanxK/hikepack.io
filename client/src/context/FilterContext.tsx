@@ -7,6 +7,10 @@ interface FilterContextType {
   setSearchDistance: (value: string) => void;
   searchDate: string;
   setSearchDate: (value: string) => void;
+  searchGoal: string;
+  setSearchGoal: (value: string) => void;
+  searchPassed: string;
+  setSearchPassed: (value: string) => void;
   clearFilters: () => void;
 }
 
@@ -16,11 +20,15 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [searchName, setSearchName] = useState('');
   const [searchDistance, setSearchDistance] = useState('');
   const [searchDate, setSearchDate] = useState('');
+  const [searchGoal, setSearchGoal] = useState('');
+  const [searchPassed, setSearchPassed] = useState('');
 
   const clearFilters = () => {
     setSearchName('');
     setSearchDistance('');
     setSearchDate('');
+    setSearchGoal('');
+    setSearchPassed('');
   };
 
   return (
@@ -32,6 +40,10 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         setSearchDistance,
         searchDate,
         setSearchDate,
+        searchGoal,
+        setSearchGoal,
+        searchPassed,
+        setSearchPassed,
         clearFilters,
       }}
     >

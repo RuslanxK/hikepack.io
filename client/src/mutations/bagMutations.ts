@@ -43,3 +43,13 @@ export const UPDATE_LIKES_BAG = gql`
     }
   }
 `;
+
+
+export const UPDATE_BAG_PASSED_STATUS = gql`
+  mutation UpdateBagPassedStatus($id: ID!, $passed: Boolean!) {
+    updateBagPassedStatus(id: $id, passed: $passed) {
+      id
+      passed
+    }
+  }
+`;

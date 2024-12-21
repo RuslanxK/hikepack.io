@@ -96,6 +96,7 @@ export interface Bag {
     totalItems: number;
     totalWeight: number;
     goal: string
+    passed: boolean
     
   }
 

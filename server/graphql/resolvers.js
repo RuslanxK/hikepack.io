@@ -592,6 +592,7 @@ const resolvers = {
       }
     },
 
+
     updateTrip: async (_, args, { user }) => {
       try {
         return await Trip.findByIdAndUpdate(

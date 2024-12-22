@@ -27,12 +27,17 @@ import JoyrideWrapper from '../guide/JoyrideWrapper';
 import { getSteps } from '../guide/steps';
 import { bagDetailsStepsConfig } from '../guide/stepsConfigs';
 import Container from '../ui/Container';
+import { useJoyride } from '../hooks/useJoyride';
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const BagDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  const isJoyrideRun = useJoyride('step-5');
+  
 
   const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white focus:outline-none rounded p-1.5 dark:hover:bg-button-hover';
 
@@ -196,7 +201,7 @@ const BagDetails: React.FC = () => {
 
   return (
   <Container>
-   <JoyrideWrapper steps={getSteps(bagDetailsStepsConfig)} run={true} />
+   {isJoyrideRun && <JoyrideWrapper steps={getSteps(bagDetailsStepsConfig)} run={true} />}
       <div className='sm:p-5'>
       <div className={`flex flex-col sm:flex-row items-start min-h-screen ${isSidePanelVisible && dataBag.bag.allItems.length ? 'sm:mr-56' : 'mr-0'}`}>
         <div className="w-full mx-auto">

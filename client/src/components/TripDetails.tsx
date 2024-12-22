@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { useQuery } from '@apollo/client';
 import { GET_TRIP } from '../queries/tripQueries';
@@ -24,13 +24,17 @@ import Container from '../ui/Container';
 import { useAnimation } from '../hooks/useAnimation';
 import { Bag } from '../types/bag';
 import { calculateDaysLeft } from '../utils/dateUtils';
+import { useJoyride } from '../hooks/useJoyride';
 
 const TripDetails: React.FC = () => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const { searchName, searchGoal, searchPassed } = useFilterContext();
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
+  const isJoyrideRun = useJoyride('step-3');
+  
   const navigate = useNavigate();
 
   const buttonClass = 'ml-2 text-white bg-button hover:bg-button-hover hover:text-white rounded p-1.5 dark:hover:bg-button-hover edit-trip-button';
@@ -94,7 +98,7 @@ const TripDetails: React.FC = () => {
 
   return (
 <Container>
-<JoyrideWrapper steps={getSteps(tripDetailsStepsConfig)} run={true} />
+{isJoyrideRun && <JoyrideWrapper steps={getSteps(tripDetailsStepsConfig)} run={true} />}
       <div className='sm:p-5 space-y-6'>
         <div className='flex flex-col lg:flex-row'>
           <div className="w-full flex flex-col">

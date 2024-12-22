@@ -15,6 +15,7 @@ import { API_BASE_URL } from '../../utils/apiConfigs';
 import JoyrideWrapper from '../../guide/JoyrideWrapper';
 import { getSteps } from '../../guide/steps';
 import { createBagStepsConfig } from '../../guide/stepsConfigs';
+import { useJoyride } from '../../hooks/useJoyride';
 
 
 const images = Array.from({ length: 8 }, (_, i) => `/images/backpack-${i + 1}.jpg`);
@@ -34,6 +35,8 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 
+  const isJoyrideRun = useJoyride('step-4');
+  
   const [addBag] = useMutation<AddBagData, AddBagVars>(ADD_BAG);
 
   const handleAddBag = async (e: React.FormEvent) => {
@@ -206,7 +209,7 @@ const AddBagModal: React.FC<AddBagModalProps> = ({ isOpen, onClose, weightUnit }
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Create New Bag">
-      <JoyrideWrapper steps={getSteps(createBagStepsConfig )} run={true} />
+     {isJoyrideRun && <JoyrideWrapper steps={getSteps(createBagStepsConfig)} run={true} />}
       <Form onSubmit={handleAddBag}>
         <div className="flex justify-between space-x-4">
           <div className="w-1/2 bag-name">

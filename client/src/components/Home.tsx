@@ -24,6 +24,7 @@ import { useFilterContext } from '../context/FilterContext';
 import Grid from '../ui/Grid';
 import AddButton from '../ui/AddButton';
 import { FaFilter } from 'react-icons/fa';
+import { useJoyride } from '../hooks/useJoyride';
 
 
 const Home: React.FC = () => {
@@ -35,6 +36,9 @@ const Home: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalWeightFromCookie, setTotalWeightFromCookie] = useState<string | null>(null);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+
+  const isJoyrideRun = useJoyride('step-1');
+
 
   const toggleMobileFilters = () => {
     setIsMobileFiltersOpen((prev) => !prev);
@@ -91,7 +95,7 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <JoyrideWrapper steps={getSteps(homeStepsConfig)} run={true} />
+       {isJoyrideRun && <JoyrideWrapper steps={getSteps(homeStepsConfig)} run={true} />}
       <div className="sm:p-5 flex flex-col items-between justify-start">
         <div className="mb-5">
         <div className="flex flex-row items-center">

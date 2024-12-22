@@ -25,9 +25,11 @@ import AdminMain from "./components/admin/AdminMain";
 import Dashboard from "./components/admin/Dashboard";
 import { getSocket, disconnectSocket } from "./utils/websocketService";
 
+
 const App: React.FC = () => {
   const [liveUsers, setLiveUsers] = useState<number>(0); 
   const location = useLocation();
+
 
   const hideSidebar =
     location.pathname.startsWith("/share") ||
@@ -43,6 +45,9 @@ const App: React.FC = () => {
     location.pathname.startsWith("/verify-account") ||
     location.pathname.startsWith("/reset-password") ||
     location.pathname.startsWith("/new-password");
+
+
+
 
     useEffect(() => {
       if (skipWebSocket) {

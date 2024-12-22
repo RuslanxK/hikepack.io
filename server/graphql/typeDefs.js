@@ -22,6 +22,7 @@ const typeDefs = gql`
     isAdmin: Boolean!
     createdAt: String!
     updatedAt: String!
+    guide: Boolean
   }
 
   type AuthPayload {
@@ -190,6 +191,7 @@ const typeDefs = gql`
     resetPassword(token: String!, newPassword: String!): String
     
     addBugReport(title: String!, description: String!): ResponseMessage!
+  
   }
 `;
 

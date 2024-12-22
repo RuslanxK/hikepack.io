@@ -22,6 +22,8 @@ import { useAnimation } from '../hooks/useAnimation';
 import JoyrideWrapper from '../guide/JoyrideWrapper';
 import { categoryDetailsStepsConfig } from '../guide/stepsConfigs';
 import { getSteps } from '../guide/steps';
+import { useJoyride } from '../hooks/useJoyride';
+
 
 const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) => {
 
@@ -42,6 +44,8 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } });
   const sensors = useSensors(mouseSensor, touchSensor);
 
+  const isJoyrideRun = useJoyride('step-6');
+  
   const buttonClass ='text-accent dark:text-gray-400 hover:text-accent rounded-full p-1 transform transition-transform duration-200 hover:scale-125';
 
 
@@ -170,7 +174,7 @@ const SingleCategory: React.FC<CategoryProps> = ({ categoryData , weightUnit}) =
   
   return (
     <div className={`mb-2`} ref={setNodeRef} style={style}>
-       <JoyrideWrapper steps={getSteps(categoryDetailsStepsConfig)} run={true}  />
+      {isJoyrideRun && <JoyrideWrapper steps={getSteps(categoryDetailsStepsConfig)} run={true}  /> }
       <div className="cursor-pointer bg-white dark:bg-box  w-full rounded-t-lg" style={{ borderLeft: `8px solid ${categoryData.color}` }}>
         <div className="py-2.5 pl-2 pr-2 text-sm w-full">
           <div className="flex justify-between items-center w-full">

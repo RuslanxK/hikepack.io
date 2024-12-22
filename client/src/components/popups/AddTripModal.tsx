@@ -15,6 +15,7 @@ import { API_BASE_URL } from '../../utils/apiConfigs';
 import { getSteps } from '../../guide/steps';
 import { createTripStepsConfig } from '../../guide/stepsConfigs';
 import JoyrideWrapper from '../../guide/JoyrideWrapper';
+import { useJoyride } from '../../hooks/useJoyride';
 
 const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUnit }) => {
   const [name, setName] = useState('');
@@ -29,8 +30,9 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   const [isDragging, setIsDragging] = useState(false);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
 
-  const [addTrip] = useMutation<AddTripData, AddTripVars>(ADD_TRIP);
+  const isJoyrideRun = useJoyride('step-2');
 
+  const [addTrip] = useMutation<AddTripData, AddTripVars>(ADD_TRIP);
 
   const handleAddTrip = async (e: React.FormEvent) => {
 
@@ -146,6 +148,8 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
   };
 
 
+
+
   const renderInputField = (
     label: string,
     type: string,
@@ -170,7 +174,7 @@ const AddTripModal: React.FC<AddTripModalProps> = ({ isOpen, onClose, distanceUn
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="Create New Trip">
-       <JoyrideWrapper steps={getSteps(createTripStepsConfig )} run={true} />
+      {isJoyrideRun && <JoyrideWrapper steps={getSteps(createTripStepsConfig)} run={true} />}
       <Form onSubmit={handleAddTrip}>
       <div className="flex justify-between space-x-4">
   <div className="w-1/2 trip-name">

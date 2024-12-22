@@ -15,6 +15,7 @@ import { HiDocumentDuplicate } from "react-icons/hi2";
 import JoyrideWrapper from '../guide/JoyrideWrapper';
 import { getSteps } from '../guide/steps';
 import { itemDetailsStepsConfig } from '../guide/stepsConfigs';
+import { useJoyride } from '../hooks/useJoyride';
 
 
 const inputClasses = "py-1 px-2 rounded border-gray-200 border text-sm focus:outline-none focus:ring-1 focus:ring-button-lightGreen dark:bg-box dark:border-neutral-600 dark:text-neutral-200 dark:placeholder-neutral-500";
@@ -36,6 +37,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   const { id: bagId } = useParams<{ id: string }>();
 
+  const isJoyrideRun = useJoyride('step-7');
 
   const priorityClass = priority === 'low' ? 'bg-emerald-100 dark:bg-primary' : 
   priority === 'med' ? 'bg-yellow-100 dark:bg-button-yellow' : 
@@ -122,7 +124,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
 
   return (
     <div id='scroll' className="container py-0.5 sm:w-full overflow-x-scroll sm:overflow-x-visible relative" ref={setNodeRef} style={style}>
-       <JoyrideWrapper steps={getSteps(itemDetailsStepsConfig)} run={true} />
+       {isJoyrideRun && <JoyrideWrapper steps={getSteps(itemDetailsStepsConfig)} run={true} /> }
       <div className='flex flex-row items-center justify-between w-48 space-x-2 sm:w-full'>
       <div className="flex items-center">
         <GrDrag className="mr-2 text-accent dark:text-gray-400 no-outline cursor-grabbing drag-item-button" size={14} {...attributes} {...listeners} />

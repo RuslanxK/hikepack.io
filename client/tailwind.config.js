@@ -17,8 +17,25 @@ module.exports = {
         airbnb: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
       },
 
+      animation: {
+        zigzag: 'zigzag 15s infinite ease-in-out',
+      },
+      keyframes: {
+        zigzag: {
+          '0%': { transform: 'translateY(0) translateX(0)' },
+          '25%': { transform: 'translateY(-30px) translateX(30px)' }, // Up-Right
+          '50%': { transform: 'translateY(30px) translateX(-30px)' }, // Down-Left
+          '75%': { transform: 'translateY(-30px) translateX(-30px)' }, // Up-Left
+          '100%': { transform: 'translateY(0) translateX(0)' }, // Return to Start
+        },
+      },
+
+    
+
+  
       colors: {
         primary: "#058373",
+        orange: "#ff7d20",
         secondary: "#FAFAFA",
         accent: "#7a7a7a",
         green: "#04ba32",

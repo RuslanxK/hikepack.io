@@ -1,16 +1,21 @@
 export interface Bag {
-    id: string;
-    tripId: string;
-    name: string;
-    description: string;
-    goal: string;
-    passed: boolean;
-    likes: number;
-    imageUrl: string;
-    exploreBags: boolean;
-    createdAt: string;
-    updatedAt: string;
-  }
+  id: string;
+  tripId: string;
+  name: string;
+  description: string;
+  likes: number;
+  exploreBags: boolean;
+  goal: string;
+  passed: boolean;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  
+  // Add these properties
+  totalWeight?: number;
+  totalWornWeight?: number;
+  baseWeight?: number;
+}
 
   export interface GetBagsData {
     bags: Bag[];

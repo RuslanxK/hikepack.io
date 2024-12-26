@@ -182,13 +182,12 @@ const SingleItem: React.FC<SingleItemProps> = ({ itemData, sendChecked, weightUn
     <option value="g" className="bg-white dark:bg-zinc-700">g</option>
     <option value="oz" className="bg-white dark:bg-zinc-700">oz</option>
   </select>
-
-    
+  
   <select
     id="priority-select"
     value={priority}
     onChange={(e) => handlePriorityChange(e.target.value)} 
-    className={`text-gray-900 dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer item-priority`} // Add `rounded-none`
+    className={`text-black dark:text-gray-200 focus:outline-none text-sm inline-flex items-center border w-48 ${inputClasses} ${priorityClass} cursor-pointer item-priority`} // Add `rounded-none`
   >
     <option value="low" className="bg-emerald-100 dark:bg-primary">Low Priority</option>
     <option value="med" className="bg-yellow-100 dark:bg-button-yellow dark:text-white">Med Priority</option>

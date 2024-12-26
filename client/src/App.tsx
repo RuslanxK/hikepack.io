@@ -24,6 +24,7 @@ import AdminRoute from "./routes/AdminRoute";
 import AdminMain from "./components/admin/AdminMain";
 import Dashboard from "./components/admin/Dashboard";
 import { getSocket, disconnectSocket } from "./utils/websocketService";
+import Homepage from "./components/welcome/Homepage";
 
 
 const App: React.FC = () => {
@@ -37,14 +38,16 @@ const App: React.FC = () => {
     location.pathname.startsWith("/login") ||
     location.pathname.startsWith("/verify-account") ||
     location.pathname.startsWith("/reset-password") ||
-    location.pathname.startsWith("/new-password");
+    location.pathname.startsWith("/new-password") ||
+    location.pathname.startsWith("/welcome")
 
   const skipWebSocket =
     location.pathname.startsWith("/register") ||
     location.pathname.startsWith("/login") ||
     location.pathname.startsWith("/verify-account") ||
     location.pathname.startsWith("/reset-password") ||
-    location.pathname.startsWith("/new-password");
+    location.pathname.startsWith("/new-password") ||
+    location.pathname.startsWith("/welcome")
 
 
 
@@ -82,6 +85,8 @@ const App: React.FC = () => {
         } min-h-screen h-fit flex-grow bg-theme-bgGray dark:bg-theme-bgDark`}
       >
         <Routes>
+
+         <Route path="welcome" element={<Homepage />} />
           {/* Public Routes */}
           <Route element={<PublicRoutes />}>
             <Route path="register" element={<Register />} />
